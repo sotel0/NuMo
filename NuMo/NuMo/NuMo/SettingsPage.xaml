@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="NuMo.SettingsPage"
+		Title="Settings">
+	<ContentPage.ToolbarItems>
+	<ToolbarItem Name="Save" Clicked = "onSaveClicked"/>
+  </ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout>
+      <Button x:Name="pickPictureButton" Text="Set Profile Picture" Clicked="PickPhotoButton_OnClicked"/>
+      <Image x:Name="profilePic" WidthRequest="50" HeightRequest="50"/>
+      <TableView>
+        <TableRoot>
+          <TableSection Title="User Info">
+            <EntryCell Label="Name: " HorizontalTextAlignment="Start" x:Name= "settings_name" Keyboard = "Text"/>
+            <ViewCell>
+              <StackLayout Orientation = "Horizontal">
+                <Label Text = "Gender" VerticalOptions="Center" Margin="18,0,0,0"/>
+                <Picker x:Name="settings_gender" HorizontalOptions="FillAndExpand">
+                  <Picker.Items>
+                    <x:String>Female</x:String>
+                    <x:String>Male</x:String>
+                  </Picker.Items>
+                </Picker>
+              </StackLayout>
+            </ViewCell>
+
+          <EntryCell Label = "Age: " x:Name="settings_age" Keyboard = "Numeric"/>
+          <SwitchCell Text = "Pregnant" x:Name = "settings_pregnant"/>
+          <SwitchCell Text = "Lactating" x:Name = "settings_lactating"/>
+
+          </TableSection>
+          <TableSection Title ="Health Concerns">
+            <SwitchCell Text = "Blood Pressure" x:Name="settings_blood_pressure"/>
+            <SwitchCell Text = "T2D" x:Name="settings_t2d"/>
+            <SwitchCell Text = "Gluten Sensitivity" x:Name="settings_gluten_sensitivity"/>
+            <SwitchCell Text = "CVD" x:Name="settings_cvd"/>
+            <SwitchCell Text = "Liver Disease" x:Name="settings_liver_disease"/>
+            <SwitchCell Text = "Kidney Disease" x:Name="settings_kidney_disease"/>
+            <SwitchCell Text = "SIBO" x:Name="settings_sibo"/>
+          </TableSection>
+
+          <TableSection Title="User Goals">
+            <SwitchCell Text = "Maximize Macro Balance" x:Name="settings_macro_balance"/>
+            <SwitchCell Text = "Maximize Weight Loss" x:Name="settings_weight_loss"/>
+          </TableSection>
+        </TableRoot>
+      </TableView>
+      
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

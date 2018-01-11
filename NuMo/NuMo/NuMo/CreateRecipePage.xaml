@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		Title = "Create Recipe"
+		x:Class="NuMo.CreateRecipePage">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem x:Name="saveButton" Name="Save" />
+  	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout Orientation = "Vertical">
+			<StackLayout Orientation = "Vertical">
+				<Label Text = "Recipe Name" HorizontalOptions="Center" Margin = "18,12,10,0" />
+				<Entry x:Name="recipeName" Margin = "0,10,10,0" HorizontalOptions="FillAndExpand"/>
+        <Entry x:Name="quantifier" x:FieldModifier="public" Placeholder ="Quantifier Name" Text="{Binding Quantifier}"/>
+        <Entry x:Name="quantity" x:FieldModifier="public" Placeholder ="Quantity" Keyboard="Keyboard.Numeric" Text="{Binding Quantity}"/>
+			</StackLayout>
+			<StackLayout Orientation = "Horizontal">
+				<Button Text="Add Ingredient"
+						Clicked = "OnAddIngredient"
+						HorizontalOptions= "CenterAndExpand"
+            			 />
+			</StackLayout>
+      <Label Text="Ingredient List"/>
+      <ListView x:Name="ingredientList">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell Text="{Binding DisplayName}" Detail="{Binding Quantity}"/>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+					
+			</StackLayout>
+		
+	</ContentPage.Content>
+</ContentPage>

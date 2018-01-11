@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:NuMo.MyDayPageHelpers"
+		Title="My Day"
+		x:Class="NuMo.MyDayPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <DataTemplate x:Key="myDayFoodItemTemplate">
+            <TextCell Text="{Binding DisplayName}" Detail="{Binding Quantity}" TextColor="#415154" DetailColor="#415154">
+              <TextCell.ContextActions>
+                <MenuItem Text="Edit"
+                          Command="{Binding OnEditEvent}"></MenuItem>
+                <MenuItem Text="Delete"
+                          Command="{Binding OnDeleteEvent}" IsDestructive="True"></MenuItem>
+              </TextCell.ContextActions>
+            </TextCell>
+      </DataTemplate>
+      <DataTemplate x:Key="myDayRemainderTemplate">
+          <ImageCell ImageSource="{Binding RemainderImage.Source}" Text="Reminder" TextColor="#415154" DetailColor="#415154">
+            <ImageCell.ContextActions>
+              <MenuItem Text="Delete"
+                        Command="{Binding OnDeleteEvent}" IsDestructive="True"></MenuItem>
+            </ImageCell.ContextActions>
+          </ImageCell>
+      </DataTemplate>
+      <DataTemplate x:Key="myDayNutrientTemplate">
+       
+        <TextCell Text="{Binding name}" Detail="{Binding quantity}" TextColor="#415154" DetailColor="#415154"/>
+      </DataTemplate>
+      <local:MyDayDataTemplateSelector x:Key="MyDayDataTemplateSelector"
+                         MyDayFoodItemTemplate="{StaticResource myDayFoodItemTemplate}"
+                         MyDayRemainderTemplate="{StaticResource myDayRemainderTemplate}"
+                         MyDayNutrientTemplate="{StaticResource myDayNutrientTemplate}"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+	<ContentPage.Content>
+
+    <StackLayout>
+      <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+			  <Button x:Name="ItemsButton" Text="Items" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Clicked="viewToggle" />
+        <Button x:Name="NutrientsButton" Text="Nutrients" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Clicked="viewToggle" />
+      </StackLayout>
+      
+      <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+        <Button Text="Visualize" Image = "ic_pie_chart_black_24dp.png" Clicked="OnVisualizeClicked"/>
+        <Image x:Name="pic" Source="ic_insert_emoticon_black_24dp.png" WidthRequest="50" HeightRequest="50"/>
+        <Button Text="Reminder" Image = "ic_photo_camera_black_24dp.png" Clicked="OnReminderClicked"/>
+      </StackLayout>
+      
+      <DatePicker x:Name ="datePicker" HorizontalOptions="Center" Date="{x:Static sys:DateTime.Now}" DateSelected="dateClicked"/>
+<Picker x:Name="timeLengthChoice" HorizontalOptions="FillAndExpand" SelectedIndexChanged="OnTimeLengthChoiceChanged">
+                  <Picker.Items>
+                    <x:String>This Day</x:String>
+                    <x:String>This Week</x:String>
+                    <x:String>This Month</x:String>
+                  </Picker.Items>
+                </Picker>
+      <ListView x:Name="listView" ItemTemplate="{StaticResource MyDayDataTemplateSelector}" ItemsSource="{Binding ViewItemList}"/> 
+      
+    </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

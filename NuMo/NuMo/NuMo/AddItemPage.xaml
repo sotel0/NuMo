@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		Title="Add Item"
+		x:Class="NuMo.AddItemPage">
+  <ContentPage.Content>
+    <StackLayout x:Name = "mainStack">
+      <ListView x:Name="searchList" ItemSelected="itemSelected" />
+      <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+        <Entry x:Name="quantity" x:FieldModifier="public" Placeholder ="Number of" Keyboard="Keyboard.Numeric" Text="{Binding Quantity}" HorizontalTextAlignment="Center"/>
+        <Picker x:Name="UnitsPicker" x:FieldModifier="public" Title=" Units                                  " >
+          <Picker.Items>
+            <x:String>Gram(s)</x:String>
+          </Picker.Items>
+        </Picker>
+      </StackLayout>
+      <Button Text="Save" HorizontalOptions="Center" Clicked="saveButtonClicked" />
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

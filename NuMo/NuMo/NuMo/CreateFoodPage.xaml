@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Picker Values from Manning CreateItemViewController.swift -->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		Title = "Create Food"
+		x:Class="NuMo.CreateFoodPage">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Name="Save" Clicked="saveButtonClicked"/>
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <TableView>
+        <TableRoot>
+          <TableSection Title="Item">
+            <EntryCell x:Name="CreateItemName" Label="Name"/>
+          </TableSection>
+          <TableSection Title="Serving">
+           <ViewCell>
+				<StackLayout x:Name="layout" Orientation = "Horizontal">
+					<Entry x:Name="quantity" Placeholder = "1" Margin = "10,0,0,0" Keyboard="Numeric"/>
+					<Entry x:Name="quantifier" Placeholder = "serving" />
+					<Label Text = "~=" Margin = "0,10,0,0"/>
+					<Entry x:Name="gramsAmount" Placeholder = "25" Keyboard="Numeric"/>
+					<Label Text = "grams" Margin = "0,10,0,0"  />
+				</StackLayout>
+          </ViewCell>
+          </TableSection>
+          <TableSection x:Name="nutrientSection" Title="Nutrients">
+            
+          </TableSection>
+        </TableRoot>
+      </TableView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
