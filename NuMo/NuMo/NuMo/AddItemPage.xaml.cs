@@ -12,7 +12,9 @@ namespace NuMo
     {
         public NumoNameSearch selectedResult;
 		public Entry searchbar;
-        public string Quantity { get
+        public string Quantity 
+        {   
+            get
             {
                 return quantity.Text;
             }
@@ -20,7 +22,7 @@ namespace NuMo
             {
                 quantity.Text = value;
             }
-            }
+        }
         public string UnitPickerText
         {
             get
@@ -40,7 +42,7 @@ namespace NuMo
 
 			searchbar = new Entry
 			{
-				Placeholder = "Search",
+				Placeholder = "Search item",
 			};
 
             //Get search results for every key entry into the search bar and display them
@@ -81,6 +83,10 @@ namespace NuMo
         //When an item is selected, make it clear to the user and append additional unit choices unique to that item to the unit picker
         public void itemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            if (e.SelectedItem == null)
+            {
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+            }
             searchbar.Text = e.SelectedItem.ToString();
             selectedResult = (NumoNameSearch)e.SelectedItem;
             setBaseUnitPickerChoices();
