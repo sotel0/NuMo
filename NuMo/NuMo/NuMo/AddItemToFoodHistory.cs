@@ -11,6 +11,7 @@ namespace NuMo
     class AddItemToFoodHistory : AddItemPage
     {
         DateTime date;
+
         public AddItemToFoodHistory(DateTime date) : base()
         {
             //display date at top of page
@@ -26,8 +27,10 @@ namespace NuMo
             if (selectedResult != null && Quantity != null && !Quantity.Equals("0") && getQuantifier() != null && date != null)
             {
                 var db = DataAccessor.getDataAccessor();
+
                 //Increment the times this item has been selected so it will get priority in the future
                 db.incrementTimesSearched(selectedResult.food_no);
+
                 FoodHistoryItem item = new FoodHistoryItem();
                 //need to add date, quantity, quantifiers, and food_no to this item
                 item.food_no = selectedResult.food_no;
