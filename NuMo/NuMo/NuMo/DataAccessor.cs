@@ -48,8 +48,16 @@ namespace NuMo
             //build where clause.
             foreach(var word in names)
             {
-                if(word.Length > 0)
-                    where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", word);
+				if (word.Length > 0)
+				{
+					var temp = word;
+					//Removes plural form, but still catches correct forom using wild cards
+					if (word[word.Length-1] == 'S')
+					{
+						temp = word.Substring(0, word.Length - 1);
+					}
+					where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
+				}
             }
             where = where.Remove(where.Length - 4);//remove last 4 as we don't want the final 'AND '
             var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", where);
@@ -175,7 +183,7 @@ namespace NuMo
             // var keys = dbConn.Query<FoodItem>("SELECT MAX(NDB_No) as food_no FROM FOOD_DES");
             //var food_no = keys.First<FoodItem>.
             name.Replace("'", "''");
-            dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
+    		dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
             dbConn.Commit();
             var food_no_data = dbConn.Query<NumoNameSearch>(String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES where UPPER(Long_Desc) LIKE '{0}' order by Times_Searched DESC", name));
             var food_no = food_no_data.FirstOrDefault().food_no;
