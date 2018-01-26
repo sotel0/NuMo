@@ -81,6 +81,7 @@ namespace NuMo
         }
 
         //When an item is selected, make it clear to the user and append additional unit choices unique to that item to the unit picker
+        /*
         public void itemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
@@ -88,7 +89,29 @@ namespace NuMo
                 return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
             }
             searchbar.Text = e.SelectedItem.ToString();
+
+            //navigate to NutrFacts page, passing in 
+            //await Navigation.PushAsync(new NutrFacts(e.SelectedItem.ToString()));
+
             selectedResult = (NumoNameSearch)e.SelectedItem;
+            setBaseUnitPickerChoices();
+            updateUnitPickerWithCustomOptions();
+        }
+        */
+
+
+        public async void itemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item == null)
+            {
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+            }
+            //searchbar.Text = e.SelectedItem.ToString();
+
+            //navigate to NutrFacts page, passing in 
+            await Navigation.PushAsync(new NutrFacts(e.Item.ToString()));
+
+            selectedResult = (NumoNameSearch)e.Item;
             setBaseUnitPickerChoices();
             updateUnitPickerWithCustomOptions();
         }

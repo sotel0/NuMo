@@ -67,7 +67,7 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer: Edward Dratz (2893856JEE)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>developmentProfile1</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: numoTeam.NuMo</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>

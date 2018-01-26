@@ -34,6 +34,7 @@ namespace NuMo
             {
                 UpdateMyDayFoodItem(sender);
             });
+
             ViewItemList = new List<IMyDayViewItem>();
             ToolbarItem plus = new ToolbarItem();
             plus.Icon = "ic_add_black_24dp.png";

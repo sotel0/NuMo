@@ -86,6 +86,9 @@
     </Compile>
     <Compile Include="IVisualize.cs" />
     <Compile Include="BullsEyeHelper.cs" />
+    <Compile Include="NutrFacts.xaml.cs">
+      <DependentUpon>NutrFacts.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
@@ -181,6 +184,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NutrFacts.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
