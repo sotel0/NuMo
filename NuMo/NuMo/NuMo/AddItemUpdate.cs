@@ -18,8 +18,10 @@ namespace NuMo
             var db = DataAccessor.getDataAccessor();
             FoodHistoryItem foodHistoryItem = db.getFoodHistoryItem(item.id);
             searchbar.Text = foodHistoryItem.DisplayName;
+
             Quantity = foodHistoryItem.Quantity.ToString();
             UnitPickerText = foodHistoryItem.Quantifier;
+
             var search = new NumoNameSearch();
             search.food_no = foodHistoryItem.food_no;
             search.name = foodHistoryItem.DisplayName;

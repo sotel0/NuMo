@@ -11,6 +11,7 @@ namespace NuMo
     public partial class AddItemPage : ContentPage
     {
         public NumoNameSearch selectedResult;
+
 		public Entry searchbar;
         public string Quantity 
         {   
@@ -57,6 +58,7 @@ namespace NuMo
             
 			mainStack.Children.Insert(0, searchbar);
 
+            //
             setBaseUnitPickerChoices();
         }
 
@@ -108,8 +110,8 @@ namespace NuMo
             }
             //searchbar.Text = e.SelectedItem.ToString();
 
-            //navigate to NutrFacts page, passing in 
-            await Navigation.PushAsync(new NutrFacts(e.Item.ToString()));
+            //navigate to NutrFacts page, passing in the event arguments
+            await Navigation.PushAsync(new NutrFacts(e));
 
             selectedResult = (NumoNameSearch)e.Item;
             setBaseUnitPickerChoices();
@@ -153,6 +155,7 @@ namespace NuMo
             searchbar.Placeholder = "Search";
             searchList.ItemsSource = null;
             quantity.Text = "";
+            //
             quantity.Placeholder = "Number of";
             UnitsPicker.SelectedIndex = -1;
             UnitsPicker.Title = " Units                           ";

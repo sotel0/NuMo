@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -37,7 +37,7 @@
   </ContentPage.Resources>
 	<ContentPage.Content>
 
-    <StackLayout>
+    <StackLayout Padding = "0,20,0,0">
       <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 			  <Button x:Name="ItemsButton" Text="Items" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Clicked="viewToggle" />
         <Button x:Name="NutrientsButton" Text="Nutrients" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Clicked="viewToggle" />
