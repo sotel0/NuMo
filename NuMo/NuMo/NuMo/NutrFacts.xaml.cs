@@ -7,16 +7,46 @@ namespace NuMo
 {
     public partial class NutrFacts : ContentPage
     {
+        //System.Diagnostics.Debug.WriteLine("cewl");
+
+        public AddItemPage aip;
+             
         public NumoNameSearch selectedResult;
+
+        public string Quantity
+        {
+            get
+            {
+                return quantity.Text;
+            }
+            set
+            {
+                quantity.Text = value;
+            }
+        }
+        public string UnitPickerText
+        {
+            get
+            {
+                return UnitsPicker.Title;
+            }
+            set
+            {
+                UnitsPicker.Title = value;
+            }
+        }
 
         //empty constructor needed for preview
         public NutrFacts(){ 
             InitializeComponent();
         }
         
-        public NutrFacts(ItemTappedEventArgs e){
+        public NutrFacts(AddItemPage aip, ItemTappedEventArgs e){
             //for associated xaml file
             InitializeComponent();
+
+            //so the saveButtonClicked method can be used by the classes inheritting from AddItemPage
+            this.aip = aip;
 
             //give the description label values
             descrView.Text = e.Item.ToString();
@@ -35,6 +65,16 @@ namespace NuMo
 
         }
 
+        private void setBaseUnitPickerChoices()
+        {
+            UnitsPicker.Items.Clear();
+            foreach (var item in UnitConverter.standardUnits)
+            {
+                UnitsPicker.Items.Add(item);
+            }
+            //add other base items here.
+        }
+
         public void updateUnitPickerWithCustomOptions()
         {
             if (selectedResult != null)
@@ -49,25 +89,23 @@ namespace NuMo
             }
         }
 
+        public String getQuantifier()
+        {
+            if (UnitsPicker.SelectedIndex >= 0)
+                return UnitsPicker.Items[UnitsPicker.SelectedIndex];
+            else if (UnitsPicker.Title != null)
+                return UnitsPicker.Title;
+            else
+                return null;
+        }
 
 
         //clear all the fields when saved
         void saveButtonClicked(object sender, EventArgs args)
         {
-            //clearAllFields();
+            aip.saveButtonClicked(sender, args);
+            Navigation.PopAsync();
         }
-
-        //Adds the static units to the unitPicker, ie grams, pounds, kilograms, things nonspecific to the user selection
-        private void setBaseUnitPickerChoices()
-        {
-            UnitsPicker.Items.Clear();
-            foreach (var item in UnitConverter.standardUnits)
-            {
-                UnitsPicker.Items.Add(item);
-            }
-            //add other base items here.
-        }
-
 
     }
 }

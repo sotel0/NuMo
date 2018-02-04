@@ -13,28 +13,31 @@ namespace NuMo
         public NumoNameSearch selectedResult;
 
 		public Entry searchbar;
-        public string Quantity 
-        {   
-            get
-            {
-                return quantity.Text;
-            }
-            set
-            {
-                quantity.Text = value;
-            }
-        }
-        public string UnitPickerText
-        {
-            get
-            {
-                return UnitsPicker.Title;
-            }
-            set
-            {
-                UnitsPicker.Title = value;
-            }
-        }
+
+        public NutrFacts nutrFacts;
+
+        //public string Quantity 
+        //{   
+        //    get
+        //    {
+        //        return quantity.Text;
+        //    }
+        //    set
+        //    {
+        //        quantity.Text = value;
+        //    }
+        //}
+        //public string UnitPickerText
+        //{
+        //    get
+        //    {
+        //        return UnitsPicker.Title;
+        //    }
+        //    set
+        //    {
+        //        UnitsPicker.Title = value;
+        //    }
+        //}
 
         public AddItemPage()
         {
@@ -59,19 +62,19 @@ namespace NuMo
 			mainStack.Children.Insert(0, searchbar);
 
             //
-            setBaseUnitPickerChoices();
+            //setBaseUnitPickerChoices();
         }
 
         //Adds the static units to the unitPicker, ie grams, pounds, kilograms, things nonspecific to the user selection
-        private void setBaseUnitPickerChoices()
-        {
-            UnitsPicker.Items.Clear();
-            foreach(var item in UnitConverter.standardUnits)
-            {
-                UnitsPicker.Items.Add(item);
-            }
-            //add other base items here.
-        }
+        //private void setBaseUnitPickerChoices()
+        //{
+        //    UnitsPicker.Items.Clear();
+        //    foreach(var item in UnitConverter.standardUnits)
+        //    {
+        //        UnitsPicker.Items.Add(item);
+        //    }
+        //    //add other base items here.
+        //}
 
         //update search results.
         public void searchForMatches(object sender, TextChangedEventArgs e)
@@ -111,54 +114,55 @@ namespace NuMo
             //searchbar.Text = e.SelectedItem.ToString();
 
             //navigate to NutrFacts page, passing in the event arguments
-            await Navigation.PushAsync(new NutrFacts(e));
+            nutrFacts = new NutrFacts(this,e);
+            await Navigation.PushAsync(nutrFacts);
 
             selectedResult = (NumoNameSearch)e.Item;
-            setBaseUnitPickerChoices();
-            updateUnitPickerWithCustomOptions();
+            //setBaseUnitPickerChoices();
+            //updateUnitPickerWithCustomOptions();
         }
 
-        public void updateUnitPickerWithCustomOptions()
-        {
-            if(selectedResult != null)
-            {
-                var db = DataAccessor.getDataAccessor();
-                db.addCustomQuantifiers(selectedResult);
-                foreach(var converter in selectedResult.convertions)
-                {
-                    if(converter.name != null)
-                        UnitsPicker.Items.Add(converter.name);
-                }
-            }
-        }
+        //public void updateUnitPickerWithCustomOptions()
+        //{
+        //    if(selectedResult != null)
+        //    {
+        //        var db = DataAccessor.getDataAccessor();
+        //        db.addCustomQuantifiers(selectedResult);
+        //        foreach(var converter in selectedResult.convertions)
+        //        {
+        //            if(converter.name != null)
+        //                UnitsPicker.Items.Add(converter.name);
+        //        }
+        //    }
+        //}
 
         //Clear all fields to make it obvious the button press had an impact.
-        void saveButtonClicked(object sender, EventArgs args)
+        public virtual void saveButtonClicked(object sender, EventArgs args)
         {
-            clearAllFields();
+            
         }
 
-        public String getQuantifier()
-        {
-            if (UnitsPicker.SelectedIndex >= 0)
-                return UnitsPicker.Items[UnitsPicker.SelectedIndex];
-            else if (UnitsPicker.Title != null)
-                return UnitsPicker.Title;
-            else
-                return null;
-        }
+        //public String getQuantifier()
+        //{
+        //    if (UnitsPicker.SelectedIndex >= 0)
+        //        return UnitsPicker.Items[UnitsPicker.SelectedIndex];
+        //    else if (UnitsPicker.Title != null)
+        //        return UnitsPicker.Title;
+        //    else
+        //        return null;
+        //}
 
         // Resets all fields to be empty so the user can add another item
-        public void clearAllFields()
-        {
-            searchbar.Text = "";
-            searchbar.Placeholder = "Search";
-            searchList.ItemsSource = null;
-            quantity.Text = "";
-            //
-            quantity.Placeholder = "Number of";
-            UnitsPicker.SelectedIndex = -1;
-            UnitsPicker.Title = " Units                           ";
-        }
+        //public void clearAllFields()
+        //{
+        //    searchbar.Text = "";
+        //    searchbar.Placeholder = "Search";
+        //    searchList.ItemsSource = null;
+        //    quantity.Text = "";
+        //    //
+        //    quantity.Placeholder = "Number of";
+        //    UnitsPicker.SelectedIndex = -1;
+        //    UnitsPicker.Title = " Units                           ";
+        //}
     }
 }
