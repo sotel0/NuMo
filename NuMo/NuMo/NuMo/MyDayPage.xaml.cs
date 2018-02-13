@@ -64,7 +64,9 @@ namespace NuMo
         //Update a food item's information
         async void UpdateMyDayFoodItem(MyDayFoodItem item)
         {
-            await Navigation.PushModalAsync(new AddItemUpdate(item));
+            AddItemUpdate update = new AddItemUpdate(item);
+            await Navigation.PushAsync(update.nutrFacts);
+
         }
 
         //Plus button in top right to add a food item to today's history

@@ -36,14 +36,43 @@ namespace NuMo
             }
         }
 
+        public string DescriptView
+        {
+            get
+            {
+                return descrView.Text;
+            }
+            set
+            {
+                descrView.Text = value;
+            }
+        }
+
         //empty constructor needed for preview
         public NutrFacts(){ 
             InitializeComponent();
+        }
+
+        public NutrFacts(AddItemPage aip){
+            InitializeComponent();
+
+            //so the saveButtonClicked method can be used by the classes inheritting from AddItemPage
+            this.aip = aip;
+
+            //establish description view
+            descrView.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            descrView.VerticalOptions = LayoutOptions.Start;
+            descrView.HorizontalOptions = LayoutOptions.Start;
+
+            //set default units in picker
+            setBaseUnitPickerChoices();
         }
         
         public NutrFacts(AddItemPage aip, ItemTappedEventArgs e){
             //for associated xaml file
             InitializeComponent();
+
+
 
             //so the saveButtonClicked method can be used by the classes inheritting from AddItemPage
             this.aip = aip;

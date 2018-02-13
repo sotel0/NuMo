@@ -12,13 +12,17 @@ namespace NuMo
     class AddItemUpdate : AddItemPage
     {
         MyDayFoodItem myDayItem;
+
         public AddItemUpdate(MyDayFoodItem item)
         {
+            nutrFacts = new NutrFacts(this);
             myDayItem = item;
+
             var db = DataAccessor.getDataAccessor();
             FoodHistoryItem foodHistoryItem = db.getFoodHistoryItem(item.id);
-            searchbar.Text = foodHistoryItem.DisplayName;
 
+            //update the values being displayed
+            nutrFacts.DescriptView = foodHistoryItem.DisplayName;
             nutrFacts.Quantity = foodHistoryItem.Quantity.ToString();
             nutrFacts.UnitPickerText = foodHistoryItem.Quantifier;
 
@@ -26,7 +30,9 @@ namespace NuMo
             search.food_no = foodHistoryItem.food_no;
             search.name = foodHistoryItem.DisplayName;
             selectedResult = search;
-            //updateUnitPickerWithCustomOptions();
+            nutrFacts.updateUnitPickerWithCustomOptions();
+
+
         }
 
         public override void saveButtonClicked(object sender, EventArgs e)
@@ -50,7 +56,6 @@ namespace NuMo
                 db.updateFoodHistory(item, myDayItem.id);
             }
             MyDayFoodItem.sendRefresh();
-            Navigation.PopModalAsync();
         }
     }
 }

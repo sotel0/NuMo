@@ -27,7 +27,7 @@
       </DataTemplate>
       <DataTemplate x:Key="myDayNutrientTemplate">
        
-        <TextCell Text="{Binding name}" Detail="{Binding quantity}" TextColor="#415154" DetailColor="#415154"/>
+        <TextCell Text="{Binding name}" Detail="{Binding quantity}" TextColor="#41514" DetailColor="#415154"/>
       </DataTemplate>
       <local:MyDayDataTemplateSelector x:Key="MyDayDataTemplateSelector"
                          MyDayFoodItemTemplate="{StaticResource myDayFoodItemTemplate}"
@@ -39,8 +39,8 @@
 
     <StackLayout Padding = "0,20,0,0">
       <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-			  <Button x:Name="ItemsButton" Text="Items" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Clicked="viewToggle" />
-        <Button x:Name="NutrientsButton" Text="Nutrients" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Clicked="viewToggle" />
+			  <Button x:Name="ItemsButton" Text="Items" HorizontalOptions="Center" VerticalOptions="Start" Clicked="viewToggle" />
+        <Button x:Name="NutrientsButton" Text="Nutrients" HorizontalOptions="Center" VerticalOptions="Start" Clicked="viewToggle" />
       </StackLayout>
       
       <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
