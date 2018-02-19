@@ -142,13 +142,13 @@
     <BundleResource Include="Resources\ic_insert_emoticon_black_24dp.png" />
     <BundleResource Include="Resources\ic_insert_emoticon_black_24dp%402x.png" />
     <BundleResource Include="Resources\ic_insert_emoticon_black_24dp%403x.png" />
-    <BundleResource Include="Resources\numoDatabase.db" />
     <BundleResource Include="Resources\ic_add_black_24dp%402x.png" />
     <BundleResource Include="Resources\ic_add_black_24dp%403x.png" />
     <BundleResource Include="Resources\ic_add_black_24dp.png" />
     <BundleResource Include="Resources\ic_check_box_black_24dp%402x.png" />
     <BundleResource Include="Resources\ic_check_box_black_24dp%403x.png" />
     <BundleResource Include="Resources\ic_check_box_black_24dp.png" />
+    <BundleResource Include="Resources\numoDatabase.db" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLite.Net, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -187,7 +187,6 @@
     <Compile Include="BullsEye.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\numoDatabase.db" />
     <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -274,6 +273,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\NuMoLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\numoDatabase.db" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets')" />
