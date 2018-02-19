@@ -15,21 +15,23 @@ namespace NuMo
 
         public AddItemUpdate(MyDayFoodItem item)
         {
-            nutrFacts = new NutrFacts(this);
             myDayItem = item;
 
             var db = DataAccessor.getDataAccessor();
             FoodHistoryItem foodHistoryItem = db.getFoodHistoryItem(item.id);
+
+            var search = new NumoNameSearch();
+            search.food_no = foodHistoryItem.food_no;
+            search.name = foodHistoryItem.DisplayName;
+
+            nutrFacts = new NutrFacts(this,search);
 
             //update the values being displayed
             nutrFacts.DescriptView = foodHistoryItem.DisplayName;
             nutrFacts.Quantity = foodHistoryItem.Quantity.ToString();
             nutrFacts.UnitPickerText = foodHistoryItem.Quantifier;
 
-            var search = new NumoNameSearch();
-            search.food_no = foodHistoryItem.food_no;
-            search.name = foodHistoryItem.DisplayName;
-            selectedResult = search;
+            nutrFacts.selectedResult = search;
             nutrFacts.updateUnitPickerWithCustomOptions();
 
 

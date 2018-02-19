@@ -221,7 +221,7 @@ namespace NuMo
                     var newItem = new MyDayFoodItem();
                     newItem.id = result.History_Id;
                     newItem.DisplayName = getNameFromID(result.food_no);
-                    newItem.Quantity = "Quantity: " + result.Quantity.ToString() + " Quantifier: " + result.Quantifier;
+                    newItem.Quantity = "(" + result.Quantity.ToString() + ") " + result.Quantifier;
                     resultList.Add(newItem);
                 }
             }

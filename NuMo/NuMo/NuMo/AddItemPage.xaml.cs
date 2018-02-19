@@ -114,27 +114,13 @@ namespace NuMo
             //searchbar.Text = e.SelectedItem.ToString();
 
             //navigate to NutrFacts page, passing in the event arguments
-            nutrFacts = new NutrFacts(this,e);
+            nutrFacts = new NutrFacts(this,(NumoNameSearch)e.Item);
             await Navigation.PushAsync(nutrFacts);
 
             selectedResult = (NumoNameSearch)e.Item;
             //setBaseUnitPickerChoices();
-            //updateUnitPickerWithCustomOptions();
+            //nutrFacts.updateUnitPickerWithCustomOptions();
         }
-
-        //public void updateUnitPickerWithCustomOptions()
-        //{
-        //    if(selectedResult != null)
-        //    {
-        //        var db = DataAccessor.getDataAccessor();
-        //        db.addCustomQuantifiers(selectedResult);
-        //        foreach(var converter in selectedResult.convertions)
-        //        {
-        //            if(converter.name != null)
-        //                UnitsPicker.Items.Add(converter.name);
-        //        }
-        //    }
-        //}
 
         //Clear all fields to make it obvious the button press had an impact.
         public virtual void saveButtonClicked(object sender, EventArgs args)

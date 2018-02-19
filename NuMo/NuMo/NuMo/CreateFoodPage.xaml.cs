@@ -79,6 +79,8 @@ namespace NuMo
             }
             //servingMultiplier for the custom unit
             var servingMultiplier = Convert.ToDouble(quantity.Text) / (multiplier);
+
+            ///no such column infinity when serving is empty
             db.createFoodItem(nutrientList, CreateItemName.Text, servingMultiplier, quantifier.Text.ToString());
         }
     }

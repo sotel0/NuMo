@@ -20,11 +20,14 @@ namespace NuMo
         DateTime date;
         List<IMyDayViewItem> ViewItemList;
         Color selectedColor = Color.FromRgb(123, 199, 193);
+
         //Initially we only want to see info for 1 day.
         int daysToLoad = 1;
 
         public MyDayPage()
 		{
+            InitializeComponent();
+
             //subscribe to events to refresh the page and update a food item
             MessagingCenter.Subscribe<MyDayFoodItem>(this, "RefreshMyDay", (sender) =>
             {
@@ -36,14 +39,20 @@ namespace NuMo
             });
 
             ViewItemList = new List<IMyDayViewItem>();
+
+
             ToolbarItem plus = new ToolbarItem();
+            ToolbarItem plusText = new ToolbarItem();
             plus.Icon = "ic_add_black_24dp.png";
+            plusText.Text = "Add Food +";
             plus.Clicked += AddButton;
+
+            //ToolbarItems.Add(plusText);
             ToolbarItems.Add(plus);
             
-            InitializeComponent();
+
             timeLengthChoice.SelectedIndex = 0;
-            ItemsButton.BackgroundColor = selectedColor;
+            //ItemsButton.BackgroundColor = selectedColor;
             date = datePicker.Date;
         }
 
@@ -78,8 +87,7 @@ namespace NuMo
         //Display the food items associated with today, and back in time to the number of selected days.
         void OnItemsClicked()
         {
-            ItemsButton.BackgroundColor = selectedColor;
-            NutrientsButton.BackgroundColor = Color.Default;
+            
             Image pic2 = new Image();
             if (Application.Current.Properties.ContainsKey("Profile Pic"))
             {
@@ -116,7 +124,8 @@ namespace NuMo
         void viewToggle(object sender, EventArgs args)
         {
             var button = (Button)sender;
-            button.BackgroundColor = selectedColor;
+            //button.BackgroundColor = selectedColor;
+
             if(button == NutrientsButton)
             {
                 OnNutrientsClicked();
@@ -130,8 +139,9 @@ namespace NuMo
         //Display nutrient info for the day/history range selected.
         void OnNutrientsClicked()
         {
-            ItemsButton.BackgroundColor = Color.Default;
-            NutrientsButton.BackgroundColor = selectedColor;
+            //ItemsButton.BackgroundColor = Color.Default;
+            //NutrientsButton.BackgroundColor = selectedColor;
+
             listView.BeginRefresh();
             listView.ItemsSource = null;
 

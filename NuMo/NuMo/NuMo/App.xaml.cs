@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace NuMo
+
 {
     public partial class App :Application
     {
         public App()
         {
+            InitializeComponent();
             //This app will be based off of navigation pages
             MainPage = new NavigationPage(new NuMo.MainPage());
         }
