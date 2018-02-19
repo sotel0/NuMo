@@ -48,11 +48,19 @@ namespace NuMo
             //build where clause.
             foreach(var word in names)
             {
-                if(word.Length > 0)
-                    where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", word);
+				if (word.Length > 0)
+				{
+					var temp = word;
+					//Removes plural form, but still catches correct forom using wild cards
+					if (word[word.Length-1] == 'S')
+					{
+						temp = word.Substring(0, word.Length - 1);
+					}
+					where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
+				}
             }
             where = where.Remove(where.Length - 4);//remove last 4 as we don't want the final 'AND '
-            var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", where);
+            var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Search_Rank DESC", where);
             var resultList = dbConn.Query<NumoNameSearch>(query);
             return resultList;
         }
@@ -175,9 +183,9 @@ namespace NuMo
             // var keys = dbConn.Query<FoodItem>("SELECT MAX(NDB_No) as food_no FROM FOOD_DES");
             //var food_no = keys.First<FoodItem>.
             name.Replace("'", "''");
-            dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
+    		dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Search_Rank) VALUES ('{0}', 10)", name));
             dbConn.Commit();
-            var food_no_data = dbConn.Query<NumoNameSearch>(String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES where UPPER(Long_Desc) LIKE '{0}' order by Times_Searched DESC", name));
+            var food_no_data = dbConn.Query<NumoNameSearch>(String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES where UPPER(Long_Desc) LIKE '{0}' order by Search_Rank DESC", name));
             var food_no = food_no_data.FirstOrDefault().food_no;
             String data_num = food_no.ToString();
             if (data_num.Length == 4)
@@ -246,11 +254,11 @@ namespace NuMo
         //increment the timessearched field so that this entry gets preference in future searches
         public void incrementTimesSearched(int food_no)
         {
-            int changes = dbConn.Execute(String.Format("UPDATE FOOD_DES SET Times_Searched = Times_Searched + 1 WHERE NDB_No = {0}", food_no));
+            int changes = dbConn.Execute(String.Format("UPDATE FOOD_DES SET Search_Rank = Search_Rank + 1 WHERE NDB_No = {0}", food_no));
             dbConn.Commit();
         }
 
-        //Methods below here are for testing purposes only
+		//Methods below here are for testing purposes only
         public void checkTimesSearched(int food_no)
         {
             var result = dbConn.Query<testTimesSearched>(String.Format("SELECT Times_Searched as times_searched FROM FOOD_DES WHERE NDB_NO = {0}", food_no));

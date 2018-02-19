@@ -164,6 +164,8 @@
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
+    <None Include="Database\numoDatabase.db" />
+    <None Include="Database\numoDatabase.db.sqbpro" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
