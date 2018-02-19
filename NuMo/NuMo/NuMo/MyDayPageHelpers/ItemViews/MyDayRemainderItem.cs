@@ -16,6 +16,7 @@ namespace NuMo.ItemViews
         public String imageString { get; set; }
         public int id { get; set; }
         public ICommand OnDeleteEvent { get; set; }
+
         public MyDayRemainderItem() {
 
             OnDeleteEvent = new Command(OnDelete);

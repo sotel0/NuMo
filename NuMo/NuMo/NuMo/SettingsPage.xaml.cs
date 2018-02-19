@@ -220,11 +220,16 @@ namespace NuMo
                 {
                     
                 }
+
+                //display settings were saved
+                await DisplayAlert("Settings Saved", "", "OK");
             }
 			//display the error message
 			else {
 				await DisplayAlert("Error", needed, "OK");
 			    }
+
+
 		}
 	}
 }

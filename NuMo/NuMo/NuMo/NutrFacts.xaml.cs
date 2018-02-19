@@ -32,6 +32,7 @@ namespace NuMo
             }
             set
             {
+                //UnitsPicker.SelectedIndex =  UnitsPicker.Items.IndexOf(value);
                 UnitsPicker.Title = value;
             }
         }
@@ -48,92 +49,125 @@ namespace NuMo
             }
         }
 
-        //empty constructor needed for preview
+        //empty constructor needed for visual studios preview
         public NutrFacts(){ 
             InitializeComponent();
         }
 
-        public NutrFacts(AddItemPage aip){
+        public NutrFacts(AddItemPage aip, NumoNameSearch search){
             InitializeComponent();
+
+            selectedResult = search;
 
             //so the saveButtonClicked method can be used by the classes inheritting from AddItemPage
             this.aip = aip;
+
+            //establish the save button on the top right
+            ToolbarItem save = new ToolbarItem();
+            save.Text = "Save";
+            save.Clicked += saveButtonClicked;
+            ToolbarItems.Add(save);
 
             //establish description view
+            descrView.Text = search.ToString();
             descrView.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             descrView.VerticalOptions = LayoutOptions.Start;
             descrView.HorizontalOptions = LayoutOptions.Start;
 
             //set default units in picker
-            setBaseUnitPickerChoices();
-        }
-        
-        public NutrFacts(AddItemPage aip, ItemTappedEventArgs e){
-            //for associated xaml file
-            InitializeComponent();
-
-
-
-            //so the saveButtonClicked method can be used by the classes inheritting from AddItemPage
-            this.aip = aip;
-
-            //give the description label values
-            descrView.Text = e.Item.ToString();
-            descrView.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            descrView.VerticalOptions = LayoutOptions.Start;
-            descrView.HorizontalOptions = LayoutOptions.Start;
-
-            //set default units in picker
-            setBaseUnitPickerChoices();
-
-            //get selected result from search
-            selectedResult = (NumoNameSearch)e.Item;
-
             //add any custom picker units from selected item
             updateUnitPickerWithCustomOptions();
-
         }
+        
+        //public NutrFacts(AddItemPage aip, ItemTappedEventArgs e){
+        //    //for associated xaml file
+        //    InitializeComponent();
+
+
+
+        //    //so the saveButtonClicked method can be used by the classes inheritting from AddItemPage
+        //    this.aip = aip;
+
+        //    //give the description label values
+        //    descrView.Text = e.Item.ToString();
+        //    descrView.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+        //    descrView.VerticalOptions = LayoutOptions.Start;
+        //    descrView.HorizontalOptions = LayoutOptions.Start;
+
+        //    //set default units in picker
+        //    setBaseUnitPickerChoices();
+
+        //    //get selected result from search
+        //    selectedResult = (NumoNameSearch)e.Item;
+
+        //    //add any custom picker units from selected item
+        //    updateUnitPickerWithCustomOptions();
+
+        //}
 
         private void setBaseUnitPickerChoices()
         {
-            UnitsPicker.Items.Clear();
             foreach (var item in UnitConverter.standardUnits)
             {
-                UnitsPicker.Items.Add(item);
+                if (item != null)
+                {
+                    UnitsPicker.Items.Add(item);
+                }
             }
             //add other base items here.
         }
 
         public void updateUnitPickerWithCustomOptions()
         {
+            //reset entire picker
+            UnitsPicker.Items.Clear();
+
+            //to reset duplicate units appearing
+            setBaseUnitPickerChoices();
+
             if (selectedResult != null)
             {
                 var db = DataAccessor.getDataAccessor();
                 db.addCustomQuantifiers(selectedResult);
                 foreach (var converter in selectedResult.convertions)
                 {
-                    if (converter.name != null)
-                        UnitsPicker.Items.Add(converter.name);
+                    if ( converter.name != null && !UnitsPicker.Items.Contains(converter.name) && converter.name != "")
+                    {
+                        UnitsPicker.Items.Insert(0,converter.name);
+                    }
                 }
             }
         }
 
+        //return item from the picker if there is one selected
         public String getQuantifier()
         {
             if (UnitsPicker.SelectedIndex >= 0)
                 return UnitsPicker.Items[UnitsPicker.SelectedIndex];
-            else if (UnitsPicker.Title != null)
-                return UnitsPicker.Title;
+            else if(UnitsPicker.Title != null){
+                return UnitsPicker.Title;                
+            }
             else
                 return null;
         }
 
 
         //clear all the fields when saved
-        void saveButtonClicked(object sender, EventArgs args)
+        async void saveButtonClicked(object sender, EventArgs args)
         {
-            aip.saveButtonClicked(sender, args);
-            Navigation.PopAsync();
+            //do not save unless input values are there
+            if (Quantity == null)
+            {
+                await DisplayAlert("Please put NUMBER OF value to save", "", "OK");
+
+            } else if(UnitsPicker.SelectedIndex < 0){
+                await DisplayAlert("Please select UNITS value to save", "", "OK");
+            }
+            else
+            {
+                aip.saveButtonClicked(sender, args);
+                await Navigation.PopAsync();
+            }
         }
 
     }

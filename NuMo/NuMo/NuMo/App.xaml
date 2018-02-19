@@ -1,4 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Numo.App">
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:NuMo.App"
+    x:Class="NuMo.App">
+<Application.Resources>
+    <ResourceDictionary>
+  <!-- DEFINE ANY CONSTANTS -->
+  <Color x:Key="BtnTxtColor">#000000</Color>
+  <Color x:Key="BtnBkgColor">#4fbcac</Color>
+            
+  
+  <Color x:Key="SeparatorLineColor">#CCCCCC</Color>
+  <Color x:Key="iOSDefaultTintColor">#007aff</Color>
+  <Color x:Key="AndroidDefaultAccentColorColor">#1FAECE</Color>
+  <OnPlatform x:TypeArguments="Color" x:Key="AccentColor">
+    <On Platform="iOS" Value="{StaticResource iOSDefaultTintColor}" />
+    <On Platform="Android" Value="{StaticResource AndroidDefaultAccentColorColor}" />
+  </OnPlatform>
+            
+  <Style TargetType="ContentPage" x:Key="PageStyle">
+   <Setter Property="BackgroundColor" Value="#B8DEDF" />
+   </Style>
 
+   <Style TargetType="Button" x:Key="BtnStyle">
+   <Setter Property="BackgroundColor" Value="{ StaticResource BtnBkgColor }" />
+   <Setter Property="TextColor" Value="{ StaticResource BtnTxtColor }" />
+                
+   </Style>
+
+</ResourceDictionary>
+        
+    </Application.Resources>
 </Application>
