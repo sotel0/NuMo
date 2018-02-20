@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:NuMo.MyDayPageHelpers"
-        Title="My Day"
-        x:Class="NuMo.MyDayPage"
+		Title="My Day"
+		x:Class="NuMo.MyDayPage"
+
     Style="{StaticResource PageStyle}">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -39,7 +40,7 @@
     </ResourceDictionary>
   </ContentPage.Resources>
     
-    <ContentPage.Content>
+	<ContentPage.Content>
 
     <StackLayout Padding = "0,10,0,0">
         <StackLayout Spacing = "10" Orientation="Horizontal" HorizontalOptions="Center">
@@ -56,7 +57,6 @@
                         
             <DatePicker x:Name ="datePicker" BackgroundColor="{StaticResource BtnBkgColor}" HorizontalOptions="Center" Date="{x:Static sys:DateTime.Now}" DateSelected="dateClicked"/>
             </StackLayout>
-
       
             <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Start">
             <Button x:Name="NutrientsButton" Text=" Nutrients " Style ="{StaticResource BtnStyle}"
