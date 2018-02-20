@@ -52,6 +52,13 @@ namespace NuMo
         //Create food item from user data and save to database
         void saveButtonClicked(object sender, EventArgs args)
         {
+            //check if name is unique
+            //notify to enter different name
+            //check if there is a quantity
+            //check if there is a serving/quantifier
+            //check if grams is not null
+            //notify with alert when saved
+
             var db = DataAccessor.getDataAccessor();
 
             var nutrientList = new List<Nutrient>();
@@ -80,7 +87,6 @@ namespace NuMo
             //servingMultiplier for the custom unit
             var servingMultiplier = Convert.ToDouble(quantity.Text) / (multiplier);
 
-            ///no such column infinity when serving is empty
             db.createFoodItem(nutrientList, CreateItemName.Text, servingMultiplier, quantifier.Text.ToString());
         }
     }

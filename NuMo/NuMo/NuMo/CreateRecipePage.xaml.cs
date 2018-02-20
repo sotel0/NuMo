@@ -26,8 +26,6 @@ namespace NuMo
             double totalQuantity = 0;
 
 
-            ///////
-            //this line below, input string was not in correct format
             double servingQuantity = Convert.ToDouble(quantity.Text);
             foreach(var item in recipeList)
             {

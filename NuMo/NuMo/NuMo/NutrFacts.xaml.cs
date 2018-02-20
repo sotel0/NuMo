@@ -33,7 +33,7 @@ namespace NuMo
             set
             {
                 UnitsPicker.Title = value;
-                UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
+                //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
             }
         }
 
@@ -133,9 +133,9 @@ namespace NuMo
             //do not save unless input values are there
             if (Quantity == null || Quantity.Equals(""))
             {
-                await DisplayAlert("Please enter NUMBER OF amount to save", "", "OK");
+                await DisplayAlert("Please enter NUMBER OF value to save", "", "OK");
 
-            } else if(UnitsPicker.SelectedIndex < 0){
+            } else if(UnitsPicker.SelectedIndex < 0 && UnitsPicker.Title.Equals("Units")){
                 await DisplayAlert("Please select UNITS value to save", "", "OK");
             }
             else

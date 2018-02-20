@@ -2,13 +2,16 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:NuMo.App"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    
     x:Class="NuMo.App">
 <Application.Resources>
     <ResourceDictionary>
   <!-- DEFINE ANY CONSTANTS -->
   <Color x:Key="BtnTxtColor">#000000</Color>
   <Color x:Key="BtnBkgColor">#4fbcac</Color>
-            
+  <sys:Int32 x:Key="BtnWidth">120</sys:Int32>
+  <sys:Int32 x:Key="BtnHeight">45</sys:Int32>   
   
   <Color x:Key="SeparatorLineColor">#CCCCCC</Color>
   <Color x:Key="iOSDefaultTintColor">#007aff</Color>
@@ -21,10 +24,18 @@
   <Style TargetType="ContentPage" x:Key="PageStyle">
    <Setter Property="BackgroundColor" Value="#B8DEDF" />
    </Style>
-
+            
+   <Style TargetType="DatePicker" x:Key="DatePickerStyle">
+   <Setter Property="BackgroundColor" Value="{ StaticResource BtnBkgColor }" />
+   <Setter Property="HeightRequest" Value="{ StaticResource BtnHeight}"/>
+   </Style>
+            
+            
    <Style TargetType="Button" x:Key="BtnStyle">
    <Setter Property="BackgroundColor" Value="{ StaticResource BtnBkgColor }" />
    <Setter Property="TextColor" Value="{ StaticResource BtnTxtColor }" />
+   <Setter Property="WidthRequest" Value="{ StaticResource BtnWidth }"/>
+   <Setter Property="HeightRequest" Value="{ StaticResource BtnHeight}"/>
                 
    </Style>
 

@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:NuMo.MyDayPageHelpers"
-		Title="My Day"
-		x:Class="NuMo.MyDayPage"
-
+        Title="My Day"
+        x:Class="NuMo.MyDayPage"
     Style="{StaticResource PageStyle}">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -40,25 +39,26 @@
     </ResourceDictionary>
   </ContentPage.Resources>
     
-	<ContentPage.Content>
+    <ContentPage.Content>
 
     <StackLayout Padding = "0,10,0,0">
         <StackLayout Spacing = "10" Orientation="Horizontal" HorizontalOptions="Center">
                 
-            <StackLayout Spacing="10">
+            <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="End">
              <Button x:Name="ItemsButton" Text=" Items " Style ="{StaticResource BtnStyle}"
                     HorizontalOptions="Center" VerticalOptions="Start" Clicked="viewToggle" />
             <Button Text="Visualize" Style ="{StaticResource BtnStyle}"
                     Image = "ic_pie_chart_black_24dp.png" Clicked="OnVisualizeClicked"/>
             </StackLayout>
 
-            <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Start">
+            <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="End">
             <Image x:Name="pic" Source="ic_insert_emoticon_black_24dp.png" WidthRequest="50" HeightRequest="50"/>
                         
-            <DatePicker x:Name ="datePicker" BackgroundColor="{StaticResource BtnBkgColor}" HorizontalOptions="Center" Date="{x:Static sys:DateTime.Now}" DateSelected="dateClicked"/>
+            <DatePicker x:Name ="datePicker" Style="{StaticResource DatePickerStyle}" HorizontalOptions="Center" Date="{x:Static sys:DateTime.Now}" DateSelected="dateClicked"/>
             </StackLayout>
+
       
-            <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Start">
+            <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="End">
             <Button x:Name="NutrientsButton" Text=" Nutrients " Style ="{StaticResource BtnStyle}"
                     HorizontalOptions="Center" VerticalOptions="Start" Clicked="viewToggle" />
             <Button Text="Reminder" Style ="{StaticResource BtnStyle}"
