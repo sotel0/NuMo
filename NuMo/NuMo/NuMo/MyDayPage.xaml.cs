@@ -198,15 +198,15 @@ namespace NuMo
         void OnTimeLengthChoiceChanged(object sender, EventArgs e)
         {
             this.Title = timeLengthChoice.Items.ElementAt(timeLengthChoice.SelectedIndex);
-            if(this.Title == "This Day")
+            if(this.Title == "One Day Report")
             {
                 daysToLoad = 1;
             }
-            else if(this.Title == "This Week")
+            else if(this.Title == "7 Day Report")
             {
                 daysToLoad = 7;
             }
-            else if(this.Title == "This Month")
+            else if(this.Title == "30 Day Report")
             {
                 daysToLoad = 30;
             }

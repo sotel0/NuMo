@@ -45,10 +45,6 @@ namespace NuMo
                     //Add to our database
                     db.addFoodHistory(item);
                 }
-                else
-                {
-                    //todo, should popup what fields aren't filled in....
-                }
             }
             //clearAllFields();
         }

@@ -69,9 +69,9 @@
 
         <Picker x:Name="timeLengthChoice" BackgroundColor="{StaticResource BtnBkgColor}" HorizontalOptions="CenterAndExpand" SelectedIndexChanged="OnTimeLengthChoiceChanged">
                   <Picker.Items>
-                    <x:String>This Day</x:String>
-                    <x:String>This Week</x:String>
-                    <x:String>This Month</x:String>
+                    <x:String>One Day Report</x:String>
+                    <x:String>7 Day Report</x:String>
+                    <x:String>30 Day Report</x:String>
                   </Picker.Items>
                 </Picker>
         <ListView x:Name="listView" ItemTemplate="{StaticResource MyDayDataTemplateSelector}" ItemsSource="{Binding ViewItemList}"/> 
