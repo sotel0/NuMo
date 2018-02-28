@@ -131,12 +131,12 @@ namespace NuMo
         async void saveButtonClicked(object sender, EventArgs args)
         {
             //do not save unless input values are there
-            if (Quantity == null || Quantity.Equals(""))
+            if (Quantity == null || Quantity.Equals("") || Quantity.Equals("0"))
             {
-                await DisplayAlert("Please enter NUMBER OF value to save", "", "OK");
+                await DisplayAlert("Please input NUMBER OF value", "example: 1.5 or 3", "OK");
 
             } else if(UnitsPicker.SelectedIndex < 0 && UnitsPicker.Title.Equals("Units")){
-                await DisplayAlert("Please select UNITS value to save", "", "OK");
+                await DisplayAlert("Please select UNITS value", "", "OK");
             }
             else
             {
