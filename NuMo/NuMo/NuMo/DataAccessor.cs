@@ -43,25 +43,33 @@ namespace NuMo
             name = name.Replace("'", "");
             name = name.ToUpper();
             String where = "WHERE ";
+            String whereOR = "WHERE ";
             var names = name.Split(' ');
-            
+
             //build where clause.
-            foreach(var word in names)
+            foreach (var word in names)
             {
-				if (word.Length > 0)
-				{
-					var temp = word;
-					//Removes plural form, but still catches correct forom using wild cards
-					if (word[word.Length-1] == 'S')
-					{
-						temp = word.Substring(0, word.Length - 1);
-					}
-					where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
-				}
+                if (word.Length > 0)
+                {
+                    var temp = word;
+                    //Removes plural form, but still catches correct form using wild cards
+                    if (word[word.Length - 1] == 'S')
+                    {
+                        temp = word.Substring(0, word.Length - 1);
+                    }
+                    where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
+                    whereOR += String.Format("UPPER(Long_Desc) LIKE '%{0}%' OR ", temp);
+                }
             }
             where = where.Remove(where.Length - 4);//remove last 4 as we don't want the final 'AND '
+            whereOR = whereOR.Remove(whereOR.Length - 3);//remove last 3 as we don't want the final 'OR '
             var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Search_Rank DESC", where);
+            var queryOR = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Search_Rank DESC", whereOR);
+
             var resultList = dbConn.Query<NumoNameSearch>(query);
+            var resultsOR = dbConn.Query<NumoNameSearch>(queryOR);
+            foreach (var item in resultsOR)
+                resultList.Add(item);
             return resultList;
         }
 

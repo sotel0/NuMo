@@ -27,8 +27,8 @@
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision>iOS Team Provisioning Profile: numoTeam.NuMo</CodesignProvision>
-    <CodesignKey>iPhone Developer: Edward Dratz (2893856JEE)</CodesignKey>
+    <CodesignProvision></CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -107,6 +107,7 @@
     <None Include="packages.config" />
     <Compile Include="VisualizePage.cs" />
     <Compile Include="BullsEye.cs" />
+    <Compile Include="CustomProgressBarRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default%402x.png" />
