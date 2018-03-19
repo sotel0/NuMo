@@ -47,6 +47,8 @@ namespace NuMo.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+
+
             base.SetTheme(Resource.Style.MainTheme);
             base.OnCreate(bundle);
 

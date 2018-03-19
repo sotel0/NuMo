@@ -6,7 +6,7 @@
 	<ContentPage.Content>
         <ScrollView>
             <StackLayout x:Name = "mainStack" Padding = "20,20,20,0" Spacing = "20">
-                <Label x:Name = "descrView">
+                <Label x:Name = "descrView" HorizontalOptions="Center" Style="{StaticResource LabelStyle}"> 
                 </Label>
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
@@ -19,10 +19,6 @@
                     </Picker>
                 </StackLayout>
                    
-
-                    
-                
-<!--                <Button Text="Save" HorizontalOptions="Center"  Clicked="saveButtonClicked" Style="{StaticResource BtnStyle}"/>-->
 
                 <Grid>
     <!--                display nutrition facts and labels-->

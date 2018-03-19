@@ -33,14 +33,9 @@ namespace NuMo
             set
             {
                 UnitsPicker.Title = value;
-<<<<<<< HEAD
-                //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
-=======
-                UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
->>>>>>> 508e21e... Add save notifications
             }
+            //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
         }
-
         public string DescriptView
         {
             get
@@ -135,15 +130,10 @@ namespace NuMo
         async void saveButtonClicked(object sender, EventArgs args)
         {
             //do not save unless input values are there
-<<<<<<< HEAD
             if (Quantity == null || Quantity.Equals("") || Quantity.Equals("0"))
             {
                 await DisplayAlert("Please input NUMBER OF value", "example: 1.5 or 3", "OK");
-=======
-            if (Quantity == null || Quantity.Equals(""))
-            {
-                await DisplayAlert("Please enter NUMBER OF amount to save", "", "OK");
->>>>>>> 508e21e... Add save notifications
+
 
             } else if(UnitsPicker.SelectedIndex < 0 && UnitsPicker.Title.Equals("Units")){
                 await DisplayAlert("Please select UNITS value", "", "OK");

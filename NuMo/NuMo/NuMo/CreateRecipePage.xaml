@@ -20,7 +20,7 @@
 						HorizontalOptions= "CenterAndExpand"
             			 />
 			</StackLayout>
-      <Label Text="Ingredient List"/>
+      <Label Text="Ingredient List" HorizontalOptions="Center"/>
       <ListView x:Name="ingredientList">
         <ListView.ItemTemplate>
           <DataTemplate>

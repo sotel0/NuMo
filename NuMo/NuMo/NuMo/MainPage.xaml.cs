@@ -14,6 +14,7 @@ namespace NuMo
 			InitializeComponent();
 			masterPage.ListView.ItemSelected += OnItemSelected;
             NavigationPage.SetHasNavigationBar(this, false);
+
             masterPage.ListView.SelectedItem = null;
         }
 

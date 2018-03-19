@@ -26,7 +26,6 @@ namespace NuMo.iOS
             global::Xamarin.Forms.Forms.Init();
 			NControlViewRenderer.Init(); //Add this line <----------
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
     }

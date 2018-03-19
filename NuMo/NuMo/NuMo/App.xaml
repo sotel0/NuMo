@@ -9,25 +9,31 @@
     <ResourceDictionary>
   <!-- DEFINE ANY CONSTANTS -->
   <Color x:Key="BtnTxtColor">#000000</Color>
-  <Color x:Key="BtnBkgColor">#4fbcac</Color>
+  <Color x:Key="BtnBkgColor">#3fccff</Color>
+  <Color x:Key="BkgColor">#ffffff</Color>
+
   <sys:Int32 x:Key="BtnWidth">120</sys:Int32>
   <sys:Int32 x:Key="BtnHeight">45</sys:Int32>   
   
-  <Color x:Key="SeparatorLineColor">#CCCCCC</Color>
+  <!--<Color x:Key="SeparatorLineColor">#CCCCCC</Color>
   <Color x:Key="iOSDefaultTintColor">#007aff</Color>
   <Color x:Key="AndroidDefaultAccentColorColor">#1FAECE</Color>
   <OnPlatform x:TypeArguments="Color" x:Key="AccentColor">
     <On Platform="iOS" Value="{StaticResource iOSDefaultTintColor}" />
     <On Platform="Android" Value="{StaticResource AndroidDefaultAccentColorColor}" />
-  </OnPlatform>
-            
+  </OnPlatform>-->
+
   <Style TargetType="ContentPage" x:Key="PageStyle">
-   <Setter Property="BackgroundColor" Value="#B8DEDF" />
+   <Setter Property="BackgroundColor" Value="{StaticResource BkgColor}" />
    </Style>
             
    <Style TargetType="DatePicker" x:Key="DatePickerStyle">
    <Setter Property="BackgroundColor" Value="{ StaticResource BtnBkgColor }" />
    <Setter Property="HeightRequest" Value="{ StaticResource BtnHeight}"/>
+   </Style>
+
+   <Style TargetType="Label" x:Key="LabelStyle">
+   <Setter Property="TextColor" Value="{ StaticResource BtnTxtColor }" />
    </Style>
             
             
