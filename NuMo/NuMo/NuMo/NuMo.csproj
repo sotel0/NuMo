@@ -89,6 +89,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomProgressBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
