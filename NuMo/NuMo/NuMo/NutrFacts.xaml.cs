@@ -33,12 +33,6 @@ namespace NuMo
             set
             {
                 UnitsPicker.Title = value;
-<<<<<<< HEAD
-=======
-                //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
-                UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
-
->>>>>>> c04ca7142a0673c21d56d87954396de3e7642d73
             }
             //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
         }
@@ -139,13 +133,6 @@ namespace NuMo
             if (Quantity == null || Quantity.Equals("") || Quantity.Equals("0"))
             {
                 await DisplayAlert("Please input NUMBER OF value", "example: 1.5 or 3", "OK");
-<<<<<<< HEAD
-
-=======
-            //if (Quantity == null || Quantity.Equals(""))
-            //{
-            //    await DisplayAlert("Please enter NUMBER OF amount to save", "", "OK");
->>>>>>> c04ca7142a0673c21d56d87954396de3e7642d73
 
             } else if(UnitsPicker.SelectedIndex < 0 && UnitsPicker.Title.Equals("Units")){
                 await DisplayAlert("Please select UNITS value", "", "OK");

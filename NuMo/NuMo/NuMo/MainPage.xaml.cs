@@ -25,6 +25,7 @@ namespace NuMo
             if (Application.Current.Properties.ContainsKey("start_up"))
             {
                 Application.Current.Properties["start_up"] = "false";
+
             }
             else
             {

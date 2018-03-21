@@ -12,7 +12,9 @@ namespace NuMo
         {
             InitializeComponent();
             //This app will be based off of navigation pages
-            MainPage = new NavigationPage(new NuMo.MainPage());
+            NavigationPage navPage = new NavigationPage(new NuMo.MainPage());
+            navPage.BarTextColor = Color.Black;
+            MainPage = navPage;
         }
         protected override void OnStart()
         {

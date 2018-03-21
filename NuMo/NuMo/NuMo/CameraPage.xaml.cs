@@ -27,6 +27,7 @@ namespace NuMo
             ToolbarItems.Add(save);
             InitializeComponent();
             this.Title = "Upload Reminder Photo";
+
         }
         private async void TakePhotoButton_OnClicked(object sender, EventArgs e)
         {
