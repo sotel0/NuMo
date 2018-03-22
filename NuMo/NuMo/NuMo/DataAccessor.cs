@@ -1,4 +1,4 @@
-﻿using NuMo.DatabaseItems;
+using NuMo.DatabaseItems;
 using NuMo.ItemViews;
 using SQLite.Net;
 using System;
@@ -63,8 +63,8 @@ namespace NuMo
             }
             where = where.Remove(where.Length - 4);//remove last 4 as we don't want the final 'AND '
             whereOR = whereOR.Remove(whereOR.Length - 3);//remove last 3 as we don't want the final 'OR '
-            var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Search_Rank DESC", where);
-            var queryOR = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Search_Rank DESC", whereOR);
+            var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", where);
+            var queryOR = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", whereOR);
 
             var resultList = dbConn.Query<NumoNameSearch>(query);
             var resultsOR = dbConn.Query<NumoNameSearch>(queryOR);
@@ -191,9 +191,9 @@ namespace NuMo
             // var keys = dbConn.Query<FoodItem>("SELECT MAX(NDB_No) as food_no FROM FOOD_DES");
             //var food_no = keys.First<FoodItem>.
             name.Replace("'", "''");
-    		dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Search_Rank) VALUES ('{0}', 10)", name));
+    		dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
             dbConn.Commit();
-            var food_no_data = dbConn.Query<NumoNameSearch>(String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES where UPPER(Long_Desc) LIKE '{0}' order by Search_Rank DESC", name));
+            var food_no_data = dbConn.Query<NumoNameSearch>(String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES where UPPER(Long_Desc) LIKE '{0}' order by Times_Searched DESC", name));
             var food_no = food_no_data.FirstOrDefault().food_no;
             String data_num = food_no.ToString();
             if (data_num.Length == 4)
@@ -262,7 +262,7 @@ namespace NuMo
         //increment the timessearched field so that this entry gets preference in future searches
         public void incrementTimesSearched(int food_no)
         {
-            int changes = dbConn.Execute(String.Format("UPDATE FOOD_DES SET Search_Rank = Search_Rank + 1 WHERE NDB_No = {0}", food_no));
+            int changes = dbConn.Execute(String.Format("UPDATE FOOD_DES SET Times_Searched = Times_Searched + 1 WHERE NDB_No = {0}", food_no));
             dbConn.Commit();
         }
 

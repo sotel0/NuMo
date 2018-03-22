@@ -21,7 +21,9 @@ namespace NuMo
 
 		public Visualize(String titleExtra, List<Nutrient> nutrientList)
 		{
-			//nutrient names
+            InitializeComponent();
+
+            //nutrient names
 			names = new List<String>();
 			//quantities consumed
 			quantities = new List<Double>();
@@ -30,7 +32,7 @@ namespace NuMo
             //Progress Bars
             progBars = new List<ProgressBar>();
 
-			InitializeComponent();
+			
 
             Title += " " + titleExtra;
 
