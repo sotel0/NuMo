@@ -8,7 +8,8 @@
   </ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-      <Button x:Name="pickPictureButton" Text="Set Profile Picture" Clicked="PickPhotoButton_OnClicked"/>
+      <Button x:Name="pickPictureButton" Text="Set Profile Picture" 
+              Clicked="PickPhotoButton_OnClicked" Style = "{StaticResource BtnStyle}"/>
       <Image x:Name="profilePic" WidthRequest="50" HeightRequest="50"/>
       <TableView>
         <TableRoot>
@@ -16,7 +17,7 @@
             <EntryCell Label="Name: " HorizontalTextAlignment="Start" x:Name= "settings_name" Keyboard = "Text"/>
             <ViewCell>
               <StackLayout Orientation = "Horizontal">
-                <Label Text = "Gender" VerticalOptions="Center" Margin="18,0,0,0"/>
+                <Label Text = "Sex: " VerticalOptions="Center" Margin="18,0,0,0"/>
                 <Picker x:Name="settings_gender" HorizontalOptions="FillAndExpand">
                   <Picker.Items>
                     <x:String>Female</x:String>

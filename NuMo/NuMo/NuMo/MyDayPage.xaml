@@ -52,12 +52,11 @@
             </StackLayout>
 
             <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="End">
-            <Image x:Name="pic" Source="ic_insert_emoticon_black_24dp.png" WidthRequest="50" HeightRequest="50"/>
-                        
+            <Image x:Name="pic" Source="ic_logo_24dp.png" WidthRequest="50" HeightRequest="50"/>
+             
             <DatePicker x:Name ="datePicker" Style="{StaticResource DatePickerStyle}" HorizontalOptions="Center" Date="{x:Static sys:DateTime.Now}" DateSelected="dateClicked"/>
             </StackLayout>
 
-      
             <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="End">
             <Button x:Name="NutrientsButton" Text=" Nutrients " Style ="{StaticResource BtnStyle}"
                     HorizontalOptions="Center" VerticalOptions="Start" Clicked="viewToggle" />
@@ -67,7 +66,8 @@
 
         </StackLayout>
 
-        <Picker x:Name="timeLengthChoice" BackgroundColor="{StaticResource BtnBkgColor}" HorizontalOptions="CenterAndExpand" SelectedIndexChanged="OnTimeLengthChoiceChanged">
+        <Picker x:Name="timeLengthChoice" BackgroundColor="{StaticResource BtnBkgColor}" Margin = "0,5,0,0" 
+                HorizontalOptions="CenterAndExpand" SelectedIndexChanged="OnTimeLengthChoiceChanged">
                   <Picker.Items>
                     <x:String>One Day Report</x:String>
                     <x:String>7 Day Report</x:String>

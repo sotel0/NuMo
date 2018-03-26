@@ -8,41 +8,43 @@
 <Application.Resources>
     <ResourceDictionary>
   <!-- DEFINE ANY CONSTANTS -->
+            
+<!--constant colors-->
   <Color x:Key="BtnTxtColor">#000000</Color>
   <Color x:Key="BtnBkgColor">#3fccff</Color>
   <Color x:Key="BkgColor">#ffffff</Color>
 
-  <sys:Int32 x:Key="BtnWidth">120</sys:Int32>
-  <sys:Int32 x:Key="BtnHeight">45</sys:Int32>   
-  
-  <!--<Color x:Key="SeparatorLineColor">#CCCCCC</Color>
-  <Color x:Key="iOSDefaultTintColor">#007aff</Color>
-  <Color x:Key="AndroidDefaultAccentColorColor">#1FAECE</Color>
-  <OnPlatform x:TypeArguments="Color" x:Key="AccentColor">
-    <On Platform="iOS" Value="{StaticResource iOSDefaultTintColor}" />
-    <On Platform="Android" Value="{StaticResource AndroidDefaultAccentColorColor}" />
-  </OnPlatform>-->
+<!--platform specific button dimensions-->
+  <OnPlatform x:TypeArguments="x:Double" x:Key="BtnWidth">
+    <On Platform="iOS" Value="120" />
+    <On Platform="Android" Value="125" />
+  </OnPlatform>
+  <OnPlatform x:TypeArguments="x:Double" x:Key="BtnHeight">
+    <On Platform="iOS" Value="40" />
+    <On Platform="Android" Value="55" />
+  </OnPlatform>
 
+<!--content page resource layout-->
   <Style TargetType="ContentPage" x:Key="PageStyle">
    <Setter Property="BackgroundColor" Value="{StaticResource BkgColor}" />
    </Style>
-            
+<!--datepicker resource layout-->
    <Style TargetType="DatePicker" x:Key="DatePickerStyle">
    <Setter Property="BackgroundColor" Value="{ StaticResource BtnBkgColor }" />
-   <Setter Property="HeightRequest" Value="{ StaticResource BtnHeight}"/>
    </Style>
-
+<!--label resource layout-->
    <Style TargetType="Label" x:Key="LabelStyle">
    <Setter Property="TextColor" Value="{ StaticResource BtnTxtColor }" />
+   <Setter Property="FontAttributes" Value = "Bold"/>
    </Style>
             
-            
+<!--button resource layout-->
    <Style TargetType="Button" x:Key="BtnStyle">
    <Setter Property="BackgroundColor" Value="{ StaticResource BtnBkgColor }" />
    <Setter Property="TextColor" Value="{ StaticResource BtnTxtColor }" />
    <Setter Property="WidthRequest" Value="{ StaticResource BtnWidth }"/>
    <Setter Property="HeightRequest" Value="{ StaticResource BtnHeight}"/>
-                
+   <Setter Property="FontAttributes" Value = "Bold"/>         
    </Style>
 
 </ResourceDictionary>

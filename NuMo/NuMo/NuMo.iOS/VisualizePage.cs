@@ -20,7 +20,7 @@ namespace NuMo.iOS
 {
 	class VisualizePage : IVisualize
 	{
-
+        
 		//stack layout to hold the graphs
 		public StackLayout loadGraphs(List <String> names, List <Double> quantities, List<Double> dris)
 		{

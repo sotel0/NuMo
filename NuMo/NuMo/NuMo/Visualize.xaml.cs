@@ -32,7 +32,6 @@ namespace NuMo
             //Progress Bars
             progBars = new List<ProgressBar>();
 
-			
 
             Title += " " + titleExtra;
 
@@ -61,7 +60,7 @@ namespace NuMo
             {
 
                 var ratio = quantities[i] / dris[i];
-                var progress = 1 - ratio / 2;
+                var progress = ratio / 2;
                 //Nut1.Text = names[i] + ": ";
                 //Nut1Data.Text = "Consumed: " + quantities[i] + "g" + "   DRI: " + dris[i] + "\nRatio: " + (ratio * 100).ToString().Substring(0, 5) + "%";
 
@@ -88,19 +87,22 @@ namespace NuMo
 
                 var nutData = new Label
                 {
+                    HorizontalOptions = LayoutOptions.Center,
                     Text = "Consumed: " + quantities[i] + "   DRI: " + dris[i] + "\nRatio: " + (ratio * 100).ToString() + "%" //.Substring(0, 5) + "%"
                 };
 
+                color = Color.White;
                 //progBars.Add(new ProgressBar
                 var bar = new ProgressBar
                 {
-                    Progress = 1,
+                    Progress = 0,
                     WidthRequest = 100,
                     HeightRequest = 10,
                     VerticalOptions = LayoutOptions.Center,
                     HorizontalOptions = LayoutOptions.Center,
-                    Rotation = 180,
-                    BackgroundColor = color
+                    Rotation = 0,
+                    Margin = 10,
+
                 };//);
 
                 var barContentView = new ContentView

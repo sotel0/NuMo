@@ -9,18 +9,20 @@
 	<ContentPage.Content>
 		<StackLayout Orientation = "Vertical">
 			<StackLayout Orientation = "Vertical">
-				<Label Text = "Recipe" HorizontalOptions="Center" Margin = "18,12,10,0" />
+				<Label Text = "Recipe" HorizontalOptions="Center" Margin = "0,20,0,0" FontAttributes = "Bold"/>
 				<Entry x:Name="recipeName" HorizontalOptions="FillAndExpand" Placeholder ="Recipe Name"/>
                 <Entry x:Name="quantity" x:FieldModifier="public" Placeholder ="Quantity" Keyboard="Keyboard.Numeric" Text="{Binding Quantity}"/>
                 <Entry x:Name="quantifier" x:FieldModifier="public" Placeholder ="Quantifier Name" Text="{Binding Quantifier}"/>
 			</StackLayout>
+            <Label Text="Ingredient List" HorizontalOptions="Center" Margin = "0,20,0,10" FontAttributes = "Bold"/>
 			<StackLayout Orientation = "Horizontal">
 				<Button Text="Add Ingredient"
 						Clicked = "OnAddIngredient"
 						HorizontalOptions= "CenterAndExpand"
+                        Style = "{StaticResource BtnStyle}"
             			 />
-			</StackLayout>
-      <Label Text="Ingredient List" HorizontalOptions="Center"/>
+		</StackLayout>
+            
       <ListView x:Name="ingredientList">
         <ListView.ItemTemplate>
           <DataTemplate>

@@ -67,6 +67,8 @@ namespace NuMo
             if (myDayRemainderItem != null)
             {
                 pic.Source = myDayRemainderItem.RemainderImage.Source;
+            } else {
+                pic.Source = "ic_logo_24dp.png";
             }
         }
 
@@ -94,6 +96,7 @@ namespace NuMo
                 pic2 = Application.Current.Properties["Profile Pic"] as Image;
                 pic.Source = pic2.Source;
             }
+
             listView.BeginRefresh();
             listView.ItemsSource = null;
             var db = DataAccessor.getDataAccessor();

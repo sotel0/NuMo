@@ -38,7 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
+<AndroidSupportedAbis>x86</AndroidSupportedAbis>
 <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -251,6 +251,9 @@
     <AndroidResource Include="Resources\drawable-hdpi\ic_check_box_black_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_check_box_black_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_check_box_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_logo_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_logo_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_logo_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
