@@ -32,7 +32,6 @@ namespace NuMo
             //Progress Bars
             progBars = new List<ProgressBar>();
 
-
             Title += " " + titleExtra;
 
 			//call to fill the names/quantities/dri lists
@@ -88,7 +87,7 @@ namespace NuMo
                 var nutData = new Label
                 {
                     HorizontalOptions = LayoutOptions.Center,
-                    Text = "Consumed: " + quantities[i] + "   DRI: " + dris[i] + "\nRatio: " + (ratio * 100).ToString() + "%" //.Substring(0, 5) + "%"
+                    Text = "Consumed: " + Math.Round(quantities[i],2) + "   DRI: " + dris[i] + "\nRatio: " + Math.Round((ratio * 100),2).ToString() + "%" //.Substring(0, 5) + "%"
                 };
 
                 color = Color.White;
@@ -147,6 +146,7 @@ namespace NuMo
             
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_protein")));
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_totalCarbs")) );
+            dris.Add(0); // sugar
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_dietaryFiber")) );
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_calcium") ));
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_iron") ));

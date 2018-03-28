@@ -28,8 +28,7 @@
             </ViewCell>
 
           <EntryCell Label = "Age: " x:Name="settings_age" Keyboard = "Numeric"/>
-          <SwitchCell Text = "Pregnant" x:Name = "settings_pregnant"/>
-          <SwitchCell Text = "Lactating" x:Name = "settings_lactating"/>
+
 
           </TableSection>
           <TableSection Title ="Health Concerns">
@@ -40,6 +39,8 @@
             <SwitchCell Text = "Liver Disease" x:Name="settings_liver_disease"/>
             <SwitchCell Text = "Kidney Disease" x:Name="settings_kidney_disease"/>
             <SwitchCell Text = "SIBO" x:Name="settings_sibo"/>
+            <SwitchCell Text = "Pregnant" x:Name = "settings_pregnant"/>
+            <SwitchCell Text = "Lactating" x:Name = "settings_lactating"/>
           </TableSection>
 
           <TableSection Title="User Goals">
