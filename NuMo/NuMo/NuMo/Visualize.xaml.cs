@@ -146,7 +146,7 @@ namespace NuMo
             
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_protein")));
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_totalCarbs")) );
-            dris.Add(0); // sugar
+            //dris.Add(0); // sugar
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_dietaryFiber")) );
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_calcium") ));
 			dris.Add(Convert.ToDouble(db.getSettingsItem("dri_iron") ));
