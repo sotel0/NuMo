@@ -28,14 +28,16 @@
             </ViewCell>
 
           <EntryCell Label = "Age: " x:Name="settings_age" Keyboard = "Numeric"/>
-
-
+          <EntryCell Label = "Weight (lb): " x:Name="settings_weight" Keyboard = "Numeric"/>              
+          <EntryCell Label = "Feet: " x:Name="settings_feet" Keyboard = "Numeric"/>
+          <EntryCell Label = "Inches: " x:Name="settings_inches" Keyboard = "Numeric"/>
+                        
           </TableSection>
           <TableSection Title ="Health Concerns">
-            <SwitchCell Text = "Blood Pressure" x:Name="settings_blood_pressure"/>
-            <SwitchCell Text = "T2D" x:Name="settings_t2d"/>
+            <SwitchCell Text = "High Blood Pressure" x:Name="settings_blood_pressure"/>
+            <SwitchCell Text = "Type 2 Diabetes" x:Name="settings_t2d"/>
             <SwitchCell Text = "Gluten Sensitivity" x:Name="settings_gluten_sensitivity"/>
-            <SwitchCell Text = "CVD" x:Name="settings_cvd"/>
+            <SwitchCell Text = "Cardiovascular Disease" x:Name="settings_cvd"/>
             <SwitchCell Text = "Liver Disease" x:Name="settings_liver_disease"/>
             <SwitchCell Text = "Kidney Disease" x:Name="settings_kidney_disease"/>
             <SwitchCell Text = "SIBO" x:Name="settings_sibo"/>
