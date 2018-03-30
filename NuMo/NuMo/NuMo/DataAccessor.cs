@@ -122,22 +122,45 @@ namespace NuMo
             return foodItem;
         }
 
+        //Used to save and read Settings and User Info from the database
         public void saveSettingsItem(String settingName, String settingValue)
         {
-            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT date as Date from FoodHistory WHERE Date = '{0}'", settingName));
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Setting_Name from SETTINGS WHERE Setting_Name = '{0}'", settingName));
             if (values.Any())
             {
-                dbConn.Execute(String.Format("UPDATE FoodHistory set Image = '{0}' WHERE Date = '1'", settingValue, settingName));
+                dbConn.Execute(String.Format("UPDATE SETTINGS set Setting_Val = '{0}' WHERE Setting_Name = '1'", settingValue, settingName));
             }
             else
             {
-                dbConn.Execute(String.Format("INSERT INTO FoodHistory (date, Image, Food_Id, Quantity, Quantifier) VALUES ('{0}', '{1}', 0, 0, '')", settingName, settingValue));
+                dbConn.Execute(String.Format("INSERT INTO SETTINGS (Setting_Name, Setting_Val) VALUES ('{0}', '{1}')", settingName, settingValue));
             }
         }
 
         public string getSettingsItem(String settingName)
         {
-            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Image as imageString from FoodHistory WHERE Date = '{0}'", settingName));
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Setting_Val as imageString from SETTINGS WHERE Setting_Name = '{0}'", settingName));
+            if (values.Any())
+                return values.First().imageString;
+            else
+                return "";
+        }
+
+        public void saveDRIValue(String DRIName, String DRIValue)
+        {
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT DRI_Name from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+            if (values.Any())
+            {
+                dbConn.Execute(String.Format("UPDATE DRI_VALUES set DRI_Val = '{0}' WHERE DRI_Name = '1'", DRIValue, DRIName));
+            }
+            else
+            {
+                dbConn.Execute(String.Format("INSERT INTO DRI_VALUES (DRI_Name, DRI_Val) VALUES ('{0}', '{1}')", DRIName, DRIValue));
+            }
+        }
+
+        public string getDRIValue(String DRIName)
+        {
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT DRI_Val as imageString from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
             if (values.Any())
                 return values.First().imageString;
             else

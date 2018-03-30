@@ -30,6 +30,7 @@ namespace NuMo
 
 		//macronutrients
         private String[] macronutrients = { "dri_calories", "dri_totalCarbs", "dri_dietaryFiber", "dri_netCarbs", "dri_protein" };
+
 		private String[] calories = {"2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000",
 			"2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000"};
 
@@ -48,6 +49,7 @@ namespace NuMo
 		//vitamins
         private String[] vitamins = {"dri_vitaminA", "dri_vitaminC", "dri_vitaminD", "dri_vitaminE", "dri_vitaminK", "dri_thiamin",
             "dri_riboflavin", "dri_niacin", "dri_vitaminB6", "dri_folate", "dri_vitaminB12", "dri_pantothenicAcid"};
+        
 		private String[] vitaminA = {"500", "300", "400", "600", "900","900","900","900","900","600","700","700","700",
 			"700","700","750","770","770", "1200","1300", "1300"};
 
@@ -425,18 +427,18 @@ namespace NuMo
 			//macronutrients
             foreach(var macroNutrient in this.macronutrients)
             {
-                db.saveSettingsItem(macroNutrient, this.FindByName<Entry>(macroNutrient).Text);
+                db.saveDRIValue(macroNutrient, this.FindByName<Entry>(macroNutrient).Text);
             }
 
 			//vitamins
 			foreach(var vitamin in this.vitamins)
             {
-                db.saveSettingsItem(vitamin, this.FindByName<Entry>(vitamin).Text);
+                db.saveDRIValue(vitamin, this.FindByName<Entry>(vitamin).Text);
             }
 
 			//minerals
 			foreach(var mineral in this.minerals){
-                db.saveSettingsItem(mineral, this.FindByName<Entry>(mineral).Text);
+                db.saveDRIValue(mineral, this.FindByName<Entry>(mineral).Text);
             }
 		}
 
@@ -447,37 +449,37 @@ namespace NuMo
 			calculateSaveNum();
 
 			//macronutrients
-			db.saveSettingsItem("dri_calories", calories[saveNum]);
-			db.saveSettingsItem("dri_totalCarbs", totalCarbs[saveNum]);
-			db.saveSettingsItem("dri_dietaryFiber", dietaryFiber[saveNum]);
-			db.saveSettingsItem("dri_netCarbs", netCarbs[saveNum]);
-			db.saveSettingsItem("dri_protein", protein[saveNum]);
+			db.saveDRIValue("dri_calories", calories[saveNum]);
+            db.saveDRIValue("dri_totalCarbs", totalCarbs[saveNum]);
+            db.saveDRIValue("dri_dietaryFiber", dietaryFiber[saveNum]);
+            db.saveDRIValue("dri_netCarbs", netCarbs[saveNum]);
+            db.saveDRIValue("dri_protein", protein[saveNum]);
 
 			//vitamins
-			db.saveSettingsItem("dri_vitaminA", vitaminA[saveNum]);
-			db.saveSettingsItem("dri_vitaminC", vitaminC[saveNum]);
-			db.saveSettingsItem("dri_vitaminD", vitaminD[saveNum]);
-			db.saveSettingsItem("dri_vitaminE", vitaminE[saveNum]);
-			db.saveSettingsItem("dri_vitaminK", vitaminK[saveNum]);
-			db.saveSettingsItem("dri_thiamin", thiamin[saveNum]);
-			db.saveSettingsItem("dri_riboflavin", riboflavin[saveNum]);
-			db.saveSettingsItem("dri_niacin", niacin[saveNum]);
-			db.saveSettingsItem("dri_vitaminB6", vitaminB6[saveNum]);
-			db.saveSettingsItem("dri_folate", folate[saveNum]);
-			db.saveSettingsItem("dri_vitaminB12", vitaminB12[saveNum]);
-			db.saveSettingsItem("dri_pantothenicAcid", pantothenicAcid[saveNum]);
+            db.saveDRIValue("dri_vitaminA", vitaminA[saveNum]);
+            db.saveDRIValue("dri_vitaminC", vitaminC[saveNum]);
+            db.saveDRIValue("dri_vitaminD", vitaminD[saveNum]);
+            db.saveDRIValue("dri_vitaminE", vitaminE[saveNum]);
+            db.saveDRIValue("dri_vitaminK", vitaminK[saveNum]);
+            db.saveDRIValue("dri_thiamin", thiamin[saveNum]);
+            db.saveDRIValue("dri_riboflavin", riboflavin[saveNum]);
+            db.saveDRIValue("dri_niacin", niacin[saveNum]);
+            db.saveDRIValue("dri_vitaminB6", vitaminB6[saveNum]);
+            db.saveDRIValue("dri_folate", folate[saveNum]);
+            db.saveDRIValue("dri_vitaminB12", vitaminB12[saveNum]);
+            db.saveDRIValue("dri_pantothenicAcid", pantothenicAcid[saveNum]);
 
 			//minerals
-			db.saveSettingsItem("dri_calcium", calcium[saveNum]);
-			db.saveSettingsItem("dri_iron", iron[saveNum]);
-			db.saveSettingsItem("dri_magnesium", magnesium[saveNum]);
-			db.saveSettingsItem("dri_phosphorus", phosphorus[saveNum]);
-			db.saveSettingsItem("dri_potassium", potassium[saveNum]);
-			db.saveSettingsItem("dri_sodium", sodium[saveNum]);
-			db.saveSettingsItem("dri_zinc", zinc[saveNum]);
-			db.saveSettingsItem("dri_copper", copper[saveNum]);
-			db.saveSettingsItem("dri_manganese", manganese[saveNum]);
-			db.saveSettingsItem("dri_selenium", selenium[saveNum]);
+            db.saveDRIValue("dri_calcium", calcium[saveNum]);
+            db.saveDRIValue("dri_iron", iron[saveNum]);
+            db.saveDRIValue("dri_magnesium", magnesium[saveNum]);
+            db.saveDRIValue("dri_phosphorus", phosphorus[saveNum]);
+            db.saveDRIValue("dri_potassium", potassium[saveNum]);
+            db.saveDRIValue("dri_sodium", sodium[saveNum]);
+            db.saveDRIValue("dri_zinc", zinc[saveNum]);
+            db.saveDRIValue("dri_copper", copper[saveNum]);
+            db.saveDRIValue("dri_manganese", manganese[saveNum]);
+            db.saveDRIValue("dri_selenium", selenium[saveNum]);
 
 		}
 	}
