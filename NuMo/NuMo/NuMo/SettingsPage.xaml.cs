@@ -27,10 +27,10 @@ namespace NuMo
             var db = DataAccessor.getDataAccessor();
 
             //name
-		    this.FindByName<EntryCell>("settings_name").Text = db.getSettingsItem("dri_name");
+		    this.FindByName<EntryCell>("settings_name").Text = db.getSettingsItem("name");
 
 			//gender
-            String gender = db.getSettingsItem("dri_gender");
+            String gender = db.getSettingsItem("gender");
 			//male
 			if (gender.Equals("1"))
 			{
@@ -42,18 +42,18 @@ namespace NuMo
 			}
 
 			//age
-            this.FindByName<EntryCell>("settings_age").Text = db.getSettingsItem("dri_age");
+            this.FindByName<EntryCell>("settings_age").Text = db.getSettingsItem("age");
 
             //weight
-            this.FindByName<EntryCell>("settings_weight").Text = db.getSettingsItem("dri_weight");
+            this.FindByName<EntryCell>("settings_weight").Text = db.getSettingsItem("weight");
 
 			//height
-            this.FindByName<EntryCell>("settings_feet").Text = db.getSettingsItem("dri_feet");
-            this.FindByName<EntryCell>("settings_inches").Text = db.getSettingsItem("dri_inches");
+            this.FindByName<EntryCell>("settings_feet").Text = db.getSettingsItem("feet");
+            this.FindByName<EntryCell>("settings_inches").Text = db.getSettingsItem("inches");
 
             //Health Concerns
 			//pregnant? 1 true 0 false
-            String pregnant = db.getSettingsItem("dri_pregnant");
+            String pregnant = db.getSettingsItem("pregnant");
 			if (pregnant == "1")
 			{
 				this.FindByName<SwitchCell>("settings_pregnant").On = true;
@@ -63,7 +63,7 @@ namespace NuMo
 			}
 
 			//lactating? 1 true 0 false
-            String lactating = db.getSettingsItem("dri_lactating");
+            String lactating = db.getSettingsItem("lactating");
 			if (lactating == "1")
 			{
 				this.FindByName<SwitchCell>("settings_lactating").On = true;
@@ -73,7 +73,7 @@ namespace NuMo
 			}
 
             //high blood pressure
-            String blood_pressure = db.getSettingsItem("dri_blood_pressure");
+            String blood_pressure = db.getSettingsItem("blood_pressure");
 			if (blood_pressure == "1")
 			{
 				this.FindByName<SwitchCell>("settings_blood_pressure").On = true;
@@ -83,7 +83,7 @@ namespace NuMo
 			}
 
             //type 2 diabetes
-            String t2d = db.getSettingsItem("dri_t2d");
+            String t2d = db.getSettingsItem("t2d");
 			if (t2d == "1")
 			{
 				this.FindByName<SwitchCell>("settings_t2d").On = true;
@@ -93,7 +93,7 @@ namespace NuMo
 			}
 
             //gluten sensitvity
-            String gluten_sensitivity = db.getSettingsItem("dri_gluten_sensitivity");
+            String gluten_sensitivity = db.getSettingsItem("gluten_sensitivity");
             if (gluten_sensitivity == "1")
             {
                 this.FindByName<SwitchCell>("settings_gluten_sensitivity").On = true;
@@ -104,7 +104,7 @@ namespace NuMo
             }
 
             //cardiovascular disease
-            String cvd = db.getSettingsItem("dri_cvd");
+            String cvd = db.getSettingsItem("cvd");
             if (cvd == "1")
             {
                 this.FindByName<SwitchCell>("settings_cvd").On = true;
@@ -115,7 +115,7 @@ namespace NuMo
             }
 
             //liver disease
-            String liver_disease = db.getSettingsItem("dri_liver_disease");
+            String liver_disease = db.getSettingsItem("liver_disease");
             if (liver_disease == "1")
             {
                 this.FindByName<SwitchCell>("settings_liver_disease").On = true;
@@ -126,7 +126,7 @@ namespace NuMo
             }
 
             //liver disease
-            String kidney_disease = db.getSettingsItem("dri_kidney_disease");
+            String kidney_disease = db.getSettingsItem("kidney_disease");
             if (kidney_disease == "1")
             {
                 this.FindByName<SwitchCell>("settings_kidney_disease").On = true;
@@ -137,7 +137,7 @@ namespace NuMo
             }
 
             //liver disease
-            String sibo = db.getSettingsItem("dri_sibo");
+            String sibo = db.getSettingsItem("sibo");
             if (sibo == "1")
             {
                 this.FindByName<SwitchCell>("settings_sibo").On = true;
@@ -148,7 +148,7 @@ namespace NuMo
             }
 
             //maximize macro balance
-            String macro_balance = db.getSettingsItem("dri_macro_balance");
+            String macro_balance = db.getSettingsItem("macro_balance");
             if (macro_balance == "1")
             {
                 this.FindByName<SwitchCell>("settings_macro_balance").On = true;
@@ -159,7 +159,7 @@ namespace NuMo
             }
 
             //maximize weight loss
-            String weight_loss = db.getSettingsItem("dri_weight_loss");
+            String weight_loss = db.getSettingsItem("weight_loss");
             if (weight_loss == "1")
             {
                 this.FindByName<SwitchCell>("settings_weight_loss").On = true;
@@ -306,68 +306,68 @@ namespace NuMo
                 var db = DataAccessor.getDataAccessor();
 
                 //saving the user settings
-                db.saveSettingsItem("dri_name", this.FindByName<EntryCell>("settings_name").Text);
-				db.saveSettingsItem("dri_age", this.FindByName<EntryCell>("settings_age").Text);
-                db.saveSettingsItem("dri_weight", this.FindByName<EntryCell>("settings_weight").Text);
-                db.saveSettingsItem("dri_feet", this.FindByName<EntryCell>("settings_feet").Text);
-                db.saveSettingsItem("dri_inches", this.FindByName<EntryCell>("settings_inches").Text);
+                db.saveSettingsItem("name", this.FindByName<EntryCell>("settings_name").Text);
+				db.saveSettingsItem("age", this.FindByName<EntryCell>("settings_age").Text);
+                db.saveSettingsItem("weight", this.FindByName<EntryCell>("settings_weight").Text);
+                db.saveSettingsItem("feet", this.FindByName<EntryCell>("settings_feet").Text);
+                db.saveSettingsItem("inches", this.FindByName<EntryCell>("settings_inches").Text);
 
                 //saving sex in the db by whichever value is selected
 				if (this.FindByName<Picker>("settings_gender").SelectedIndex == 1)
 				{
-                    db.saveSettingsItem("dri_gender", "1");
+                    db.saveSettingsItem("gender", "1");
                 } else {
-                    db.saveSettingsItem("dri_gender", "0");
+                    db.saveSettingsItem("gender", "0");
                 }
 				
                 //saving pregnant toggle in the db, by whichever pregnant value is selected
 				if (this.FindByName<SwitchCell>("settings_pregnant").On == true)
 				{
-					db.saveSettingsItem("dri_pregnant", "1");
+					db.saveSettingsItem("pregnant", "1");
 				} else {
-                    db.saveSettingsItem("dri_pregnant", "0");
+                    db.saveSettingsItem("pregnant", "0");
                 }
 
 				if (this.FindByName<SwitchCell>("settings_lactating").On == true)
 				{
-					db.saveSettingsItem("dri_lactating", "1");
+					db.saveSettingsItem("lactating", "1");
 				} else {
-                    db.saveSettingsItem("dri_lactating", "0");
+                    db.saveSettingsItem("lactating", "0");
                 }
 
                 if (this.FindByName<SwitchCell>("settings_blood_pressure").On == true)
                 {
-                    db.saveSettingsItem("dri_blood_pressure", "1");
+                    db.saveSettingsItem("blood_pressure", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_blood_pressure", "0");
+                    db.saveSettingsItem("blood_pressure", "0");
                 }
 
                 if (this.FindByName<SwitchCell>("settings_t2d").On == true)
                 {
-                    db.saveSettingsItem("dri_t2d", "1");
+                    db.saveSettingsItem("t2d", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_t2d", "0");
+                    db.saveSettingsItem("t2d", "0");
                 }
 
                 if (this.FindByName<SwitchCell>("settings_gluten_sensitivity").On == true)
                 {
-                    db.saveSettingsItem("dri_gluten_sensitivity", "1");
+                    db.saveSettingsItem("gluten_sensitivity", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_gluten_sensitivity", "0");
+                    db.saveSettingsItem("gluten_sensitivity", "0");
                 }
                 if (this.FindByName<SwitchCell>("settings_cvd").On == true)
                 {
-                    db.saveSettingsItem("dri_cvd", "1");
+                    db.saveSettingsItem("cvd", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_cvd", "0");
+                    db.saveSettingsItem("cvd", "0");
                 }
                 if (this.FindByName<SwitchCell>("settings_liver_disease").On == true)
                 {
@@ -375,39 +375,39 @@ namespace NuMo
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_liver_disease", "0");
+                    db.saveSettingsItem("liver_disease", "0");
                 }
                 if (this.FindByName<SwitchCell>("settings_kidney_disease").On == true)
                 {
-                    db.saveSettingsItem("dri_kidney_disease", "1");
+                    db.saveSettingsItem("kidney_disease", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_kidney_disease", "0");
+                    db.saveSettingsItem("kidney_disease", "0");
                 }
                 if (this.FindByName<SwitchCell>("settings_sibo").On == true)
                 {
-                    db.saveSettingsItem("dri_sibo", "1");
+                    db.saveSettingsItem("sibo", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_sibo", "0");
+                    db.saveSettingsItem("sibo", "0");
                 }
                 if (this.FindByName<SwitchCell>("settings_macro_balance").On == true)
                 {
-                    db.saveSettingsItem("dri_macro_balance", "1");
+                    db.saveSettingsItem("macro_balance", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_macro_balance", "0");
+                    db.saveSettingsItem("macro_balance", "0");
                 }
                 if (this.FindByName<SwitchCell>("settings_weight_loss").On == true)
                 {
-                    db.saveSettingsItem("dri_weight_loss", "1");
+                    db.saveSettingsItem("weight_loss", "1");
                 }
                 else
                 {
-                    db.saveSettingsItem("dri_weight_loss", "0");
+                    db.saveSettingsItem("weight_loss", "0");
                 }
 
 
