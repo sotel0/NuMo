@@ -14,10 +14,13 @@ namespace NuMo
 {
     public partial class Visualize : ContentPage
     {
+
 		List<String> names;
 		List<Double> quantities;
 		List<Double> dris;
         List<ProgressBar> progBars;
+        IDictionary<String, Double[]> items;
+        int dayMultiplier;
 
 		public Visualize(String titleExtra, List<Nutrient> nutrientList)
 		{
@@ -32,7 +35,17 @@ namespace NuMo
             //Progress Bars
             progBars = new List<ProgressBar>();
 
+            items = new Dictionary<String, Double[]>();
+            initializeItems();
+
             Title += " " + titleExtra;
+            if (titleExtra[0] == '7'){
+                dayMultiplier = 7;
+            } else if(titleExtra[0] == '3'){
+                dayMultiplier = 30;
+            } else {
+                dayMultiplier = 1;
+            }
 
 			//call to fill the names/quantities/dri lists
             getData(nutrientList);
@@ -47,7 +60,7 @@ namespace NuMo
 
         protected override void OnAppearing() {  
             base.OnAppearing();
-            animateBars();
+            animateBars2();
             //await progress.ProgressTo(0.2, 1000, Easing.Linear);  
             //await sugarProgress.ProgressTo(0.45, 1000, Easing.Linear);
             //await fatProgress.ProgressTo(0.75, 1000, Easing.Linear);
@@ -57,8 +70,9 @@ namespace NuMo
 
             for (int i = 0; i < names.Count; i++)
             {
-                try
-                {
+                //try
+                //{
+
                     var ratio = quantities[i] / dris[i];
                     var progress = ratio / 2;
                     //Nut1.Text = names[i] + ": ";
@@ -116,10 +130,8 @@ namespace NuMo
                     layout.Children.Add(barContentView);
 
                     bar.ProgressTo(progress, 1000, Easing.Linear);
-                } 
-                catch(Exception){
-                    
-                }
+                //} 
+                //catch(Exception){}
             }
 
             foreach (var bar in progBars){
@@ -134,12 +146,18 @@ namespace NuMo
 
 		private void getData(List<Nutrient> nutrientList)
 		{
+            
 			foreach (var item in nutrientList)
 			{
 				//add nutrient names to list to be passed
 				names.Add(item.name);
 				//add quantities to list to be passed
 				quantities.Add(item.quantity);
+
+                try
+                {
+                    items[item.name][0] = item.quantity;
+                } catch(Exception){}
 			}
 			getDRI();
 		}
@@ -153,14 +171,14 @@ namespace NuMo
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) );
             //dris.Add(0); // sugar
 			//dris.Add(Convert.ToDouble(db.getSettingsItem("dri_dietaryFiber")) );
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_magnesium") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_phosphorus") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_potassium") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_sodium") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_zinc") ));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_copper") ));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_magnesium")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_phosphorus")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_potassium")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_sodium")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_zinc")));
+            dris.Add(Convert.ToDouble(db.getDRIValue("dri_copper")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_manganese")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_selenium")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminA")));
@@ -188,6 +206,94 @@ namespace NuMo
 			//DependencyService.Get<IVisualize>().resetOrientation();
 
 		}
-    }
 
+        private void initializeItems()
+        {
+            var db = DataAccessor.getDataAccessor();
+
+            double[] QDRI1 = { 0, Convert.ToDouble(db.getDRIValue("dri_protein")) }; //quantity = 0, dri value = 0
+            double[] QDRI2 = { 0, Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) };
+            double[] QDRI3 = { 0, Convert.ToDouble(db.getDRIValue("dri_calcium")) };
+            double[] QDRI4 = { 0, Convert.ToDouble(db.getDRIValue("dri_iron")) };
+            double[] QDRI5 = { 0, Convert.ToDouble(db.getDRIValue("dri_magnesium")) };
+            double[] QDRI6 = { 0, Convert.ToDouble(db.getDRIValue("dri_phosphorus")) };
+            double[] QDRI7 = { 0, Convert.ToDouble(db.getDRIValue("dri_potassium")) };
+            double[] QDRI8 = { 0, Convert.ToDouble(db.getDRIValue("dri_sodium")) };
+            double[] QDRI9 = { 0, Convert.ToDouble(db.getDRIValue("dri_zinc")) };
+            double[] QDRI10 = { 0, Convert.ToDouble(db.getDRIValue("dri_copper")) };
+            double[] QDRI11 = { 0, Convert.ToDouble(db.getDRIValue("dri_manganese")) };
+                
+            items.Add("Protein(g)", QDRI1);
+            items.Add("Carbohydrates(g)",QDRI2);
+            //items.Add("Total Sugars(g)", QDRI3);
+            //items.Add("Total Dietary Fiber(g)", QDRI4);
+            items.Add("Calcium(mg)", QDRI3);
+            items.Add("Iron(mg)", QDRI4);
+            items.Add("Magnesium(mg)", QDRI5);
+            items.Add("Phosphorus(mg)", QDRI6);
+            items.Add("Potassium(mg)", QDRI7);
+            items.Add("Sodium(mg)", QDRI8);
+            items.Add("Zinc(mg)", QDRI9);
+            items.Add("Copper(mg)", QDRI10);
+            items.Add("Magnanese(mg)", QDRI11);
+        }
+
+        private void animateBars2()
+        {
+            
+            foreach(var item in items)
+            {
+                try
+                {
+
+                    var ratio = item.Value[0] / (item.Value[1]*dayMultiplier);
+                    var progress = ratio / 2;
+                    String nutText = "Consumed: " + Math.Round(item.Value[0], 2) + "\nDaily Recommended Intake: " + item.Value[1] * dayMultiplier + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%";
+
+                    Button button = new Button
+                    {
+                        Text = item.Key,
+                        Font = Font.SystemFontOfSize(NamedSize.Medium),
+                        BorderWidth = 0,
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                    };
+
+                    button.Clicked += OnClicked;
+
+                    void OnClicked(object sender, EventArgs ea)
+                    {
+                        DisplayAlert(item.Key, nutText, "OK");
+                    }
+
+
+                    var bar = new ProgressBar
+                    {
+                        Progress = 0,
+                        WidthRequest = 100,
+                        HeightRequest = 10,
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center,
+                        Rotation = 0,
+                        Margin = 10,
+                    };
+
+                    var barContentView = new ContentView
+                    {
+                        Scale = 3,
+                        Content = bar
+                    };
+
+                    layout.Children.Add(button);
+                    layout.Children.Add(barContentView);
+
+                    bar.ProgressTo(progress, 1000, Easing.Linear);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
+    }
 }

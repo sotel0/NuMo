@@ -53,7 +53,7 @@ namespace NuMo
                         nutrient.quantifier = "g";
                         break;
                     case 205:
-                        nutrient.name = "Carbs By Diff(g)";
+                        nutrient.name = "Carbohydrates(g)";
                         nutrient.quantifier = "g";
                         break;
                     case 269:
