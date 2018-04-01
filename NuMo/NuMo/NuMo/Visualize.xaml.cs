@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
@@ -170,6 +170,7 @@ namespace NuMo
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_protein")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) );
             //dris.Add(0); // sugar
+
 			//dris.Add(Convert.ToDouble(db.getSettingsItem("dri_dietaryFiber")) );
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron")));
@@ -179,6 +180,7 @@ namespace NuMo
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_sodium")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_zinc")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_copper")));
+
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_manganese")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_selenium")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminA")));

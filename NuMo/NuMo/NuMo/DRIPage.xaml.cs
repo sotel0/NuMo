@@ -203,7 +203,7 @@ namespace NuMo
 		{
             var db = DataAccessor.getDataAccessor();
 			//4 values needed to calculate DRI
-			String age = db.getSettingsItem("dri_age");
+			String age = db.getSettingsItem("age");
 
 			if (age != null && age != "")
 			{
@@ -211,13 +211,13 @@ namespace NuMo
 
 			}
 
-			String genderString = db.getSettingsItem("dri_gender");
+			String genderString = db.getSettingsItem("gender");
 			gender = int.Parse(genderString);
 
-			String pregnantString = db.getSettingsItem("dri_pregnant");
+			String pregnantString = db.getSettingsItem("pregnant");
 			pregnant = int.Parse(pregnantString);
 
-			String lactatingString = db.getSettingsItem("dri_lactating");
+			String lactatingString = db.getSettingsItem("lactating");
 			lactating = int.Parse(lactatingString);
 
 

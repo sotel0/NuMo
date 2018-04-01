@@ -371,7 +371,7 @@ namespace NuMo
                 }
                 if (this.FindByName<SwitchCell>("settings_liver_disease").On == true)
                 {
-                    db.saveSettingsItem("dri_liver_disease", "1");
+                    db.saveSettingsItem("liver_disease", "1");
                 }
                 else
                 {
