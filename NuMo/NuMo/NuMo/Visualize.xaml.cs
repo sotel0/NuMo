@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
@@ -96,6 +96,8 @@ namespace NuMo
 
                     var title = new Label
                     {
+                        
+                        HorizontalOptions = LayoutOptions.Center,
                         Text = '\n' + names[i]
                     };
 
@@ -125,9 +127,9 @@ namespace NuMo
                         Content = bar//progBars.Last()
                     };
 
-                    layout.Children.Add(title);
-                    layout.Children.Add(nutData);
-                    layout.Children.Add(barContentView);
+                    layoutLowStack.Children.Add(title);
+                    layoutLowStack.Children.Add(nutData);
+                    layoutLowStack.Children.Add(barContentView);
 
                     bar.ProgressTo(progress, 1000, Easing.Linear);
                 //} 
@@ -257,7 +259,7 @@ namespace NuMo
                         Text = item.Key,
                         Font = Font.SystemFontOfSize(NamedSize.Medium),
                         BorderWidth = 0,
-                        HorizontalOptions = LayoutOptions.Start,
+                        HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.CenterAndExpand,
                     };
 
@@ -286,8 +288,19 @@ namespace NuMo
                         Content = bar
                     };
 
-                    layout.Children.Add(button);
-                    layout.Children.Add(barContentView);
+                    //Add the nutrient to the corresponding ratio layout
+                    if (ratio < .70)
+                    {
+                        layoutLowStack.Children.Add(button);
+                        layoutLowStack.Children.Add(barContentView);
+                    } else if (ratio >= .70 && ratio <= 1.30){
+                        layoutMidStack.Children.Add(button);
+                        layoutMidStack.Children.Add(barContentView);
+                    } else {
+                        layoutHighStack.Children.Add(button);
+                        layoutHighStack.Children.Add(barContentView);
+                    }
+
 
                     bar.ProgressTo(progress, 1000, Easing.Linear);
                 }
@@ -295,6 +308,26 @@ namespace NuMo
                 {
 
                 }
+            }
+
+            //label to place if there are no nutrients in the layout category
+            Label nothing = new Label
+            {
+                Text = "...",
+                HorizontalOptions = LayoutOptions.Center,
+                Style = App.Current.Resources["LabelStyle"] as Style
+            };
+            if (layoutLowStack.Children.Count == 1)
+            {
+                layoutLowStack.Children.Add(nothing);
+            }
+            if (layoutMidStack.Children.Count == 1)
+            {
+                layoutMidStack.Children.Add(nothing);
+            }
+            if(layoutHighStack.Children.Count == 1)
+            {
+                layoutHighStack.Children.Add(nothing);
             }
         }
     }

@@ -29,13 +29,27 @@
 
           <EntryCell Label = "Age: " x:Name="settings_age" Keyboard = "Numeric"/>
           <EntryCell Label = "Weight (lb): " x:Name="settings_weight" Keyboard = "Numeric"/>                
+
+          <ViewCell>
+              <StackLayout Orientation = "Horizontal">
+                <Label Text = "Exercise Level: " VerticalOptions="Center" Margin="18,0,0,0"/>
+                <Picker x:Name="settings_activity_level" HorizontalOptions="FillAndExpand">
+                  <Picker.Items>
+                    <x:String>0-1 days a week</x:String>
+                    <x:String> 2-4 days a week</x:String>
+                    <x:String> 5-7 days a week</x:String>             
+                  </Picker.Items>
+                </Picker>
+              </StackLayout>
+            </ViewCell>
+                        
           </TableSection>
 
           <TableSection Title ="Height">
           <EntryCell Label = "Feet: " x:Name="settings_feet" Keyboard = "Numeric"/>
           <EntryCell Label = "Inches: " x:Name="settings_inches" Keyboard = "Numeric"/>
           </TableSection>
-                    
+
           <TableSection Title ="Health Concerns">
             <SwitchCell Text = "High Blood Pressure" x:Name="settings_blood_pressure"/>
             <SwitchCell Text = "Type 2 Diabetes" x:Name="settings_t2d"/>

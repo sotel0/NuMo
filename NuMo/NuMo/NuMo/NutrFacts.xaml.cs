@@ -34,7 +34,6 @@ namespace NuMo
             {
                 UnitsPicker.Title = value;
             }
-            //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
         }
         public string DescriptView
         {
@@ -77,6 +76,20 @@ namespace NuMo
             //set default units in picker
             //add any custom picker units from selected item
             updateUnitPickerWithCustomOptions();
+
+            //get nutrient info on food item
+            displayNutrInfo();
+        }
+
+        private void displayNutrInfo(){
+            //var db = DataAccessor.getDataAccessor();
+            //var convertNutInfo = db.getFoodInfo(selectedResult.food_no);
+            //Label info1 = new Label
+            //{
+            //    Text = convertNutInfo.ToString(),
+            //    HorizontalOptions = LayoutOptions.Center,
+            //    Style = App.Current.Resources["LabelStyle"] as Style
+            //};
         }
 
         private void setBaseUnitPickerChoices()

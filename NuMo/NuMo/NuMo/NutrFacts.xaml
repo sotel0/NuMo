@@ -26,9 +26,16 @@
                 </StackLayout>
                    
 
-                <Grid>
-    <!--                display nutrition facts and labels-->
-                </Grid>
+               <TableView>
+                    <TableRoot>
+                            <TableSection Title="Info">
+                            <ViewCell>
+                                <StackLayout x:Name = "layoutNutInfo" Orientation = "Vertical">
+                                </StackLayout>
+                            </ViewCell>
+                            </TableSection>
+                    </TableRoot>
+                </TableView>
 
             </StackLayout>
         </ScrollView>
