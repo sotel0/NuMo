@@ -251,16 +251,18 @@ namespace NuMo
                 {
 
                     var ratio = item.Value[0] / (item.Value[1]*dayMultiplier);
-                    var progress = ratio / 2;
+                    var progress = ratio;
                     String nutText = "Consumed: " + Math.Round(item.Value[0], 2) + "\nDaily Recommended Intake: " + item.Value[1] * dayMultiplier + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%";
 
                     Button button = new Button
                     {
                         Text = item.Key,
                         Font = Font.SystemFontOfSize(NamedSize.Medium),
-                        BorderWidth = 0,
+                        WidthRequest = 170,
+                        Margin = 15,
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.CenterAndExpand,
+                        Style = App.Current.Resources["BtnStyle"] as Style
                     };
 
                     button.Clicked += OnClicked;
@@ -288,8 +290,14 @@ namespace NuMo
                         Content = bar
                     };
 
-                    //Add the nutrient to the corresponding ratio layout
-                    if (ratio < .70)
+                    //Add the nutrient to the corresponding layout
+
+                    //check for nutrients to add them to category
+                    if(item.Key.Equals("Sodium(mg)")){
+                        importantStack.Children.Add(button);
+                        importantStack.Children.Add(barContentView);
+                    }
+                    else if (ratio < .70)
                     {
                         layoutLowStack.Children.Add(button);
                         layoutLowStack.Children.Add(barContentView);
@@ -311,22 +319,47 @@ namespace NuMo
             }
 
             //label to place if there are no nutrients in the layout category
-            Label nothing = new Label
+            if (importantStack.Children.Count == 1)
             {
-                Text = "...",
-                HorizontalOptions = LayoutOptions.Center,
-                Style = App.Current.Resources["LabelStyle"] as Style
-            };
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
+                importantStack.Children.Add(nothing);
+            }
+
             if (layoutLowStack.Children.Count == 1)
             {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
                 layoutLowStack.Children.Add(nothing);
             }
+
             if (layoutMidStack.Children.Count == 1)
             {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
                 layoutMidStack.Children.Add(nothing);
             }
+
             if(layoutHighStack.Children.Count == 1)
             {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
                 layoutHighStack.Children.Add(nothing);
             }
         }

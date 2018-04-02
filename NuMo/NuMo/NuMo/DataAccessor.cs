@@ -97,13 +97,13 @@ namespace NuMo
         }
 
         //Retrives macronutrients from the database for a food_no
-        //not working when called
+        //NOT WORKING
         public List<ConvertItem> getFoodInfo(int food_no)
         {
             string data_num = food_no.ToString();
             if (data_num.Length == 4)
                 data_num = "0" + data_num;
-            var foodInfo = dbConn.Query<ConvertItem>(String.Format("SELECT Carbohydrt_(g) as carbs, Sugar_Tot as sugarTotal FROM ABBREV WHERE NDB_No = '{0}'", data_num));
+            var foodInfo = dbConn.Query<ConvertItem>(String.Format("SELECT Carbohydrt_(g) as carbs, Sugar_Tot_(g) as sugarTotal FROM ABBREV WHERE NDB_No = '{0}'", data_num));
             return foodInfo;
         }
 

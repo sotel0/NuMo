@@ -15,20 +15,24 @@
              xmlns:control="clr-namespace:NuMo;assembly=NuMo">
  <ScrollView>   
 <StackLayout> 
+<StackLayout x:Name='importantStack' Padding="0,20,0,20" >
+<Label x:Name = "title0" HorizontalTextAlignment="Center" 
+Text=" IMPORTANT " Style="{StaticResource LabelStyle}"> </Label>
+</StackLayout>
             
-<StackLayout x:Name='layoutLowStack' Padding="0,20,0,0" >
+<StackLayout x:Name='layoutLowStack' Padding="0,20,0,20" >
 <Label x:Name = "title1" HorizontalTextAlignment="Center" 
 Text=" LOW INTAKE   0% - 70% " Style="{StaticResource LabelStyle}"> </Label>
 </StackLayout>
 
-<StackLayout x:Name='layoutMidStack' Padding="0,20,0,0" >
+<StackLayout x:Name='layoutMidStack' Padding="0,20,0,20" >
 <Label x:Name = "title2" HorizontalTextAlignment="Center" 
 Text=" GOOD INTAKE   70% - 130% " Style="{StaticResource LabelStyle}"> </Label>
 </StackLayout>
 
-<StackLayout x:Name='layoutHighStack' Padding="0,20,0,0" >
+<StackLayout x:Name='layoutHighStack' Padding="0,20,0,20" >
 <Label x:Name = "title3" HorizontalTextAlignment="Center" 
-Text="HIGH INTAKE   130% or more" Style="{StaticResource LabelStyle}"> </Label>
+Text="HIGH INTAKE   130% or more " Style="{StaticResource LabelStyle}"> </Label>
 </StackLayout>
 
             
