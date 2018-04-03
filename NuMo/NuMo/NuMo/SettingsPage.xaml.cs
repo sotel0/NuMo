@@ -54,8 +54,10 @@ namespace NuMo
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 1;
             } 
             //highly active = 2
-            else {
+            else if (activity_level.Equals("2")){
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 2;
+            } else {
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 3;
 
             }
 
@@ -246,7 +248,7 @@ namespace NuMo
             //didn't select exercise level
             if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == -1)
             {
-                needed += "\nExercise Level";
+                needed += "\nDaily Exercise Level";
             }
 
 			//Error checking
@@ -352,8 +354,10 @@ namespace NuMo
                 else if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 1)
                 {
                     db.saveSettingsItem("activity_level", "1");
-                } else {
+                } else if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 2){
                     db.saveSettingsItem("activity_level", "2");
+                } else {
+                    db.saveSettingsItem("activity_level", "3");
                 }
 				
                 //saving pregnant toggle in the db, by whichever pregnant value is selected

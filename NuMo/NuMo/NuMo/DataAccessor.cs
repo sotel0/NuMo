@@ -140,7 +140,7 @@ namespace NuMo
             var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Setting_Name from SETTINGS WHERE Setting_Name = '{0}'", settingName));
             if (values.Any())
             {
-                dbConn.Execute(String.Format("UPDATE SETTINGS set Setting_Val = '{0}' WHERE Setting_Name = '1'", settingValue, settingName));
+                dbConn.Execute(String.Format("UPDATE SETTINGS set Setting_Val = '{0}' WHERE Setting_Name = '{1}'", settingValue, settingName));
             }
             else
             {

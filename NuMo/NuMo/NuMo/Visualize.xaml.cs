@@ -173,7 +173,7 @@ namespace NuMo
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) );
             //dris.Add(0); // sugar
 
-			//dris.Add(Convert.ToDouble(db.getSettingsItem("dri_dietaryFiber")) );
+			dris.Add(Convert.ToDouble(db.getDRIValue("dri_dietaryFiber")) );
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_magnesium")));
@@ -230,7 +230,7 @@ namespace NuMo
             items.Add("Protein(g)", QDRI1);
             items.Add("Carbohydrates(g)",QDRI2);
             //items.Add("Total Sugars(g)", QDRI3);
-            //items.Add("Total Dietary Fiber(g)", QDRI4);
+            items.Add("Total Dietary Fiber(g)", QDRI4);
             items.Add("Calcium(mg)", QDRI3);
             items.Add("Iron(mg)", QDRI4);
             items.Add("Magnesium(mg)", QDRI5);
