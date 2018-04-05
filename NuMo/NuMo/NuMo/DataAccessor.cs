@@ -37,10 +37,12 @@ namespace NuMo
         //For use in addItem pages.
         public List<NumoNameSearch> searchName(String name)
         {
+            
             if (name == null || name.Length <= 0 || name.Trim().Length == 0)
                 return new List<NumoNameSearch>();
             //ignore single quotes
-            name = name.Replace("'", "");
+            name = name.Replace("’", "");//iPhone specific
+            name = name.Replace("'", "");//Android Specific
             name = name.ToUpper();
             String where = "WHERE ";
             String whereOR = "WHERE ";
@@ -57,6 +59,7 @@ namespace NuMo
                     {
                         temp = word.Substring(0, word.Length - 1);
                     }
+                    System.Diagnostics.Debug.WriteLine(temp);
                     where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
                     whereOR += String.Format("UPPER(Long_Desc) LIKE '%{0}%' OR ", temp);
                 }
@@ -65,6 +68,12 @@ namespace NuMo
             whereOR = whereOR.Remove(whereOR.Length - 3);//remove last 3 as we don't want the final 'OR '
             var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", where);
             var queryOR = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", whereOR);
+
+            //query = query.Replace("'%'", "%'");
+            //queryOR = queryOR.Replace("'%'", "%'");
+
+            System.Diagnostics.Debug.WriteLine(query);
+            System.Diagnostics.Debug.WriteLine(queryOR);
 
             var resultList = dbConn.Query<NumoNameSearch>(query);
             var resultsOR = dbConn.Query<NumoNameSearch>(queryOR);

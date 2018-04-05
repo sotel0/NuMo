@@ -12,7 +12,7 @@ namespace NuMo
     {
         public NumoNameSearch selectedResult;
 
-		public Entry searchbar;
+        public Entry searchbar;
 
         public NutrFacts nutrFacts;
 
@@ -42,24 +42,24 @@ namespace NuMo
         public AddItemPage()
         {
             InitializeComponent();
-            
 
-			searchbar = new Entry
-			{
-				Placeholder = "Search item",
-			};
+
+            searchbar = new Entry
+            {
+                Placeholder = "Search item",
+            };
 
             //Get search results for every key entry into the search bar and display them
-			searchbar.TextChanged += (sender, e) =>
-			{
-				var searchItem = e.NewTextValue;
-				var db = DataAccessor.getDataAccessor();
-				var searchResults = db.searchName(searchItem);
-				searchList.ItemsSource = searchResults;
-			};
+            searchbar.TextChanged += (sender, e) =>
+            {
+                String searchItem = e.NewTextValue;;
+                var db = DataAccessor.getDataAccessor();
+                var searchResults = db.searchName(searchItem);
+                searchList.ItemsSource = searchResults;
+            };
 
-            
-			mainStack.Children.Insert(0, searchbar);
+
+            mainStack.Children.Insert(0, searchbar);
 
             //
             //setBaseUnitPickerChoices();
@@ -114,7 +114,7 @@ namespace NuMo
             //searchbar.Text = e.SelectedItem.ToString();
 
             //navigate to NutrFacts page, passing in the event arguments
-            nutrFacts = new NutrFacts(this,(NumoNameSearch)e.Item);
+            nutrFacts = new NutrFacts(this, (NumoNameSearch)e.Item);
             await Navigation.PushAsync(nutrFacts);
 
             selectedResult = (NumoNameSearch)e.Item;
@@ -125,7 +125,7 @@ namespace NuMo
         //Clear all fields to make it obvious the button press had an impact.
         public virtual void saveButtonClicked(object sender, EventArgs args)
         {
-            
+
         }
 
         //public String getQuantifier()
