@@ -41,6 +41,26 @@ namespace NuMo
 				this.FindByName<Picker>("settings_gender").SelectedIndex = 0;
 			}
 
+            //activity level
+            String activity_level = db.getSettingsItem("activity_level");
+            //inactive = 0
+            if (activity_level.Equals("0"))
+            {
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 0;
+            }
+            //moderately active = 1
+            else if (activity_level.Equals("1"))
+            {
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 1;
+            } 
+            //highly active = 2
+            else if (activity_level.Equals("2")){
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 2;
+            } else {
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 3;
+
+            }
+
 			//age
             this.FindByName<EntryCell>("settings_age").Text = db.getSettingsItem("age");
 
@@ -219,11 +239,17 @@ namespace NuMo
 				}
 			}
 
-			//didn't select a sex ;(
+            //didn't select a sex ;(
 			if (this.FindByName<Picker>("settings_gender").SelectedIndex == -1)
 			{
 				needed += "\nSex";
 			}
+
+            //didn't select exercise level
+            if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == -1)
+            {
+                needed += "\nDaily Exercise Level";
+            }
 
 			//Error checking
 
@@ -318,6 +344,20 @@ namespace NuMo
                     db.saveSettingsItem("gender", "1");
                 } else {
                     db.saveSettingsItem("gender", "0");
+                }
+
+                //saving exercise level in the db by whichever value is selected
+                if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 0)
+                {
+                    db.saveSettingsItem("activity_level", "0");
+                }
+                else if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 1)
+                {
+                    db.saveSettingsItem("activity_level", "1");
+                } else if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 2){
+                    db.saveSettingsItem("activity_level", "2");
+                } else {
+                    db.saveSettingsItem("activity_level", "3");
                 }
 				
                 //saving pregnant toggle in the db, by whichever pregnant value is selected

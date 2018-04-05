@@ -11,9 +11,12 @@
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 
-                    <Entry x:Name="quantity" x:FieldModifier="public"
-                           Placeholder ="Number of" Keyboard="Keyboard.Numeric" Text="{Binding Quantity}" HorizontalTextAlignment="Center"/>
-                    <Picker x:Name="UnitsPicker" x:FieldModifier="public" Title="Units" >
+                    <Entry x:Name="quantity" x:FieldModifier="public" 
+                           Placeholder ="Number of" Keyboard="Keyboard.Numeric" 
+                           Text="{Binding Quantity}" HorizontalTextAlignment="Center"
+                           TextChanged = "Handle_TextChanged"/>
+                    <Picker x:Name="UnitsPicker" x:FieldModifier="public" Title="Units"
+                            SelectedIndexChanged="Handle_SelectedIndexChanged" >
                       <Picker.Items>
                         <x:String>Gram(s)</x:String>
                       </Picker.Items>
@@ -24,11 +27,15 @@
                         </Picker.WidthRequest>-->
                     </Picker>
                 </StackLayout>
-                   
 
-                <Grid>
-    <!--                display nutrition facts and labels-->
-                </Grid>
+                
+               <TableView>
+                    <TableRoot>
+                            <TableSection x:Name = "nutTable" Title="Information">
+
+                            </TableSection>
+                    </TableRoot>
+                </TableView>
 
             </StackLayout>
         </ScrollView>

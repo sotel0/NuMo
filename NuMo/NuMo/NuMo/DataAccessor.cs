@@ -105,6 +105,18 @@ namespace NuMo
             return quantifier1;
         }
 
+        //Retrives macronutrients from the database for a food_no
+        //NOT WORKING
+        public List<ConvertItem> getFoodInfo(int food_no)
+        {
+            string data_num = food_no.ToString();
+            if (data_num.Length == 4)
+                data_num = "0" + data_num;
+            var foodInfo = dbConn.Query<ConvertItem>(String.Format("SELECT Carbohydrt_(g) as carbs, Sugar_Tot_(g) as sugarTotal FROM ABBREV WHERE NDB_No = '{0}'", data_num));
+            return foodInfo;
+        }
+
+
         //Retrieves one clean list of all the nutrients related to a list of historyItems
         public List<Nutrient> getNutrientsFromHistoryList(List<FoodHistoryItem> historyItems)
         {
@@ -137,7 +149,7 @@ namespace NuMo
             var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Setting_Name from SETTINGS WHERE Setting_Name = '{0}'", settingName));
             if (values.Any())
             {
-                dbConn.Execute(String.Format("UPDATE SETTINGS set Setting_Val = '{0}' WHERE Setting_Name = '1'", settingValue, settingName));
+                dbConn.Execute(String.Format("UPDATE SETTINGS set Setting_Val = '{0}' WHERE Setting_Name = '{1}'", settingValue, settingName));
             }
             else
             {

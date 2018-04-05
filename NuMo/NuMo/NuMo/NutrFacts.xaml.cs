@@ -7,10 +7,10 @@ namespace NuMo
 {
     public partial class NutrFacts : ContentPage
     {
+
         //System.Diagnostics.Debug.WriteLine("cewl");
 
         public AddItemPage aip;
-             
         public NumoNameSearch selectedResult;
 
         public string Quantity
@@ -34,7 +34,6 @@ namespace NuMo
             {
                 UnitsPicker.Title = value;
             }
-            //UnitsPicker.SelectedItem = UnitsPicker.Items.IndexOf(value);
         }
         public string DescriptView
         {
@@ -77,6 +76,54 @@ namespace NuMo
             //set default units in picker
             //add any custom picker units from selected item
             updateUnitPickerWithCustomOptions();
+
+            //set default input values
+            Quantity = "1";
+            UnitsPicker.SelectedIndex = 0;
+            UnitPickerText = UnitsPicker.SelectedItem.ToString();
+
+            //so that it is not called incorrectly
+            //get nutrient info on food item
+            displayNutrInfo();
+        }
+
+        private void displayNutrInfo(){
+
+            //check if there is a quantity
+            if (Quantity != "")
+            {
+                //remove old info
+                nutTable.Clear();
+
+                var db = DataAccessor.getDataAccessor();
+                //get selected food with nutrient info
+                var foodItem = db.getFoodItem(selectedResult.food_no, UnitConverter.getMultiplier(getQuantifier(), selectedResult.food_no) * Convert.ToDouble(Quantity));
+
+                //remove extra omega values, only want totals
+                foodItem.stripExtraOmegs();
+
+                foreach (var item in foodItem.nutrients)
+                {
+
+                    //create a new stack to put in table
+                    var layout = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                    //stack contains nutrient name
+                    layout.Children.Add(new Label()
+                    {
+                        Text = item.name,
+                        HorizontalOptions = LayoutOptions.StartAndExpand,
+                        Style = App.Current.Resources["LabelStyle"] as Style
+                    });
+                    //stack contains nutrient quantity
+                    layout.Children.Add(new Label()
+                    {
+                        Text = Convert.ToString(Math.Round(item.quantity, 4)),
+                        HorizontalOptions = LayoutOptions.EndAndExpand,
+                        Style = App.Current.Resources["LabelStyle"] as Style
+                    });
+                    nutTable.Add(new ViewCell() { View = layout });
+                }
+            }
         }
 
         private void setBaseUnitPickerChoices()
@@ -144,5 +191,15 @@ namespace NuMo
             }
         }
 
+        //when picker changed, update nutrition info
+        void Handle_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+               displayNutrInfo();
+        }
+
+        void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+               displayNutrInfo();
+        }
     }
 }

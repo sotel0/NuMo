@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
@@ -96,6 +96,8 @@ namespace NuMo
 
                     var title = new Label
                     {
+                        
+                        HorizontalOptions = LayoutOptions.Center,
                         Text = '\n' + names[i]
                     };
 
@@ -125,9 +127,9 @@ namespace NuMo
                         Content = bar//progBars.Last()
                     };
 
-                    layout.Children.Add(title);
-                    layout.Children.Add(nutData);
-                    layout.Children.Add(barContentView);
+                    layoutLowStack.Children.Add(title);
+                    layoutLowStack.Children.Add(nutData);
+                    layoutLowStack.Children.Add(barContentView);
 
                     bar.ProgressTo(progress, 1000, Easing.Linear);
                 //} 
@@ -171,7 +173,7 @@ namespace NuMo
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) );
             //dris.Add(0); // sugar
 
-			//dris.Add(Convert.ToDouble(db.getSettingsItem("dri_dietaryFiber")) );
+			dris.Add(Convert.ToDouble(db.getDRIValue("dri_dietaryFiber")) );
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron")));
             dris.Add(Convert.ToDouble(db.getDRIValue("dri_magnesium")));
@@ -228,7 +230,7 @@ namespace NuMo
             items.Add("Protein(g)", QDRI1);
             items.Add("Carbohydrates(g)",QDRI2);
             //items.Add("Total Sugars(g)", QDRI3);
-            //items.Add("Total Dietary Fiber(g)", QDRI4);
+            items.Add("Total Dietary Fiber(g)", QDRI4);
             items.Add("Calcium(mg)", QDRI3);
             items.Add("Iron(mg)", QDRI4);
             items.Add("Magnesium(mg)", QDRI5);
@@ -249,16 +251,18 @@ namespace NuMo
                 {
 
                     var ratio = item.Value[0] / (item.Value[1]*dayMultiplier);
-                    var progress = ratio / 2;
+                    var progress = ratio;
                     String nutText = "Consumed: " + Math.Round(item.Value[0], 2) + "\nDaily Recommended Intake: " + item.Value[1] * dayMultiplier + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%";
 
                     Button button = new Button
                     {
                         Text = item.Key,
                         Font = Font.SystemFontOfSize(NamedSize.Medium),
-                        BorderWidth = 0,
-                        HorizontalOptions = LayoutOptions.Start,
+                        WidthRequest = 170,
+                        Margin = 15,
+                        HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.CenterAndExpand,
+                        Style = App.Current.Resources["BtnStyle"] as Style
                     };
 
                     button.Clicked += OnClicked;
@@ -286,8 +290,25 @@ namespace NuMo
                         Content = bar
                     };
 
-                    layout.Children.Add(button);
-                    layout.Children.Add(barContentView);
+                    //Add the nutrient to the corresponding layout
+
+                    //check for nutrients to add them to category
+                    if(item.Key.Equals("Sodium(mg)")){
+                        importantStack.Children.Add(button);
+                        importantStack.Children.Add(barContentView);
+                    }
+                    else if (ratio < .70)
+                    {
+                        layoutLowStack.Children.Add(button);
+                        layoutLowStack.Children.Add(barContentView);
+                    } else if (ratio >= .70 && ratio <= 1.30){
+                        layoutMidStack.Children.Add(button);
+                        layoutMidStack.Children.Add(barContentView);
+                    } else {
+                        layoutHighStack.Children.Add(button);
+                        layoutHighStack.Children.Add(barContentView);
+                    }
+
 
                     bar.ProgressTo(progress, 1000, Easing.Linear);
                 }
@@ -295,6 +316,51 @@ namespace NuMo
                 {
 
                 }
+            }
+
+            //label to place if there are no nutrients in the layout category
+            if (importantStack.Children.Count == 1)
+            {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
+                importantStack.Children.Add(nothing);
+            }
+
+            if (layoutLowStack.Children.Count == 1)
+            {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
+                layoutLowStack.Children.Add(nothing);
+            }
+
+            if (layoutMidStack.Children.Count == 1)
+            {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
+                layoutMidStack.Children.Add(nothing);
+            }
+
+            if(layoutHighStack.Children.Count == 1)
+            {
+                Label nothing = new Label
+                {
+                    Text = "...",
+                    HorizontalOptions = LayoutOptions.Center,
+                    Style = App.Current.Resources["LabelStyle"] as Style
+                };
+                layoutHighStack.Children.Add(nothing);
             }
         }
     }

@@ -11,7 +11,8 @@
             
 <!--constant colors-->
   <Color x:Key="BtnTxtColor">#000000</Color>
-  <Color x:Key="BtnBkgColor">#3fccff</Color>
+<!--  <Color x:Key="BtnBkgColor">#3fccff</Color>-->
+  <Color x:Key="BtnBkgColor">#37c0ff</Color>
   <Color x:Key="BkgColor">#ffffff</Color>
 
 <!--platform specific button dimensions-->

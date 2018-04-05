@@ -14,9 +14,31 @@
              x:Class="NuMo.Visualize"
              xmlns:control="clr-namespace:NuMo;assembly=NuMo">
  <ScrollView>   
-<StackLayout x:Name='layout' Padding="0,20,10,0">
+<StackLayout> 
+<StackLayout x:Name='importantStack' Padding="0,20,0,20" >
+<Label x:Name = "title0" HorizontalTextAlignment="Center" 
+Text=" IMPORTANT " Style="{StaticResource LabelStyle}"> </Label>
+</StackLayout>
+            
+<StackLayout x:Name='layoutLowStack' Padding="0,20,0,20" >
+<Label x:Name = "title1" HorizontalTextAlignment="Center" 
+Text=" LOW INTAKE   0% - 70% " Style="{StaticResource LabelStyle}"> </Label>
+</StackLayout>
 
-    
+<StackLayout x:Name='layoutMidStack' Padding="0,20,0,20" >
+<Label x:Name = "title2" HorizontalTextAlignment="Center" 
+Text=" GOOD INTAKE   70% - 130% " Style="{StaticResource LabelStyle}"> </Label>
+</StackLayout>
+
+<StackLayout x:Name='layoutHighStack' Padding="0,20,0,20" >
+<Label x:Name = "title3" HorizontalTextAlignment="Center" 
+Text="HIGH INTAKE   130% or more " Style="{StaticResource LabelStyle}"> </Label>
+</StackLayout>
+
+            
+</StackLayout>
+</ScrollView>   
+</ContentPage>  
 <!--<control:CustomProgressBar/> x:Name="progressBar"/>-->
 <!--        <Label x:Name="Nut1"/>
         <Label x:Name="Nut1Data" HorizontalTextAlignment="Center"/>
@@ -34,7 +56,3 @@
         <ProgressBar x:Name="fatProgress" Progress="1" WidthRequest="100" HeightRequest="10" VerticalOptions="Center" HorizontalOptions="Center" Rotation="180" BackgroundColor="Yellow" />
         </ContentView>
 -->
-            
-</StackLayout>
-</ScrollView>
-</ContentPage>

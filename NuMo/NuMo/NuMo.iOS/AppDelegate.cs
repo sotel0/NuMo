@@ -25,7 +25,7 @@ namespace NuMo.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             //set default progress bar color
-            UIProgressView.Appearance.TintColor = global::Xamarin.Forms.Color.FromHex("#3fccff").ToUIColor();
+            UIProgressView.Appearance.TintColor = global::Xamarin.Forms.Color.FromHex("#3fc0ff").ToUIColor();
 
             global::Xamarin.Forms.Forms.Init();
 			NControlViewRenderer.Init(); //Add this line <----------
