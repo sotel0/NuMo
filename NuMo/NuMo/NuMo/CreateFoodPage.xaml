@@ -17,10 +17,12 @@
           <TableSection Title="Serving">
            <ViewCell>
 				<StackLayout x:Name="layout" Orientation = "Horizontal" Margin = "0,0,0,0">
-					<Entry x:Name="quantity" Placeholder = "1    " Margin = "10,0,0,0" Keyboard="Numeric"/>
-					<Entry x:Name="quantifier" Placeholder = "serving" />
+					<Entry x:Name="quantity" Placeholder = "1    " Margin = "10,0,0,0" 
+                           Keyboard="Numeric" WidthRequest ="55"/>
+					<Entry x:Name="quantifier" Placeholder = "serving" WidthRequest ="80" />
 					<Label Text = "~=" Margin = "0,0,0,0" VerticalOptions="Center"/>
-					<Entry x:Name="gramsAmount" Placeholder = "0     " Keyboard="Numeric"/>
+					<Entry x:Name="gramsAmount" Placeholder = "0     "
+                           Keyboard="Numeric" WidthRequest ="65"/>
 					<Label Text = "Grams" Margin = "0,0,0,0" VerticalOptions="Center" />
 				</StackLayout>
           </ViewCell>

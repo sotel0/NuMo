@@ -39,14 +39,40 @@ namespace NuMo
         {
             InitializeComponent();
 
-            foreach(var item in inputValues)
+            foreach (var item in inputValues)
             {
-                var entryCell = new EntryCell();
-                entryCell.Label = item;
-                entryCell.Keyboard = Keyboard.Numeric;
-                entryCell.Text = "0";
+                ////create a new stack to put in table
+                //var layout = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                ////stack contains nutrient name
+                //layout.Children.Add(new Label()
+                //{
+                //    Text = item,
+                //    HorizontalOptions = LayoutOptions.Start,
+                //});
+
+                //stack contains nutrient quantity
+                //layout.Children.Add(new EntryCell()
+                //{
+                //    Keyboard = Keyboard.Numeric,
+                //    Text = "0"
+
+                //});
+
+                var entryCell = new EntryCell()
+                {
+                    Label = item,
+                    Keyboard = Keyboard.Numeric,
+                    //WidthRequest = 65,
+                    Text = "0",
+                    //Margin = new Thickness(0, 0, 50, 0),
+                    //HorizontalOptions = LayoutOptions.EndAndExpand
+                };
                 nutrientSection.Add(entryCell);
+                //layout.Children.Add(entryCell);
+
+                //nutrientSection.Add(new ViewCell() { View = layout });
             }
+
         }
 
         //Create food item from user data and save to database
@@ -80,6 +106,7 @@ namespace NuMo
 
                 foreach (var item in nutrientSection)
                 {
+
                     var entryCellItem = (EntryCell)item;
                     if (Convert.ToDouble(entryCellItem.Text) > 0)
                     {

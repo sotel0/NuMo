@@ -66,7 +66,7 @@ namespace NuMo
             //await fatProgress.ProgressTo(0.75, 1000, Easing.Linear);
         } 
 
-        private void animateBars(){
+        /*private void animateBars(){
 
             for (int i = 0; i < names.Count; i++)
             {
@@ -145,6 +145,7 @@ namespace NuMo
             //progress2.ProgressTo(0.33, 1000, Easing.Linear);
 
         }
+        */
 
 		private void getData(List<Nutrient> nutrientList)
 		{
@@ -163,6 +164,7 @@ namespace NuMo
 			}
 			getDRI();
 		}
+
 
 		//get all of the DRI information, put it into List to be passed
 		public void getDRI()
@@ -215,7 +217,8 @@ namespace NuMo
         {
             var db = DataAccessor.getDataAccessor();
 
-            double[] QDRI1 = { 0, Convert.ToDouble(db.getDRIValue("dri_protein")) }; //quantity = 0, dri value = 0
+            //quantity = 0, dri value = 0
+            double[] QDRI1 = { 0, Convert.ToDouble(db.getDRIValue("dri_protein")) }; 
             double[] QDRI2 = { 0, Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) };
             double[] QDRI3 = { 0, Convert.ToDouble(db.getDRIValue("dri_calcium")) };
             double[] QDRI4 = { 0, Convert.ToDouble(db.getDRIValue("dri_iron")) };
@@ -226,11 +229,13 @@ namespace NuMo
             double[] QDRI9 = { 0, Convert.ToDouble(db.getDRIValue("dri_zinc")) };
             double[] QDRI10 = { 0, Convert.ToDouble(db.getDRIValue("dri_copper")) };
             double[] QDRI11 = { 0, Convert.ToDouble(db.getDRIValue("dri_manganese")) };
-                
+
+            //does not exists yet, may be spelled wrong
+            //double[] QDRI12 = { 0, Convert.ToDouble(db.getDRIValue("dri_tot_sugar")) };
+            //double[] QDRI13 = { 0, Convert.ToDouble(db.getDRIValue("dri_fiber")) };
+
             items.Add("Protein(g)", QDRI1);
             items.Add("Carbohydrates(g)",QDRI2);
-            //items.Add("Total Sugars(g)", QDRI3);
-            items.Add("Total Dietary Fiber(g)", QDRI4);
             items.Add("Calcium(mg)", QDRI3);
             items.Add("Iron(mg)", QDRI4);
             items.Add("Magnesium(mg)", QDRI5);
@@ -240,6 +245,8 @@ namespace NuMo
             items.Add("Zinc(mg)", QDRI9);
             items.Add("Copper(mg)", QDRI10);
             items.Add("Magnanese(mg)", QDRI11);
+            //items.Add("Total Sugars(g)", QDRI12);
+            //items.Add("Total Dietary Fiber(g)", QDRI13);
         }
 
         private void animateBars2()
