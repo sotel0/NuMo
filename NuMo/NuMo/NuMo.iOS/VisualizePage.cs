@@ -20,7 +20,27 @@ namespace NuMo.iOS
 {
 	class VisualizePage : IVisualize
 	{
-        
+        public StackLayout loadBars(){
+            StackLayout sl = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+
+            };
+
+            var cpbr = new CustomProgressBar(.45f,.55f)
+            {
+                Progress = .6,
+                WidthRequest = 350,
+                Scale = 2,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+            sl.Children.Add(cpbr);
+
+            return sl;
+        }
+
 		//stack layout to hold the graphs
 		public StackLayout loadGraphs(List <String> names, List <Double> quantities, List<Double> dris)
 		{
@@ -29,7 +49,6 @@ namespace NuMo.iOS
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				Orientation = StackOrientation.Horizontal
-				         	                                 
 			};
 
 			//create a new list of the bars

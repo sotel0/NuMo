@@ -171,7 +171,7 @@ namespace NuMo
             var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT DRI_Name from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
             if (values.Any())
             {
-                dbConn.Execute(String.Format("UPDATE DRI_VALUES set DRI_Val = '{0}' WHERE DRI_Name = '1'", DRIValue, DRIName));
+                dbConn.Execute(String.Format("UPDATE DRI_VALUES set DRI_Val = '{0}' WHERE DRI_Name = '{1}'", DRIValue, DRIName));
             }
             else
             {

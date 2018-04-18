@@ -19,7 +19,6 @@ namespace NuMo
 	{
         DateTime date;
         List<IMyDayViewItem> ViewItemList;
-        Color selectedColor = Color.FromRgb(123, 199, 193);
 
         //Initially we only want to see info for 1 day.
         int daysToLoad = 1;

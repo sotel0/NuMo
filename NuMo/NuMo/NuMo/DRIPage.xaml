@@ -89,7 +89,7 @@
 
 					<ViewCell>
 				<StackLayout Orientation="Horizontal">
-				<Label Text = "Vitamin K (mcg): " Margin="18,10,0,0" />
+				<Label Text = "Vitamin K (μg): " Margin="18,10,0,0" />
 				<Entry Text = "Value here" Margin="0,0,50,0" x:Name="dri_vitaminK"
                        HorizontalOptions="EndAndExpand" WidthRequest = "65"/>
 						</StackLayout>
@@ -129,7 +129,7 @@
 
 				<ViewCell>
 				<StackLayout Orientation="Horizontal">
-				<Label Text = "Folate (mcg): " Margin="18,10,0,0" />
+				<Label Text = "Folate (μg): " Margin="18,10,0,0" />
 				<Entry Text = "Value here" Margin="0,0,50,0" x:Name="dri_folate"
                        HorizontalOptions="EndAndExpand" WidthRequest = "65"/>
 						</StackLayout>
@@ -137,7 +137,7 @@
 
 				<ViewCell>
 				<StackLayout Orientation="Horizontal">
-				<Label Text = "Vitamin B12 (mcg): " Margin="18,10,0,0" />
+				<Label Text = "Vitamin B12 (μg): " Margin="18,10,0,0" />
 				<Entry Text = "Value here" Margin="0,0,50,0" x:Name="dri_vitaminB12"
                        HorizontalOptions="EndAndExpand" WidthRequest = "65"/>
 						</StackLayout>
@@ -232,7 +232,7 @@
 				
 				<ViewCell>
 				<StackLayout Orientation="Horizontal">
-				<Label Text = "Selenium (mcg): " Margin="18,10,0,0" />
+				<Label Text = "Selenium (μg): " Margin="18,10,0,0" />
 				<Entry Text = "Value here" Margin="0,0,50,0" x:Name="dri_selenium"
                        HorizontalOptions="EndAndExpand" WidthRequest = "65"/>
 						</StackLayout>

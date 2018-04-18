@@ -158,7 +158,7 @@ namespace NuMo
 			{
                 var db = DataAccessor.getDataAccessor();
                 //set as customized
-                db.saveSettingsItem("custom_dri", "false");
+                db.saveSettingsItem("custom_dri", "true");
                 //save all of the custom values
                 saveInfo();
 			}
@@ -175,19 +175,19 @@ namespace NuMo
 					//macronutrients
                     foreach(var macronutrient in this.macronutrients)
                     {
-                        this.FindByName<Entry>(macronutrient).Text = db.getSettingsItem(macronutrient);
+                    this.FindByName<Entry>(macronutrient).Text = db.getDRIValue(macronutrient);
                     }
 
 					//vitamins
                     foreach(var vitamin in this.vitamins)
                     {
-                        this.FindByName<Entry>(vitamin).Text = db.getSettingsItem(vitamin);
+                    this.FindByName<Entry>(vitamin).Text = db.getDRIValue(vitamin);
                     }
 
 					//minerals
                     foreach(var mineral in this.minerals)
                     {
-                        this.FindByName<Entry>(mineral).Text = db.getSettingsItem(mineral);
+                    this.FindByName<Entry>(mineral).Text = db.getDRIValue(mineral);
                     }
 
 				}

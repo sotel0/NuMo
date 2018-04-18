@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+
 using Xamarin.Forms;
 using System.Collections.Generic;
 
@@ -50,21 +51,19 @@ namespace NuMo
 			//call to fill the names/quantities/dri lists
             getData(nutrientList);
 
-			//force the screen to be in landscape mode
-			//DependencyService.Get<IVisualize>().forceLandscape();
-			//add the graphs to the main stack
-			//mainVStack.Children.Add(DependencyService.Get<IVisualize>().loadGraphs(names, quantities, dris));
+            //force the screen to be in landscape mode
+            //DependencyService.Get<IVisualize>().somethingOrientation();
+			
+            //mainVStack.Children.Add(DependencyService.Get<IVisualize>().loadGraphs(names, quantities, dris));
             //initial progress is 20%
 
 		}
 
         protected override void OnAppearing() {  
             base.OnAppearing();
-            animateBars2();
-            //await progress.ProgressTo(0.2, 1000, Easing.Linear);  
-            //await sugarProgress.ProgressTo(0.45, 1000, Easing.Linear);
-            //await fatProgress.ProgressTo(0.75, 1000, Easing.Linear);
-        } 
+            //animateBars2();
+            animateBars3();
+        }
 
         /*private void animateBars(){
 
@@ -209,8 +208,7 @@ namespace NuMo
 		//when the user leaves this page...allow them to reset orientation
 		protected override void OnDisappearing()
 		{
-			//DependencyService.Get<IVisualize>().resetOrientation();
-
+            //DependencyService.Get<IVisualize>().resetOrientation();
 		}
 
         private void initializeItems()
@@ -248,6 +246,12 @@ namespace NuMo
             //items.Add("Total Sugars(g)", QDRI12);
             //items.Add("Total Dietary Fiber(g)", QDRI13);
         }
+
+        private void animateBars3(){
+            //add the graphs to the main stack
+            mainStack.Children.Add(DependencyService.Get<IVisualize>().loadBars());
+        }
+
 
         private void animateBars2()
         {
@@ -299,7 +303,8 @@ namespace NuMo
 
                     //Add the nutrient to the corresponding layout
 
-                    //check for nutrients to add them to category
+                    //check for nutrients to add them to special category
+
                     if(item.Key.Equals("Sodium(mg)")){
                         importantStack.Children.Add(button);
                         importantStack.Children.Add(barContentView);

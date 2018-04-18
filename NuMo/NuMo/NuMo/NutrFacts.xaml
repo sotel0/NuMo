@@ -4,7 +4,6 @@
     x:Class="NuMo.NutrFacts"
     Style = "{StaticResource PageStyle}">
 	<ContentPage.Content>
-        <ScrollView>
             <StackLayout x:Name = "mainStack" Padding = "20,20,20,0" Spacing = "20">
                 <Label x:Name = "descrView" HorizontalTextAlignment="Center" Style="{StaticResource LabelStyle}"> 
                 </Label>
@@ -38,6 +37,5 @@
                 </TableView>
 
             </StackLayout>
-        </ScrollView>
 	</ContentPage.Content>
 </ContentPage>

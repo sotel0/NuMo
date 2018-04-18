@@ -102,6 +102,39 @@ namespace NuMo
                 //remove extra omega values, only want totals
                 foodItem.stripExtraOmegs();
 
+                //add preliminary table titles
+                var colTitle = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                colTitle.Children.Add(new Label() //nutrients
+                {
+                    Text = "Nutrient",
+                    WidthRequest = 150,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    TextColor = (Color)App.Current.Resources["BtnBkgColor"],
+                    FontAttributes = FontAttributes.Bold
+                });
+                colTitle.Children.Add(new Label()
+                {
+                    Text = "Amount",
+                    //HorizontalOptions = LayoutOptions.StartAndExpand,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+
+                    TextColor = (Color)App.Current.Resources["BtnBkgColor"],
+                    FontAttributes = FontAttributes.Bold
+                });
+                //////TODO DRI percentages
+                //colTitle.Children.Add(new Label()
+                //{
+                //    Text = "DRI %",
+                //    HorizontalOptions = LayoutOptions.End,
+                //    TextColor = (Color)App.Current.Resources["BtnBkgColor"],
+                //    FontAttributes = FontAttributes.Bold
+                //});
+                //add to table
+                nutTable.Add(new ViewCell() { View = colTitle});
+                //////////////////
+
+
+                //add each nutrient into table
                 foreach (var item in foodItem.nutrients)
                 {
 
@@ -112,15 +145,27 @@ namespace NuMo
                     {
                         Text = item.name,
                         HorizontalOptions = LayoutOptions.StartAndExpand,
+                        WidthRequest = 150,
                         Style = App.Current.Resources["LabelStyle"] as Style
                     });
                     //stack contains nutrient quantity
                     layout.Children.Add(new Label()
                     {
                         Text = Convert.ToString(Math.Round(item.quantity, 4)),
+                        //HorizontalOptions = LayoutOptions.StartAndExpand,
                         HorizontalOptions = LayoutOptions.EndAndExpand,
                         Style = App.Current.Resources["LabelStyle"] as Style
                     });
+
+                    ///////////TODO add DRI %'s
+                    //layout.Children.Add(new Label()
+                    //{
+                    //    Text = Convert.ToString(Math.Round(item.quantity, 4)),
+                    //    HorizontalOptions = LayoutOptions.End,
+                    //    Style = App.Current.Resources["LabelStyle"] as Style
+                    //});
+
+                    //add nutrient to xaml table
                     nutTable.Add(new ViewCell() { View = layout });
                 }
             }
