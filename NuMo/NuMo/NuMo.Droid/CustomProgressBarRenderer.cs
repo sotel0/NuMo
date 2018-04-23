@@ -19,29 +19,25 @@ namespace NuMo.Droid
 
             var custBar = Element as CustomProgressBar;
 
-            //control.progress was too large
-            //get threshold for each nutrient progress bar, just make individual progress bars
-            if (Control.Progress > custBar.highThreshold)
+            if (Control != null && custBar != null)
             {
-                Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(255, 0, 0).ToAndroid());
-                //Control.ProgressDrawable.SetColorFilter(Color.FromRgb(255, 0, 0).ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
-
-            }
-            else if(Control.Progress < custBar.lowThreshold)
-            {
-                Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(255, 255, 0).ToAndroid());
+                if (Control.Progress * .0001f > custBar.highThreshold)
+                {//red - high
+                    Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(255, 0, 0).ToAndroid());
+                }
+                else if (Control.Progress * .0001f < custBar.lowThreshold)
+                {//yellow - low
+                    Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(255, 255, 0).ToAndroid());
+                }
+                else
+                {//green - middle
+                    Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(0, 255, 0).ToAndroid());
+                }
                 //Control.ProgressDrawable.SetColorFilter(Color.FromRgb(182, 231, 233).ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
-            } else {
-                
-                Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(0, 255, 0).ToAndroid());
-                //Control.ProgressDrawable.SetColorFilter(Color.FromRgb(182, 231, 233).ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
+                //Control.ProgressTintListColor.FromRgb(182, 231, 233).ToAndroid();
+
+                Control.ScaleY = 10;
             }
-
-            /////Control.ProgressTintListColor.FromRgb(182, 231, 233).ToAndroid();
-
-
-            Control.ScaleY = 12;
-
         }
     }
 }

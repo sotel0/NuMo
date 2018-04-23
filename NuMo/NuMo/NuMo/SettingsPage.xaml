@@ -35,11 +35,10 @@
                 <Label Text = "Daily Exercise Level: " VerticalOptions="Center" Margin="18,0,0,0"/>
                 <Picker x:Name="settings_activity_level" HorizontalOptions="FillAndExpand">
                   <Picker.Items>
-                    <x:String> Light</x:String>             
-                    <x:String> Moderate</x:String>
+                    <x:String> High Intensity</x:String>
                     <x:String> Heavy</x:String>
-                    <x:String> High Intensity</x:String>                             
-                                        
+                    <x:String> Moderate</x:String>
+                    <x:String> Light</x:String>                   
                   </Picker.Items>
                 </Picker>
               </StackLayout>

@@ -25,6 +25,7 @@ namespace NuMo
 
 		public Visualize(String titleExtra, List<Nutrient> nutrientList)
 		{
+            
             InitializeComponent();
 
             //nutrient names
@@ -39,6 +40,7 @@ namespace NuMo
             items = new Dictionary<String, Double[]>();
             initializeItems();
 
+            //find how many days to calculate nutrients for
             Title += " " + titleExtra;
             if (titleExtra[0] == '7'){
                 dayMultiplier = 7;
@@ -48,11 +50,19 @@ namespace NuMo
                 dayMultiplier = 1;
             }
 
+            MessagingCenter.Subscribe<IVisualize, string[]>(this, "NutrientText", (sender,values) =>
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert(values[0], values[1], "Ok");
+                });
+            });
+
 			//call to fill the names/quantities/dri lists
             getData(nutrientList);
 
             //force the screen to be in landscape mode
-            //DependencyService.Get<IVisualize>().somethingOrientation();
+            //DependencyService.Get<IVisualize>().resetOrientation();
 			
             //mainVStack.Children.Add(DependencyService.Get<IVisualize>().loadGraphs(names, quantities, dris));
             //initial progress is 20%
@@ -63,6 +73,11 @@ namespace NuMo
             base.OnAppearing();
             //animateBars2();
             animateBars3();
+        }
+        private void animateBars3()
+        {
+            //add the graphs to the main stack
+            mainStack.Children.Add(DependencyService.Get<IVisualize>().loadBars(items,names,quantities,dris,dayMultiplier));
         }
 
         /*private void animateBars(){
@@ -205,10 +220,8 @@ namespace NuMo
 
 		}
 
-		//when the user leaves this page...allow them to reset orientation
 		protected override void OnDisappearing()
 		{
-            //DependencyService.Get<IVisualize>().resetOrientation();
 		}
 
         private void initializeItems()
@@ -229,7 +242,7 @@ namespace NuMo
             double[] QDRI11 = { 0, Convert.ToDouble(db.getDRIValue("dri_manganese")) };
 
             //does not exists yet, may be spelled wrong
-            //double[] QDRI12 = { 0, Convert.ToDouble(db.getDRIValue("dri_tot_sugar")) };
+            //double[] QDRI12 = { 0, Convert.ToDouble(db.getDRIValue("dri_total_sugar")) };
             //double[] QDRI13 = { 0, Convert.ToDouble(db.getDRIValue("dri_fiber")) };
 
             items.Add("Protein(g)", QDRI1);
@@ -247,133 +260,128 @@ namespace NuMo
             //items.Add("Total Dietary Fiber(g)", QDRI13);
         }
 
-        private void animateBars3(){
-            //add the graphs to the main stack
-            mainStack.Children.Add(DependencyService.Get<IVisualize>().loadBars());
-        }
 
-
-        private void animateBars2()
-        {
+        //private void animateBars2()
+        //{
             
-            foreach(var item in items)
-            {
-                try
-                {
+        //    foreach(var item in items)
+        //    {
+        //        try
+        //        {
 
-                    var ratio = item.Value[0] / (item.Value[1]*dayMultiplier);
-                    var progress = ratio;
-                    String nutText = "Consumed: " + Math.Round(item.Value[0], 2) + "\nDaily Recommended Intake: " + item.Value[1] * dayMultiplier + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%";
+        //            var ratio = item.Value[0] / (item.Value[1]*dayMultiplier);
+        //            var progress = ratio;
+        //            String nutText = "Consumed: " + Math.Round(item.Value[0], 2) + "\nDaily Recommended Intake: " + item.Value[1] * dayMultiplier + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%";
 
-                    Button button = new Button
-                    {
-                        Text = item.Key,
-                        Font = Font.SystemFontOfSize(NamedSize.Medium),
-                        WidthRequest = 170,
-                        Margin = 15,
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.CenterAndExpand,
-                        Style = App.Current.Resources["BtnStyle"] as Style
-                    };
+        //            Button button = new Button
+        //            {
+        //                Text = item.Key,
+        //                Font = Font.SystemFontOfSize(NamedSize.Medium),
+        //                WidthRequest = 170,
+        //                Margin = 15,
+        //                HorizontalOptions = LayoutOptions.Center,
+        //                VerticalOptions = LayoutOptions.CenterAndExpand,
+        //                Style = App.Current.Resources["BtnStyle"] as Style
+        //            };
 
-                    button.Clicked += OnClicked;
+        //            button.Clicked += OnClicked;
 
-                    void OnClicked(object sender, EventArgs ea)
-                    {
-                        DisplayAlert(item.Key, nutText, "OK");
-                    }
-
-
-                    var bar = new ProgressBar
-                    {
-                        Progress = 0,
-                        WidthRequest = 100,
-                        HeightRequest = 10,
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Center,
-                        Rotation = 0,
-                        Margin = 10,
-                    };
-
-                    var barContentView = new ContentView
-                    {
-                        Scale = 3,
-                        Content = bar
-                    };
-
-                    //Add the nutrient to the corresponding layout
-
-                    //check for nutrients to add them to special category
-
-                    if(item.Key.Equals("Sodium(mg)")){
-                        importantStack.Children.Add(button);
-                        importantStack.Children.Add(barContentView);
-                    }
-                    else if (ratio < .70)
-                    {
-                        layoutLowStack.Children.Add(button);
-                        layoutLowStack.Children.Add(barContentView);
-                    } else if (ratio >= .70 && ratio <= 1.30){
-                        layoutMidStack.Children.Add(button);
-                        layoutMidStack.Children.Add(barContentView);
-                    } else {
-                        layoutHighStack.Children.Add(button);
-                        layoutHighStack.Children.Add(barContentView);
-                    }
+        //            void OnClicked(object sender, EventArgs ea)
+        //            {
+        //                DisplayAlert(item.Key, nutText, "OK");
+        //            }
 
 
-                    bar.ProgressTo(progress, 1000, Easing.Linear);
-                }
-                catch (Exception)
-                {
+        //            var bar = new ProgressBar
+        //            {
+        //                Progress = 0,
+        //                WidthRequest = 100,
+        //                HeightRequest = 10,
+        //                VerticalOptions = LayoutOptions.Center,
+        //                HorizontalOptions = LayoutOptions.Center,
+        //                Rotation = 0,
+        //                Margin = 10,
+        //            };
 
-                }
-            }
+        //            var barContentView = new ContentView
+        //            {
+        //                Scale = 3,
+        //                Content = bar
+        //            };
 
-            //label to place if there are no nutrients in the layout category
-            if (importantStack.Children.Count == 1)
-            {
-                Label nothing = new Label
-                {
-                    Text = "...",
-                    HorizontalOptions = LayoutOptions.Center,
-                    Style = App.Current.Resources["LabelStyle"] as Style
-                };
-                importantStack.Children.Add(nothing);
-            }
+        //            //Add the nutrient to the corresponding layout
 
-            if (layoutLowStack.Children.Count == 1)
-            {
-                Label nothing = new Label
-                {
-                    Text = "...",
-                    HorizontalOptions = LayoutOptions.Center,
-                    Style = App.Current.Resources["LabelStyle"] as Style
-                };
-                layoutLowStack.Children.Add(nothing);
-            }
+        //            //check for nutrients to add them to special category
 
-            if (layoutMidStack.Children.Count == 1)
-            {
-                Label nothing = new Label
-                {
-                    Text = "...",
-                    HorizontalOptions = LayoutOptions.Center,
-                    Style = App.Current.Resources["LabelStyle"] as Style
-                };
-                layoutMidStack.Children.Add(nothing);
-            }
+        //            if(item.Key.Equals("Sodium(mg)")){
+        //                importantStack.Children.Add(button);
+        //                importantStack.Children.Add(barContentView);
+        //            }
+        //            else if (ratio < .70)
+        //            {
+        //                layoutLowStack.Children.Add(button);
+        //                layoutLowStack.Children.Add(barContentView);
+        //            } else if (ratio >= .70 && ratio <= 1.30){
+        //                layoutMidStack.Children.Add(button);
+        //                layoutMidStack.Children.Add(barContentView);
+        //            } else {
+        //                layoutHighStack.Children.Add(button);
+        //                layoutHighStack.Children.Add(barContentView);
+        //            }
 
-            if(layoutHighStack.Children.Count == 1)
-            {
-                Label nothing = new Label
-                {
-                    Text = "...",
-                    HorizontalOptions = LayoutOptions.Center,
-                    Style = App.Current.Resources["LabelStyle"] as Style
-                };
-                layoutHighStack.Children.Add(nothing);
-            }
-        }
+
+        //            bar.ProgressTo(progress, 1000, Easing.Linear);
+        //        }
+        //        catch (Exception)
+        //        {
+
+        //        }
+        //    }
+
+        //    //label to place if there are no nutrients in the layout category
+        //    if (importantStack.Children.Count == 1)
+        //    {
+        //        Label nothing = new Label
+        //        {
+        //            Text = "...",
+        //            HorizontalOptions = LayoutOptions.Center,
+        //            Style = App.Current.Resources["LabelStyle"] as Style
+        //        };
+        //        importantStack.Children.Add(nothing);
+        //    }
+
+        //    if (layoutLowStack.Children.Count == 1)
+        //    {
+        //        Label nothing = new Label
+        //        {
+        //            Text = "...",
+        //            HorizontalOptions = LayoutOptions.Center,
+        //            Style = App.Current.Resources["LabelStyle"] as Style
+        //        };
+        //        layoutLowStack.Children.Add(nothing);
+        //    }
+
+        //    if (layoutMidStack.Children.Count == 1)
+        //    {
+        //        Label nothing = new Label
+        //        {
+        //            Text = "...",
+        //            HorizontalOptions = LayoutOptions.Center,
+        //            Style = App.Current.Resources["LabelStyle"] as Style
+        //        };
+        //        layoutMidStack.Children.Add(nothing);
+        //    }
+
+        //    if(layoutHighStack.Children.Count == 1)
+        //    {
+        //        Label nothing = new Label
+        //        {
+        //            Text = "...",
+        //            HorizontalOptions = LayoutOptions.Center,
+        //            Style = App.Current.Resources["LabelStyle"] as Style
+        //        };
+        //        layoutHighStack.Children.Add(nothing);
+        //    }
+        //}
     }
 }

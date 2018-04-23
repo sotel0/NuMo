@@ -17,8 +17,24 @@ namespace NuMo.iOS
             
             base.OnElementChanged(e);
 
-                Control.ProgressTintColor = Color.FromRgb(182, 231, 233).ToUIColor();// Color..FromHex("#254f5e").ToUIColor();
+            var custBar = Element as CustomProgressBar;
+            if (Control != null && custBar != null)
+            {
+                if (Control.Progress > custBar.highThreshold)
+                {
+                    Control.ProgressTintColor = Color.FromRgb(255, 0, 0).ToUIColor();
+
+                }
+                else if (Control.Progress < custBar.lowThreshold)
+                {
+                    Control.ProgressTintColor = Color.FromRgb(255, 255, 0).ToUIColor();
+                }
+                else
+                {
+                    Control.ProgressTintColor = Color.FromRgb(0, 255, 0).ToUIColor();
+                }
                 Control.TrackTintColor = Color.FromRgb(188, 203, 219).ToUIColor();
+            }
         }
 
 
@@ -34,7 +50,7 @@ namespace NuMo.iOS
 
             this.ClipsToBounds = true;
             this.Layer.MasksToBounds = true;
-            this.Layer.CornerRadius = 10; // This is for rounded corners.
+            this.Layer.CornerRadius = 2; // This is for rounded corners.
         }
     }
 }

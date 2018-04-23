@@ -37,25 +37,26 @@ namespace NuMo
                 UpdateMyDayFoodItem(sender);
             });
 
+
             ViewItemList = new List<IMyDayViewItem>();
 
 
             ToolbarItem plus = new ToolbarItem();
-            ToolbarItem plusText = new ToolbarItem();
             plus.Icon = "ic_add_black_24dp.png";
-            plusText.Text = "Add Food +";
             plus.Clicked += AddButton;
 
+            //attempt at adding text next to plus image
+            //ToolbarItem plusText = new ToolbarItem();
+            //plusText.Text = "Add Food +";
             //ToolbarItems.Add(plusText);
             ToolbarItems.Add(plus);
             
-
+            //setting the values of the calendar
             timeLengthChoice.SelectedIndex = 0;
-            //ItemsButton.BackgroundColor = selectedColor;
             date = datePicker.Date;
         }
 
-        //Set the profile picture, default to a smiley face if one does not exist.
+        //Set the profile picture, default to logo if one does not exist.
         void UpdateMyDayPicture()
         {
             var db = DataAccessor.getDataAccessor();
@@ -141,9 +142,6 @@ namespace NuMo
         //Display nutrient info for the day/history range selected.
         void OnNutrientsClicked()
         {
-            //ItemsButton.BackgroundColor = Color.Default;
-            //NutrientsButton.BackgroundColor = selectedColor;
-
             listView.BeginRefresh();
             listView.ItemsSource = null;
 

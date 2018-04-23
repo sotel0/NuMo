@@ -48,7 +48,6 @@ namespace NuMo.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
 
-
             base.SetTheme(Resource.Style.MainTheme);
             base.OnCreate(bundle);
 
