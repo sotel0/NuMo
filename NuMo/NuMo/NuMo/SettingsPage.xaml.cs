@@ -44,17 +44,17 @@ namespace NuMo
             //activity level
             String activity_level = db.getSettingsItem("activity_level");
             //inactive = 0
-            if (activity_level.Equals("0"))
+            if (activity_level.Equals("1.2"))
             {
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 0;
             }
             //moderately active = 1
-            else if (activity_level.Equals("1"))
+            else if (activity_level.Equals("1.3"))
             {
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 1;
             } 
             //highly active = 2
-            else if (activity_level.Equals("2")){
+            else if (activity_level.Equals("1.4")){
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 2;
             } else {
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 3;

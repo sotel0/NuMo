@@ -86,7 +86,7 @@ namespace NuMo
                         break;
                     case 307:
                         nutrient.name = "Sodium(mg)";
-                        nutrient.quantifier = "mg";
+                        nutrient.quantifier = "g";
                         break;
                     case 309:
                         nutrient.name = "Zinc(mg)";

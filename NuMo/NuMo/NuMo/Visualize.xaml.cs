@@ -176,7 +176,7 @@ namespace NuMo
                     items[item.name][0] = item.quantity;
                 } catch(Exception){}
 			}
-			getDRI();
+			//getDRI();
 		}
 
 
@@ -184,39 +184,39 @@ namespace NuMo
 		public void getDRI()
 		{
             var db = DataAccessor.getDataAccessor();
-            
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_protein")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) );
-            //dris.Add(0); // sugar
 
-			dris.Add(Convert.ToDouble(db.getDRIValue("dri_dietaryFiber")) );
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_magnesium")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_phosphorus")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_potassium")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_sodium")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_zinc")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_copper")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_protein")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_totalCarbs")));
+                //dris.Add(0); // sugar
 
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_manganese")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_selenium")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminA")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminC")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_thiamin")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_riboflavin")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_niacin")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_pantothenicAcid")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminB6")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_folate")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminB12")));
-			dris.Add(0); //omega 6 total
-			dris.Add(0); //omega 3 total
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_netCarbs")));
-			dris.Add(0); //total sugars
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminE")));
-            dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminK")));
-			dris.Add(0); //omega 3/6 ratio
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_dietaryFiber")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_calcium")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_iron")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_magnesium")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_phosphorus")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_potassium")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_sodium")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_zinc")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_copper")));
+
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_manganese")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_selenium")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminA")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminC")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_thiamin")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_riboflavin")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_niacin")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_pantothenicAcid")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminB6")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_folate")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminB12")));
+                dris.Add(0); //omega 6 total
+                dris.Add(0); //omega 3 total
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_netCarbs")));
+                dris.Add(0); //total sugars
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminE")));
+                dris.Add(Convert.ToDouble(db.getDRIValue("dri_vitaminK")));
+                dris.Add(0); //omega 3/6 ratio
 
 		}
 

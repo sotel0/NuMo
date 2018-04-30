@@ -382,7 +382,30 @@ namespace NuMo
 			calculateSaveNum();
 
 			//macronutrients
-			this.FindByName<Entry>("dri_calories").Text = calories[saveNum];
+
+            var db = DataAccessor.getDataAccessor();
+
+            //Calculating Calories using Mifflin-St. Jeor equation
+            String ageString = db.getSettingsItem("age");
+            var age = int.Parse(ageString);
+            String genderString = db.getSettingsItem("gender");
+            gender = int.Parse(genderString); //male == 1, female == 0
+            String weightString = db.getSettingsItem("weight");
+            var weight_kg = double.Parse(weightString) * 0.453592;
+            String feet = db.getSettingsItem("feet");
+            String inches = db.getSettingsItem("inches");
+            var height_cm = (double.Parse(feet) * 12 + double.Parse(inches)) * 2.54;
+            String activityLevelString = db.getSettingsItem("activity_level");
+            var activityLevel = double.Parse(activityLevelString);
+            var calories = 0;
+
+            if(gender == 1){
+                calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age + 5) * activityLevel);
+            } else{
+                calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age - 161) * activityLevel);
+            }
+
+            this.FindByName<Entry>("dri_calories").Text = calories.ToString();//calories[saveNum];
 			this.FindByName<Entry>("dri_totalCarbs").Text = totalCarbs[saveNum];
 			this.FindByName<Entry>("dri_dietaryFiber").Text = dietaryFiber[saveNum];
 			this.FindByName<Entry>("dri_netCarbs").Text = netCarbs[saveNum];
