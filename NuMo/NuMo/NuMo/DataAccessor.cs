@@ -59,21 +59,15 @@ namespace NuMo
                     {
                         temp = word.Substring(0, word.Length - 1);
                     }
-                    System.Diagnostics.Debug.WriteLine(temp);
+
                     where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
-                    whereOR += String.Format("UPPER(Long_Desc) LIKE '%{0}%' OR ", temp);
+                    whereOR += String.Format("UPPER(Long_Desc) LIKE '%{0}%' OR ", temp); //Allows for misspelling of a word in a phrase
                 }
             }
             where = where.Remove(where.Length - 4);//remove last 4 as we don't want the final 'AND '
             whereOR = whereOR.Remove(whereOR.Length - 3);//remove last 3 as we don't want the final 'OR '
             var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", where);
             var queryOR = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", whereOR);
-
-            //query = query.Replace("'%'", "%'");
-            //queryOR = queryOR.Replace("'%'", "%'");
-
-            System.Diagnostics.Debug.WriteLine(query);
-            System.Diagnostics.Debug.WriteLine(queryOR);
 
             var resultList = dbConn.Query<NumoNameSearch>(query);
             var resultsOR = dbConn.Query<NumoNameSearch>(queryOR);
@@ -232,8 +226,6 @@ namespace NuMo
         //quantity is the number of servings...
         public void createFoodItem(List<Nutrient> values, String name, double multiplier, String quantifier)
         {
-            // var keys = dbConn.Query<FoodItem>("SELECT MAX(NDB_No) as food_no FROM FOOD_DES");
-            //var food_no = keys.First<FoodItem>.
             name.Replace("'", "''");
     		dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
             dbConn.Commit();
@@ -308,20 +300,6 @@ namespace NuMo
         {
             int changes = dbConn.Execute(String.Format("UPDATE FOOD_DES SET Times_Searched = Times_Searched + 1 WHERE NDB_No = {0}", food_no));
             dbConn.Commit();
-        }
-
-		//Methods below here are for testing purposes only
-        public void checkTimesSearched(int food_no)
-        {
-            var result = dbConn.Query<testTimesSearched>(String.Format("SELECT Times_Searched as times_searched FROM FOOD_DES WHERE NDB_NO = {0}", food_no));
-            int times_searched = result.First<testTimesSearched>().times_searched;
-            times_searched--;
-            times_searched++;
-        }
-
-        public class testTimesSearched
-        {
-            public int times_searched { get; set; }
         }
     }
 }

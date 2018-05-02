@@ -31,9 +31,6 @@ namespace NuMo
 		//macronutrients
         private String[] macronutrients = { "dri_calories", "dri_totalCarbs", "dri_dietaryFiber", "dri_sugar", "dri_netCarbs", "dri_protein" };
 
-		private String calorieStr = "0";
-        private String sugarStr = "0";
-
 		private String[] totalCarbs = {"95","130","130","130","130","130","130","130","130","130","130","130","130","130","130",
 		"175","175","175","210","210","210"};
 
@@ -381,7 +378,6 @@ namespace NuMo
 		{
             var db = DataAccessor.getDataAccessor();
 			calculateSaveNum();
-            Debug.WriteLine("valHelp" + calorieStr + "//" + sugarStr);
 			//macronutrients
             this.FindByName<Entry>("dri_calories").Text = db.getDRIValue("dri_calories");
 			this.FindByName<Entry>("dri_totalCarbs").Text = totalCarbs[saveNum];
@@ -473,16 +469,13 @@ namespace NuMo
                 calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age - 161) * activityLevel);
             }
 
+            //Calculate sugar from Ed's formula. 
             var sugar = (int)(0.1 * calories) / 4;
 
-            calorieStr = calories.ToString();
-            sugarStr = sugar.ToString();
-
-            Debug.WriteLine("SaveNoLoad" + calorieStr + "//" + sugarStr);
 			//macronutrients
-            db.saveDRIValue("dri_calories", calorieStr);
+            db.saveDRIValue("dri_calories", calories.ToString());
             db.saveDRIValue("dri_totalCarbs", totalCarbs[saveNum]);
-            db.saveDRIValue("dri_sugar", sugarStr);
+            db.saveDRIValue("dri_sugar", sugar.ToString());
             db.saveDRIValue("dri_dietaryFiber", dietaryFiber[saveNum]);
             db.saveDRIValue("dri_netCarbs", netCarbs[saveNum]);
             db.saveDRIValue("dri_protein", protein[saveNum]);

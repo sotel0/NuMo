@@ -14,14 +14,6 @@ namespace NuMo
 	{
         //load the progress bars
         StackLayout loadBars(IDictionary<String, Double[]> items, List<String> names, List<Double> quantities, List<Double> dris, int dayMult);
-
-		//load the bullseye and nutrient graphs
-		//StackLayout loadGraphs(List<String> names, List<Double> quantities, List<Double> dris);
-		
-        //force the screen to go sideways
-		void forceLandscape();
-		//reset the orientation when you leave graph page
-		void resetOrientation();
 	}
 
 }

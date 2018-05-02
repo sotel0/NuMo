@@ -41,22 +41,6 @@ namespace NuMo
 
             foreach (var item in inputValues)
             {
-                ////create a new stack to put in table
-                //var layout = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                ////stack contains nutrient name
-                //layout.Children.Add(new Label()
-                //{
-                //    Text = item,
-                //    HorizontalOptions = LayoutOptions.Start,
-                //});
-
-                //stack contains nutrient quantity
-                //layout.Children.Add(new EntryCell()
-                //{
-                //    Keyboard = Keyboard.Numeric,
-                //    Text = "0"
-
-                //});
 
                 var entryCell = new EntryCell()
                 {
@@ -68,9 +52,6 @@ namespace NuMo
                     //HorizontalOptions = LayoutOptions.EndAndExpand
                 };
                 nutrientSection.Add(entryCell);
-                //layout.Children.Add(entryCell);
-
-                //nutrientSection.Add(new ViewCell() { View = layout });
             }
 
         }

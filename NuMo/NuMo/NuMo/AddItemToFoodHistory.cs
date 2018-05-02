@@ -46,7 +46,6 @@ namespace NuMo
                     db.addFoodHistory(item);
                 }
             }
-            //clearAllFields();
         }
     }
 }

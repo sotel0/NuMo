@@ -82,7 +82,6 @@
       <DependentUpon>Visualize.xaml</DependentUpon>
     </Compile>
     <Compile Include="IVisualize.cs" />
-    <Compile Include="BullsEyeHelper.cs" />
     <Compile Include="NutrFacts.xaml.cs">
       <DependentUpon>NutrFacts.xaml</DependentUpon>
     </Compile>
