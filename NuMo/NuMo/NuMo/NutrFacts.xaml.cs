@@ -152,7 +152,6 @@ namespace NuMo
                     layout.Children.Add(new Label()
                     {
                         Text = Convert.ToString(Math.Round(item.quantity, 4)),
-                        //HorizontalOptions = LayoutOptions.StartAndExpand,
                         HorizontalOptions = LayoutOptions.EndAndExpand,
                         Style = App.Current.Resources["LabelStyle"] as Style
                     });

@@ -44,11 +44,6 @@ namespace NuMo
             ToolbarItem plus = new ToolbarItem();
             plus.Icon = "ic_add_black_24dp.png";
             plus.Clicked += AddButton;
-
-            //attempt at adding text next to plus image
-            //ToolbarItem plusText = new ToolbarItem();
-            //plusText.Text = "Add Food +";
-            //ToolbarItems.Add(plusText);
             ToolbarItems.Add(plus);
             
             //setting the values of the calendar
@@ -127,7 +122,6 @@ namespace NuMo
         void viewToggle(object sender, EventArgs args)
         {
             var button = (Button)sender;
-            //button.BackgroundColor = selectedColor;
 
             if(button == NutrientsButton)
             {

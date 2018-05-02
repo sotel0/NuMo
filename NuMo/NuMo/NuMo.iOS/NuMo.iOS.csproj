@@ -106,7 +106,6 @@
     <ITunesArtwork Include="iTunesArtwork@2x" />
     <None Include="packages.config" />
     <Compile Include="VisualizePage.cs" />
-    <Compile Include="BullsEye.cs" />
     <Compile Include="CustomProgressBarRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
