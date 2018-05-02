@@ -46,7 +46,7 @@ namespace NuMo
             //inactive = 0
             if (activity_level.Equals("1.2"))
             {
-                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 0;
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 2;
             }
             //moderately active = 1
             else if (activity_level.Equals("1.3"))
@@ -54,11 +54,9 @@ namespace NuMo
                 this.FindByName<Picker>("settings_activity_level").SelectedIndex = 1;
             } 
             //highly active = 2
-            else if (activity_level.Equals("1.4")){
-                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 2;
-            } else {
-                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 3;
-
+            else 
+            {
+                this.FindByName<Picker>("settings_activity_level").SelectedIndex = 0;
             }
 
 			//age
@@ -347,17 +345,15 @@ namespace NuMo
                 }
 
                 //saving exercise level in the db by whichever value is selected
-                if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 0)
+                if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 2)
                 {
-                    db.saveSettingsItem("activity_level", "0");
+                    db.saveSettingsItem("activity_level", "1.2");
                 }
                 else if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 1)
                 {
-                    db.saveSettingsItem("activity_level", "1");
-                } else if (this.FindByName<Picker>("settings_activity_level").SelectedIndex == 2){
-                    db.saveSettingsItem("activity_level", "2");
+                    db.saveSettingsItem("activity_level", "1.3");
                 } else {
-                    db.saveSettingsItem("activity_level", "3");
+                    db.saveSettingsItem("activity_level", "1.4");
                 }
 				
                 //saving pregnant toggle in the db, by whichever pregnant value is selected

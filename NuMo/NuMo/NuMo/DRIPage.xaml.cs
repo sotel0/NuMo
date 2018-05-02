@@ -29,10 +29,10 @@ namespace NuMo
 		//Lactating 14-18, Lactating 19-30, Lactating 31-50,
 
 		//macronutrients
-        private String[] macronutrients = { "dri_calories", "dri_totalCarbs", "dri_dietaryFiber", "dri_netCarbs", "dri_protein" };
+        private String[] macronutrients = { "dri_calories", "dri_totalCarbs", "dri_dietaryFiber", "dri_sugar", "dri_netCarbs", "dri_protein" };
 
-		private String[] calories = {"2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000",
-			"2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000", "2000"};
+		private String calorieStr = "0";
+        private String sugarStr = "0";
 
 		private String[] totalCarbs = {"95","130","130","130","130","130","130","130","130","130","130","130","130","130","130",
 		"175","175","175","210","210","210"};
@@ -379,34 +379,13 @@ namespace NuMo
 		//for code reuse
 		public void setValuesHelper()
 		{
-			calculateSaveNum();
-
-			//macronutrients
-
             var db = DataAccessor.getDataAccessor();
-
-            //Calculating Calories using Mifflin-St. Jeor equation
-            String ageString = db.getSettingsItem("age");
-            var age = int.Parse(ageString);
-            String genderString = db.getSettingsItem("gender");
-            gender = int.Parse(genderString); //male == 1, female == 0
-            String weightString = db.getSettingsItem("weight");
-            var weight_kg = double.Parse(weightString) * 0.453592;
-            String feet = db.getSettingsItem("feet");
-            String inches = db.getSettingsItem("inches");
-            var height_cm = (double.Parse(feet) * 12 + double.Parse(inches)) * 2.54;
-            String activityLevelString = db.getSettingsItem("activity_level");
-            var activityLevel = double.Parse(activityLevelString);
-            var calories = 0;
-
-            if(gender == 1){
-                calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age + 5) * activityLevel);
-            } else{
-                calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age - 161) * activityLevel);
-            }
-
-            this.FindByName<Entry>("dri_calories").Text = calories.ToString();//calories[saveNum];
+			calculateSaveNum();
+            Debug.WriteLine("valHelp" + calorieStr + "//" + sugarStr);
+			//macronutrients
+            this.FindByName<Entry>("dri_calories").Text = db.getDRIValue("dri_calories");
 			this.FindByName<Entry>("dri_totalCarbs").Text = totalCarbs[saveNum];
+            this.FindByName<Entry>("dri_sugar").Text = db.getDRIValue("dri_sugar");
 			this.FindByName<Entry>("dri_dietaryFiber").Text = dietaryFiber[saveNum];
 			this.FindByName<Entry>("dri_netCarbs").Text = netCarbs[saveNum];
 			this.FindByName<Entry>("dri_protein").Text = protein[saveNum];
@@ -471,9 +450,39 @@ namespace NuMo
             var db = DataAccessor.getDataAccessor();
 			calculateSaveNum();
 
+            //Calculating Calories using Mifflin-St. Jeor equation
+            String ageString = db.getSettingsItem("age");
+            var age = int.Parse(ageString);
+            String genderString = db.getSettingsItem("gender");
+            gender = int.Parse(genderString); //male == 1, female == 0
+            String weightString = db.getSettingsItem("weight");
+            var weight_kg = double.Parse(weightString) * 0.453592;
+            String feet = db.getSettingsItem("feet");
+            String inches = db.getSettingsItem("inches");
+            var height_cm = (double.Parse(feet) * 12 + double.Parse(inches)) * 2.54;
+            String activityLevelString = db.getSettingsItem("activity_level");
+            var activityLevel = double.Parse(activityLevelString);
+            var calories = 0;
+
+            if (gender == 1)
+            {
+                calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age + 5) * activityLevel);
+            }
+            else
+            {
+                calories = (int)((10 * weight_kg + 6.25 * height_cm - 5 * age - 161) * activityLevel);
+            }
+
+            var sugar = (int)(0.1 * calories) / 4;
+
+            calorieStr = calories.ToString();
+            sugarStr = sugar.ToString();
+
+            Debug.WriteLine("SaveNoLoad" + calorieStr + "//" + sugarStr);
 			//macronutrients
-			db.saveDRIValue("dri_calories", calories[saveNum]);
+            db.saveDRIValue("dri_calories", calorieStr);
             db.saveDRIValue("dri_totalCarbs", totalCarbs[saveNum]);
+            db.saveDRIValue("dri_sugar", sugarStr);
             db.saveDRIValue("dri_dietaryFiber", dietaryFiber[saveNum]);
             db.saveDRIValue("dri_netCarbs", netCarbs[saveNum]);
             db.saveDRIValue("dri_protein", protein[saveNum]);
