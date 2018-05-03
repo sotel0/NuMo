@@ -1,4 +1,4 @@
-﻿using Xamarin.Forms;
+using Xamarin.Forms;
 using System.Collections.Generic;
 using System;
 
@@ -14,6 +14,7 @@ namespace NuMo
 	{
         //load the progress bars
         StackLayout loadBars(IDictionary<String, Double[]> items, List<String> names, List<Double> quantities, List<Double> dris, int dayMult);
+
 	}
 
 }

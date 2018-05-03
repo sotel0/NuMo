@@ -5,10 +5,9 @@ using System.Linq;
 using Xamarin.Forms;
 using System.Collections.Generic;
 
-/* Page to display the nutrient graphs. 
- * Utilizes dependency service, because of dif. between android and iOS implementations
+/* Page to display the nutrient graphs 
+ * Utilizes custom renderers because of dif. between android and iOS implementations
  */
-
 
 namespace NuMo
 
@@ -61,105 +60,19 @@ namespace NuMo
 			//call to fill the names/quantities/dri lists
             getData(nutrientList);
 
-            //force the screen to be in landscape mode
-            //DependencyService.Get<IVisualize>().resetOrientation();
-			
-            //mainVStack.Children.Add(DependencyService.Get<IVisualize>().loadGraphs(names, quantities, dris));
-            //initial progress is 20%
-
 		}
 
         protected override void OnAppearing() {  
             base.OnAppearing();
-            //animateBars2();
+
+            //animate the progress bars
             animateBars3();
         }
         private void animateBars3()
         {
-            //add the graphs to the main stack
+            //add the returned stack to the main stack
             mainStack.Children.Add(DependencyService.Get<IVisualize>().loadBars(items,names,quantities,dris,dayMultiplier));
         }
-
-        /*private void animateBars(){
-
-            for (int i = 0; i < names.Count; i++)
-            {
-                //try
-                //{
-
-                    var ratio = quantities[i] / dris[i];
-                    var progress = ratio / 2;
-                    //Nut1.Text = names[i] + ": ";
-                    //Nut1Data.Text = "Consumed: " + quantities[i] + "g" + "   DRI: " + dris[i] + "\nRatio: " + (ratio * 100).ToString().Substring(0, 5) + "%";
-
-                    var color = new Color();
-
-                    if (progress > 0.75)
-                    {
-                        color = Color.Yellow;
-                    }
-                    else if (progress <= 0.75 && progress > 0.25)
-                    {
-                        color = Color.LimeGreen;
-                    }
-                    else
-                    {
-                        color = Color.Red;
-                    }
-
-
-                    var title = new Label
-                    {
-                        
-                        HorizontalOptions = LayoutOptions.Center,
-                        Text = '\n' + names[i]
-                    };
-
-                    var nutData = new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Center,
-                        Text = "Consumed: " + Math.Round(quantities[i], 2) + "   DRI: " + dris[i] + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%" //.Substring(0, 5) + "%"
-                    };
-
-                    color = Color.White;
-                    //progBars.Add(new ProgressBar
-                    var bar = new ProgressBar
-                    {
-                        Progress = 0,
-                        WidthRequest = 100,
-                        HeightRequest = 10,
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Center,
-                        Rotation = 0,
-                        Margin = 10,
-
-                    };//);
-
-                    var barContentView = new ContentView
-                    {
-                        Scale = 3,
-                        Content = bar//progBars.Last()
-                    };
-
-                    layoutLowStack.Children.Add(title);
-                    layoutLowStack.Children.Add(nutData);
-                    layoutLowStack.Children.Add(barContentView);
-
-                    bar.ProgressTo(progress, 1000, Easing.Linear);
-                //} 
-                //catch(Exception){}
-            }
-
-            foreach (var bar in progBars){
-               bar.ProgressTo(0.5, 1000, Easing.Linear);
-            }
-
-            //sugarProgress.ProgressTo(0.45, 1000, Easing.Linear);
-            //fatProgress.ProgressTo(0.75, 1000, Easing.Linear);
-            //progress2.ProgressTo(0.33, 1000, Easing.Linear);
-
-        }
-        */
 
 		private void getData(List<Nutrient> nutrientList)
 		{
@@ -224,164 +137,70 @@ namespace NuMo
 		{
 		}
 
+
+        /// <summary>
+        /// Where you can add nutrients to the list of progress bars shown
+        /// </summary>
         private void initializeItems()
         {
             var db = DataAccessor.getDataAccessor();
+            //DRI not currently being used in Visualizing
 
-            //quantity = 0, dri value = 0
-            double[] QDRI1 = { 0, Convert.ToDouble(db.getDRIValue("dri_protein")) }; 
-            double[] QDRI2 = { 0, Convert.ToDouble(db.getDRIValue("dri_totalCarbs")) };
-            double[] QDRI3 = { 0, Convert.ToDouble(db.getDRIValue("dri_calcium")) };
-            double[] QDRI4 = { 0, Convert.ToDouble(db.getDRIValue("dri_iron")) };
-            double[] QDRI5 = { 0, Convert.ToDouble(db.getDRIValue("dri_magnesium")) };
-            double[] QDRI6 = { 0, Convert.ToDouble(db.getDRIValue("dri_phosphorus")) };
-            double[] QDRI7 = { 0, Convert.ToDouble(db.getDRIValue("dri_potassium")) };
-            double[] QDRI8 = { 0, Convert.ToDouble(db.getDRIValue("dri_sodium")) };
-            double[] QDRI9 = { 0, Convert.ToDouble(db.getDRIValue("dri_zinc")) };
-            double[] QDRI10 = { 0, Convert.ToDouble(db.getDRIValue("dri_copper")) };
-            double[] QDRI11 = { 0, Convert.ToDouble(db.getDRIValue("dri_manganese")) };
+            //retreiving the thresholds from the database
+            var sugarThresh = db.getDRIThresholds("dri_sugar");
+            var omega63Thresh = db.getDRIThresholds("dri_omega6/3 ratio");
+            var caloriesThresh = db.getDRIThresholds("dri_calories");
+            var netCarbsThresh = db.getDRIThresholds("dri_netCarbs");
+            var fiberThresh = db.getDRIThresholds("dri_dietaryFiber");
+            var zincThresh = db.getDRIThresholds("dri_zinc");
+            var totCarbsThresh = db.getDRIThresholds("dri_totalCarbs");
 
-            //does not exists yet, may be spelled wrong
-            //double[] QDRI12 = { 0, Convert.ToDouble(db.getDRIValue("dri_total_sugar")) };
-            //double[] QDRI13 = { 0, Convert.ToDouble(db.getDRIValue("dri_fiber")) };
+            //quantity = 0, dri value = 1, low threshold = 2, high threshold = 3
+       
+            double[] QDRI12 = { 0, Convert.ToDouble(db.getDRIValue("dri_sugar")), Convert.ToDouble(sugarThresh[0].lowThresh), Convert.ToDouble(sugarThresh[0].highThresh) };
+            double[] QDRI15 = { 0, Convert.ToDouble(db.getDRIValue("dri_omega6/3 ratio")), Convert.ToDouble(omega63Thresh[0].lowThresh), Convert.ToDouble(omega63Thresh[0].highThresh) };
+            double[] QDRI14 = { 0, Convert.ToDouble(db.getDRIValue("dri_calories")), Convert.ToDouble(caloriesThresh[0].lowThresh), Convert.ToDouble(caloriesThresh[0].highThresh) };
+            double[] QDRI2 = { 0, Convert.ToDouble(db.getDRIValue("dri_netCarbs")), Convert.ToDouble(netCarbsThresh[0].lowThresh), Convert.ToDouble(netCarbsThresh[0].highThresh) };
+            double[] QDRI13 = { 0, Convert.ToDouble(db.getDRIValue("dri_dietaryFiber")), Convert.ToDouble(fiberThresh[0].lowThresh), Convert.ToDouble(fiberThresh[0].highThresh) };
+            double[] QDRI9 = { 0, Convert.ToDouble(db.getDRIValue("dri_zinc")), Convert.ToDouble(zincThresh[0].lowThresh), Convert.ToDouble(zincThresh[0].highThresh) };
+            double[] QDRI16 = { 0, Convert.ToDouble(db.getDRIValue("dri_totalCarbs")), Convert.ToDouble(totCarbsThresh[0].lowThresh), Convert.ToDouble(totCarbsThresh[0].highThresh) };
 
-            items.Add("Protein(g)", QDRI1);
-            items.Add("Carbohydrates(g)",QDRI2);
-            items.Add("Calcium(mg)", QDRI3);
-            items.Add("Iron(mg)", QDRI4);
-            items.Add("Magnesium(mg)", QDRI5);
-            items.Add("Phosphorus(mg)", QDRI6);
-            items.Add("Potassium(mg)", QDRI7);
-            items.Add("Sodium(mg)", QDRI8);
+            //double[] QDRI1 = { 0, Convert.ToDouble(db.getDRIValue("dri_protein"))};
+            //double[] QDRI3 = { 0, Convert.ToDouble(db.getDRIValue("dri_calcium")) };
+            //double[] QDRI4 = { 0, Convert.ToDouble(db.getDRIValue("dri_iron")) };
+            //double[] QDRI5 = { 0, Convert.ToDouble(db.getDRIValue("dri_magnesium")) };
+            //double[] QDRI6 = { 0, Convert.ToDouble(db.getDRIValue("dri_phosphorus")) };
+            //double[] QDRI7 = { 0, Convert.ToDouble(db.getDRIValue("dri_potassium")) };
+            //double[] QDRI8 = { 0, Convert.ToDouble(db.getDRIValue("dri_sodium")) };
+            //double[] QDRI10 = { 0, Convert.ToDouble(db.getDRIValue("dri_copper")) };
+            //double[] QDRI11 = { 0, Convert.ToDouble(db.getDRIValue("dri_manganese")) };
+
+            /////////////////////////////////////////////////////////////////////
+            //creating the items to be displayed in the progress bars
+            items.Add("Total Sugars(g)", QDRI12);
+            items.Add("Omega6/3 Ratio", QDRI15);
+            items.Add("Calories", QDRI14);
+            items.Add("Carbohydrates(g)", QDRI16);
+            //items.Add("Net Carbohydrates(g)",QDRI2);
+            items.Add("Total Dietary Fiber(g)", QDRI13);
             items.Add("Zinc(mg)", QDRI9);
-            items.Add("Copper(mg)", QDRI10);
-            items.Add("Magnanese(mg)", QDRI11);
-            //items.Add("Total Sugars(g)", QDRI12);
-            //items.Add("Total Dietary Fiber(g)", QDRI13);
+
+
+            //items.Add("Protein(g)", QDRI1);
+            //items.Add("Iron(mg)", QDRI4);
+            //items.Add("Calcium(mg)", QDRI3);
+            //items.Add("Magnesium(mg)", QDRI5);
+            //items.Add("Phosphorus(mg)", QDRI6);
+            //items.Add("Potassium(mg)", QDRI7);
+            //items.Add("Sodium(mg)", QDRI8);
+            //items.Add("Copper(mg)", QDRI10);
+            //items.Add("Magnanese(mg)", QDRI11);
+
+
+
+
         }
 
 
-        //private void animateBars2()
-        //{
-            
-        //    foreach(var item in items)
-        //    {
-        //        try
-        //        {
-
-        //            var ratio = item.Value[0] / (item.Value[1]*dayMultiplier);
-        //            var progress = ratio;
-        //            String nutText = "Consumed: " + Math.Round(item.Value[0], 2) + "\nDaily Recommended Intake: " + item.Value[1] * dayMultiplier + "\nRatio: " + Math.Round((ratio * 100), 2).ToString() + "%";
-
-        //            Button button = new Button
-        //            {
-        //                Text = item.Key,
-        //                Font = Font.SystemFontOfSize(NamedSize.Medium),
-        //                WidthRequest = 170,
-        //                Margin = 15,
-        //                HorizontalOptions = LayoutOptions.Center,
-        //                VerticalOptions = LayoutOptions.CenterAndExpand,
-        //                Style = App.Current.Resources["BtnStyle"] as Style
-        //            };
-
-        //            button.Clicked += OnClicked;
-
-        //            void OnClicked(object sender, EventArgs ea)
-        //            {
-        //                DisplayAlert(item.Key, nutText, "OK");
-        //            }
-
-
-        //            var bar = new ProgressBar
-        //            {
-        //                Progress = 0,
-        //                WidthRequest = 100,
-        //                HeightRequest = 10,
-        //                VerticalOptions = LayoutOptions.Center,
-        //                HorizontalOptions = LayoutOptions.Center,
-        //                Rotation = 0,
-        //                Margin = 10,
-        //            };
-
-        //            var barContentView = new ContentView
-        //            {
-        //                Scale = 3,
-        //                Content = bar
-        //            };
-
-        //            //Add the nutrient to the corresponding layout
-
-        //            //check for nutrients to add them to special category
-
-        //            if(item.Key.Equals("Sodium(mg)")){
-        //                importantStack.Children.Add(button);
-        //                importantStack.Children.Add(barContentView);
-        //            }
-        //            else if (ratio < .70)
-        //            {
-        //                layoutLowStack.Children.Add(button);
-        //                layoutLowStack.Children.Add(barContentView);
-        //            } else if (ratio >= .70 && ratio <= 1.30){
-        //                layoutMidStack.Children.Add(button);
-        //                layoutMidStack.Children.Add(barContentView);
-        //            } else {
-        //                layoutHighStack.Children.Add(button);
-        //                layoutHighStack.Children.Add(barContentView);
-        //            }
-
-
-        //            bar.ProgressTo(progress, 1000, Easing.Linear);
-        //        }
-        //        catch (Exception)
-        //        {
-
-        //        }
-        //    }
-
-        //    //label to place if there are no nutrients in the layout category
-        //    if (importantStack.Children.Count == 1)
-        //    {
-        //        Label nothing = new Label
-        //        {
-        //            Text = "...",
-        //            HorizontalOptions = LayoutOptions.Center,
-        //            Style = App.Current.Resources["LabelStyle"] as Style
-        //        };
-        //        importantStack.Children.Add(nothing);
-        //    }
-
-        //    if (layoutLowStack.Children.Count == 1)
-        //    {
-        //        Label nothing = new Label
-        //        {
-        //            Text = "...",
-        //            HorizontalOptions = LayoutOptions.Center,
-        //            Style = App.Current.Resources["LabelStyle"] as Style
-        //        };
-        //        layoutLowStack.Children.Add(nothing);
-        //    }
-
-        //    if (layoutMidStack.Children.Count == 1)
-        //    {
-        //        Label nothing = new Label
-        //        {
-        //            Text = "...",
-        //            HorizontalOptions = LayoutOptions.Center,
-        //            Style = App.Current.Resources["LabelStyle"] as Style
-        //        };
-        //        layoutMidStack.Children.Add(nothing);
-        //    }
-
-        //    if(layoutHighStack.Children.Count == 1)
-        //    {
-        //        Label nothing = new Label
-        //        {
-        //            Text = "...",
-        //            HorizontalOptions = LayoutOptions.Center,
-        //            Style = App.Current.Resources["LabelStyle"] as Style
-        //        };
-        //        layoutHighStack.Children.Add(nothing);
-        //    }
-        //}
     }
 }

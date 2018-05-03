@@ -203,7 +203,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteService.cs" />
     <Compile Include="VisualizePage.cs" />
-    <Compile Include="BullsEye.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="CustomProgressBarRenderer.cs" />
   </ItemGroup>

@@ -48,6 +48,10 @@ namespace NuMo
                 nutrient.dbNo = value.nutr_no;
                 switch (value.nutr_no)
                 {
+                    case 208:
+                        nutrient.name = "Calories";
+                        nutrient.quantifier = "kcal";
+                        break;
                     case 203:
                         nutrient.name = "Protein(g)";
                         nutrient.quantifier = "g";
@@ -272,11 +276,11 @@ namespace NuMo
             {
                 Nutrient omega63ratio = new NuMo.Nutrient();
                 omega63ratio.quantity = 0;
-                omega63ratio.name = "Omega6/3Ratio";
+                omega63ratio.name = "Omega6/3 Ratio";
                 omega63ratio.quantifier = "special";
                 if(omega6 != null)
                     omega63ratio.quantity = omega6.quantity / omega3.quantity;
-                nutrients.RemoveAll(i => i.name.Equals("Omega6/3Ratio"));
+                nutrients.RemoveAll(i => i.name.Equals("Omega6/3 Ratio"));
                 nutrients.Add(omega63ratio);
             }
         }

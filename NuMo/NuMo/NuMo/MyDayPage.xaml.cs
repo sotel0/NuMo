@@ -168,7 +168,7 @@ namespace NuMo
 
             foreach (var item in nutrientList)
             {
-                if (item.name != "Omega6/3Ratio")
+                if (item.name != "Omega6/3 Ratio")
                     item.quantity /= daysToLoad;
             }
             return nutrientList;

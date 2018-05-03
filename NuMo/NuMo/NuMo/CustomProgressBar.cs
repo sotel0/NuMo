@@ -5,6 +5,7 @@ namespace NuMo
 
     public class CustomProgressBar : Xamarin.Forms.ProgressBar
     {
+        
         public float lowThreshold { get; set; }
         public float highThreshold { get; set; }
 

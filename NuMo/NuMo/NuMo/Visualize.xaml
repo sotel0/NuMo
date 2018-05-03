@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!--<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			Title = "Nutrients by % of DRI"
-             x:Class="NuMo.Visualize">
 
-	<StackLayout x:Name = "mainVStack" VerticalOptions = "FillAndExpand">
-	</StackLayout>
-
-</ContentPage> -->
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
@@ -16,45 +8,7 @@
  <ScrollView> 
         
 <StackLayout x:Name ='mainStack'> 
-            
-<!--<StackLayout x:Name='importantStack' Padding="0,20,0,20" >
-<Label x:Name = "title0" HorizontalTextAlignment="Center" 
-Text=" IMPORTANT " Style="{StaticResource LabelStyle}"> </Label>
-</StackLayout>
-            
-<StackLayout x:Name='layoutLowStack' Padding="0,20,0,20" >
-<Label x:Name = "title1" HorizontalTextAlignment="Center" 
-Text=" LOW INTAKE   0% - 70% " Style="{StaticResource LabelStyle}"> </Label>
-</StackLayout>
-
-<StackLayout x:Name='layoutMidStack' Padding="0,20,0,20" >
-<Label x:Name = "title2" HorizontalTextAlignment="Center" 
-Text=" GOOD INTAKE   70% - 130% " Style="{StaticResource LabelStyle}"> </Label>
-</StackLayout>
-
-<StackLayout x:Name='layoutHighStack' Padding="0,20,0,20" >
-<Label x:Name = "title3" HorizontalTextAlignment="Center" 
-Text="HIGH INTAKE   130% or more " Style="{StaticResource LabelStyle}"> </Label>
-</StackLayout>-->
-
-            
+<!--progress bar stack gets inserted here       -->
 </StackLayout>
 </ScrollView>   
 </ContentPage>  
-<!--<control:CustomProgressBar/> x:Name="progressBar"/>-->
-<!--        <Label x:Name="Nut1"/>
-        <Label x:Name="Nut1Data" HorizontalTextAlignment="Center"/>
-        <ContentView Scale="3">
-        <ProgressBar x:Name="progress1" Progress="1" WidthRequest="100" HeightRequest="10" VerticalOptions="Center" HorizontalOptions="Center" Rotation="180" BackgroundColor="Red" />
-        </ContentView>
-
-        <Label x:Name="Nut2" Text="Sugar"/>
-        <ContentView Scale="3">
-        <ProgressBar x:Name="sugarProgress" Progress="1" WidthRequest="100" HeightRequest="10" VerticalOptions="Center" HorizontalOptions="Center" Rotation="180" BackgroundColor="LimeGreen" />
-        </ContentView>
-
-        <Label x:Name="Nut3" Text="Fat"/>
-        <ContentView Scale="3">
-        <ProgressBar x:Name="fatProgress" Progress="1" WidthRequest="100" HeightRequest="10" VerticalOptions="Center" HorizontalOptions="Center" Rotation="180" BackgroundColor="Yellow" />
-        </ContentView>
--->

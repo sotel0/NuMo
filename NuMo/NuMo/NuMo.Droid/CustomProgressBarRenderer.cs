@@ -21,6 +21,7 @@ namespace NuMo.Droid
 
             if (Control != null && custBar != null)
             {
+                //change color depending on ratio
                 if (Control.Progress * .0001f > custBar.highThreshold)
                 {//red - high
                     Control.ProgressTintList = Android.Content.Res.ColorStateList.ValueOf(Color.FromRgb(255, 0, 0).ToAndroid());

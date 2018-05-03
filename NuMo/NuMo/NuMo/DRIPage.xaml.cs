@@ -37,8 +37,8 @@ namespace NuMo
 		private String[] dietaryFiber = {"19","19","26","31","38","38","38","30","30","26","26","25","25","21","21",
 			"28","28","28","29","29","29"};
 
-		private String[] netCarbs = {"100","100","100","100","100","100","100","100","100","100","100","100","100",
-			"100","100","100","100","100","100","100","100"};
+		private String[] netCarbs = {"76","111","104","99","92","92","92","100","100","104","104","105","105",
+			"109","109","147","147","147","181","181","181"};
 
 		private String[] protein = {"11","13","19","34","52","56","56","56","56","34","46","46","46","46","46",
 		"71","71","71","71","71","71",};
@@ -100,16 +100,16 @@ namespace NuMo
 		private String[] phosphorus = {"275","460","500","1250","1250","700","700","700","700","1250", "1250", "700", "700", "700", "700",
 			"1250","700","700","1250","700","700"};
 
-		private String[] potassium = {".7","3","3.8","4.5","4.7","4.7","4.7","4.7","4.7","4.5", "4.7", "4.7", "4.7", "4.7", "4.7",
-		"4.7", "4.7", "4.7","5.1","5.1","5.1"};
+		private String[] potassium = {"700","3000","3800","4500","4700","4700","4700","4700","4700","4500", "4700", "4700", "4700", "4700", "4700",
+		"4700", "4700", "4700","5100","5100","5100"};
 
-		private String[] sodium = {".37","1","1.2","1.5","1.5","1.5","1.5","1.3","1.2","1.5", "1.5", "1.5", "1.5", "1.3", "1.2",
-		"1.5","1.5","1.5","1.5","1.5","1.5",};
+		private String[] sodium = {"370","1000","1200","1500","1500","1500","1500","1300","1200","1500", "1500", "1500", "1500", "1300", "1200",
+		"1500","1500","1500","1500","1500","1500",};
 
 		private String[] zinc = { "3", "3", "5", "8", "11", "11", "11", "11", "11", "8", "9", "8", "8", "8", "8", "12", "11", "11", "13", "12", "12" };
 
-		private String[] copper = {"220","340","440","700","890","900","900","900","900","700", "890", "900", "900", "900", "900",
-		"1000","1000","1000","1300","1300","1300"};
+		private String[] copper = {".220",".340",".440",".700",".890",".900",".900",".900",".900",".700", ".890", ".900", ".900", ".900", ".900",
+		"1.000","1.000","1.000","1.300","1.300","1.300"};
 
 		private String[] manganese = {".6","1.2","1.5","1.9","2.2","2.3","2.3","2.3","2.3","1.6","1.6","1.8","1.8","1.8",
 		"1.8","2","2","2","2.6","2.6","2.6"};
@@ -445,46 +445,166 @@ namespace NuMo
 		}
 
 		//save without loading the page, need for the visualizer
-		public void saveNoLoad()
+        /// <summary>
+        /// Sugar and Calories Calculated
+        /// dri values and threshold values saved here 
+        /// Can edit the threshold values per nutrient here. 
+        /// </summary>
+		public void saveNoLoad() 
 		{
             var db = DataAccessor.getDataAccessor();
 			calculateSaveNum();
+
             var calories = calculateCalories();
             var sugar = calculateSugar(calories);
-			//macronutrients
-            db.saveDRIValue("dri_calories", calories);
-            db.saveDRIValue("dri_totalCarbs", totalCarbs[saveNum]);
-            db.saveDRIValue("dri_sugar", sugar);
-            db.saveDRIValue("dri_dietaryFiber", dietaryFiber[saveNum]);
-            db.saveDRIValue("dri_netCarbs", netCarbs[saveNum]);
-            db.saveDRIValue("dri_protein", protein[saveNum]);
 
+            //default threshold percentages of dri
+            var lowDefault = 0.25;
+            var highDefault = 1.25;
+
+			//macronutrients
+            db.saveDRIValue("dri_omega6/3 ratio", "4");             db.saveDRIThresholds("dri_omega6/3 ratio", "4", "10");
+
+            db.saveDRIValue("dri_calories", calories.ToString());
+            db.saveDRIThresholds("dri_calories", 
+                                 (Convert.ToDouble(calories)*lowDefault).ToString(), 
+                                 (Convert.ToDouble(calories)*highDefault).ToString());
+
+            db.saveDRIValue("dri_totalCarbs", totalCarbs[saveNum]);
+            db.saveDRIThresholds("dri_totalCarbs", 
+                                 (Convert.ToDouble(totalCarbs[saveNum]) * lowDefault).ToString(),
+                                (Convert.ToDouble(totalCarbs[saveNum]) * highDefault).ToString());
+
+            db.saveDRIValue("dri_sugar", sugar.ToString());
+            db.saveDRIThresholds("dri_sugar", 
+                                 (Convert.ToDouble(sugar) * lowDefault).ToString(),
+                                 (Convert.ToDouble(sugar) * highDefault).ToString());
+
+            db.saveDRIValue("dri_dietaryFiber", dietaryFiber[saveNum]);
+            db.saveDRIThresholds("dri_dietaryFiber", 
+                                 (Convert.ToDouble(dietaryFiber[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(dietaryFiber[saveNum]) * highDefault).ToString());
+
+            db.saveDRIValue("dri_netCarbs", netCarbs[saveNum]);
+            db.saveDRIThresholds("dri_netCarbs", 
+                                 (Convert.ToDouble(netCarbs[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(netCarbs[saveNum]) * highDefault).ToString());
+
+            db.saveDRIValue("dri_protein", protein[saveNum]);
+            db.saveDRIThresholds("dri_protein", 
+                                 (Convert.ToDouble(protein[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(protein[saveNum]) * highDefault).ToString());
 			//vitamins
             db.saveDRIValue("dri_vitaminA", vitaminA[saveNum]);
+            db.saveDRIThresholds("dri_vitaminA", 
+                                 (Convert.ToDouble(vitaminA[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminA[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_vitaminC", vitaminC[saveNum]);
+            db.saveDRIThresholds("dri_vitaminC",
+                                 (Convert.ToDouble(vitaminC[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminC[saveNum]) * highDefault).ToString());
+
             db.saveDRIValue("dri_vitaminD", vitaminD[saveNum]);
+            db.saveDRIThresholds("dri_vitaminD", 
+                                 (Convert.ToDouble(vitaminD[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminD[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_vitaminE", vitaminE[saveNum]);
+            db.saveDRIThresholds("dri_vitaminE", 
+                                 (Convert.ToDouble(vitaminE[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminE[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_vitaminK", vitaminK[saveNum]);
+            db.saveDRIThresholds("dri_vitaminK", 
+                                 (Convert.ToDouble(vitaminK[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminK[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_thiamin", thiamin[saveNum]);
+            db.saveDRIThresholds("dri_thiamin", 
+                                 (Convert.ToDouble(thiamin[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(thiamin[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_riboflavin", riboflavin[saveNum]);
+            db.saveDRIThresholds("dri_riboflavin",
+                                 (Convert.ToDouble(riboflavin[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(riboflavin[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_niacin", niacin[saveNum]);
+            db.saveDRIThresholds("dri_niacin", 
+                                 (Convert.ToDouble(niacin[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(niacin[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_vitaminB6", vitaminB6[saveNum]);
+            db.saveDRIThresholds("dri_vitaminB6", 
+                                 (Convert.ToDouble(vitaminB6[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminB6[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_folate", folate[saveNum]);
+            db.saveDRIThresholds("dri_folate", 
+                                 (Convert.ToDouble(folate[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(folate[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_vitaminB12", vitaminB12[saveNum]);
+            db.saveDRIThresholds("dri_vitaminB12", 
+                                 (Convert.ToDouble(vitaminB12[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(vitaminB12[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_pantothenicAcid", pantothenicAcid[saveNum]);
+            db.saveDRIThresholds("dri_pantothenicAcid", 
+                                 (Convert.ToDouble(pantothenicAcid[saveNum]) * lowDefault).ToString(),
+                                (Convert.ToDouble(pantothenicAcid[saveNum]) * highDefault).ToString());
 
 			//minerals
             db.saveDRIValue("dri_calcium", calcium[saveNum]);
+            db.saveDRIThresholds("dri_calcium", 
+                                 (Convert.ToDouble(calcium[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(calcium[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_iron", iron[saveNum]);
+            db.saveDRIThresholds("dri_iron", 
+                                 (Convert.ToDouble(iron[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(iron[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_magnesium", magnesium[saveNum]);
+            db.saveDRIThresholds("dri_magnesium",
+                                 (Convert.ToDouble(magnesium[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(magnesium[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_phosphorus", phosphorus[saveNum]);
+            db.saveDRIThresholds("dri_phosphorus", 
+                                 (Convert.ToDouble(phosphorus[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(phosphorus[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_potassium", potassium[saveNum]);
+            db.saveDRIThresholds("dri_potassium", 
+                                 (Convert.ToDouble(potassium[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(potassium[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_sodium", sodium[saveNum]);
+            db.saveDRIThresholds("dri_sodium",
+                                 (Convert.ToDouble(sodium[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(sodium[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_zinc", zinc[saveNum]);
+            db.saveDRIThresholds("dri_zinc", 
+                                 (Convert.ToDouble(zinc[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(zinc[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_copper", copper[saveNum]);
+            db.saveDRIThresholds("dri_copper", 
+                                 (Convert.ToDouble(copper[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(copper[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_manganese", manganese[saveNum]);
+            db.saveDRIThresholds("dri_manganese", 
+                                 (Convert.ToDouble(manganese[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(manganese[saveNum]) * highDefault).ToString());
+            
             db.saveDRIValue("dri_selenium", selenium[saveNum]);
-
+            db.saveDRIThresholds("dri_selenium", 
+                                 (Convert.ToDouble(selenium[saveNum]) * lowDefault).ToString(),
+                                 (Convert.ToDouble(selenium[saveNum]) * highDefault).ToString());
 		}
 
         private string calculateCalories(){

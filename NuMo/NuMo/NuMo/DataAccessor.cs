@@ -181,6 +181,28 @@ namespace NuMo
             else
                 return "";
         }
+
+        //save threshold values for dri thresholds
+        public void saveDRIThresholds(String DRIName, String lowThresh, String highThresh)
+        {
+            var values = dbConn.Query<DRIThresholds>(String.Format("SELECT Low_Thresh as lowThresh from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+            if (values.Any())
+            {
+                dbConn.Execute(String.Format("UPDATE DRI_VALUES set Low_Thresh = '{0}', High_Thresh ='{1}' WHERE DRI_Name = '{2}'", lowThresh,highThresh,DRIName));
+            }
+            else
+            {
+                dbConn.Execute(String.Format("INSERT INTO DRI_VALUES (DRI_Name, Low_Thresh, High_Thresh) VALUES ('{0}', '{1}', '{2}')", DRIName,lowThresh,highThresh));
+            }
+        }
+
+        //retrieve the thresholds of whichever nutrient
+        public List<DRIThresholds> getDRIThresholds(String DRIName)
+        {
+            var values = dbConn.Query<DRIThresholds>(String.Format("SELECT Low_Thresh as lowThresh, High_Thresh as highThresh from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+
+            return values;
+        }
         
         //Inserts a new reminder for a specific date. Reminders are held in the database as a base64 string.
         public void insertRemainder(MyDayRemainderItem item)
@@ -246,6 +268,8 @@ namespace NuMo
         {
             dbConn.Execute(String.Format("INSERT INTO FoodHistory (Date, Food_Id, Quantity, Quantifier) VALUES ('{0}', {1}, {2}, '{3}')", item.Date, item.food_no, item.Quantity, item.Quantifier));
         }
+
+
 
         //retrieves the foodhistory associated to a certain date
         public List<FoodHistoryItem> getFoodHistoryList(String date)

@@ -8,8 +8,6 @@ namespace NuMo
     public partial class NutrFacts : ContentPage
     {
 
-        //System.Diagnostics.Debug.WriteLine("cewl");
-
         public AddItemPage aip;
         public NumoNameSearch selectedResult;
 
@@ -121,7 +119,7 @@ namespace NuMo
                     TextColor = (Color)App.Current.Resources["BtnBkgColor"],
                     FontAttributes = FontAttributes.Bold
                 });
-                //////TODO DRI percentages
+                //////TODO show what these nutrient values are as percentages of the DRI
                 //colTitle.Children.Add(new Label()
                 //{
                 //    Text = "DRI %",
@@ -130,6 +128,8 @@ namespace NuMo
                 //    FontAttributes = FontAttributes.Bold
                 //});
                 //add to table
+
+
                 nutTable.Add(new ViewCell() { View = colTitle});
                 //////////////////
 

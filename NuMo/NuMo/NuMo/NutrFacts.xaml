@@ -14,6 +14,7 @@
                            Placeholder ="Number of" Keyboard="Keyboard.Numeric" 
                            Text="{Binding Quantity}" HorizontalTextAlignment="Center"
                            TextChanged = "Handle_TextChanged"/>
+                
                     <Picker x:Name="UnitsPicker" x:FieldModifier="public" Title="Units"
                             SelectedIndexChanged="Handle_SelectedIndexChanged" >
                       <Picker.Items>
@@ -31,7 +32,7 @@
                <TableView>
                     <TableRoot>
                             <TableSection x:Name = "nutTable" Title="Information">
-
+<!--                        where the table results are displayed-->
                             </TableSection>
                     </TableRoot>
                 </TableView>
