@@ -11,6 +11,7 @@ namespace NuMo
     class AddItemToFoodHistory : AddItemPage
     {
         DateTime date;
+
         public AddItemToFoodHistory(DateTime date) : base()
         {
             //display date at top of page
@@ -19,31 +20,32 @@ namespace NuMo
         }
 
         //When saved, data needs to be send to the database.
-        void saveButtonClicked(object sender, EventArgs args)
+        public override void saveButtonClicked(object sender, EventArgs args)
         {
-            var test = getQuantifier();
-            //save info to database here
-            if (selectedResult != null && Quantity != null && !Quantity.Equals("0") && getQuantifier() != null && date != null)
+            if (nutrFacts != null)
             {
-                var db = DataAccessor.getDataAccessor();
-                //Increment the times this item has been selected so it will get priority in the future
-                db.incrementTimesSearched(selectedResult.food_no);
-                FoodHistoryItem item = new FoodHistoryItem();
-                //need to add date, quantity, quantifiers, and food_no to this item
-                item.food_no = selectedResult.food_no;
-                item.Date = date.ToString();
-                item.Quantity = Convert.ToDouble(Quantity);
-                item.Quantifier = getQuantifier(); 
+                var nutrQuantifier = nutrFacts.getQuantifier();
+                var nutrQuantity = nutrFacts.Quantity;
+                //save info to database here
+                if (selectedResult != null && nutrQuantity != null && !nutrQuantity.Equals("0") && nutrQuantifier != null && date != null)
+                {
+                    var db = DataAccessor.getDataAccessor();
+
+                    //Increment the times this item has been selected so it will get priority in the future
+                    db.incrementTimesSearched(selectedResult.food_no);
+
+                    FoodHistoryItem item = new FoodHistoryItem();
+                    //need to add date, quantity, quantifiers, and food_no to this item
+                    item.food_no = selectedResult.food_no;
+                    item.Date = date.ToString();
+                    item.Quantity = Convert.ToDouble(nutrQuantity);
+                    item.Quantifier = nutrQuantifier;
 
 
-                //Add to our database
-                db.addFoodHistory(item);
+                    //Add to our database
+                    db.addFoodHistory(item);
+                }
             }
-            else
-            {
-                //todo, should popup what fields aren't filled in....
-            }
-            clearAllFields();
         }
     }
 }

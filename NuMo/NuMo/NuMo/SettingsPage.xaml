@@ -8,7 +8,8 @@
   </ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-      <Button x:Name="pickPictureButton" Text="Set Profile Picture" Clicked="PickPhotoButton_OnClicked"/>
+      <Button x:Name="pickPictureButton" Text="Set Profile Picture" 
+              Clicked="PickPhotoButton_OnClicked" Style = "{StaticResource BtnStyle}"/>
       <Image x:Name="profilePic" WidthRequest="50" HeightRequest="50"/>
       <TableView>
         <TableRoot>
@@ -16,7 +17,7 @@
             <EntryCell Label="Name: " HorizontalTextAlignment="Start" x:Name= "settings_name" Keyboard = "Text"/>
             <ViewCell>
               <StackLayout Orientation = "Horizontal">
-                <Label Text = "Gender" VerticalOptions="Center" Margin="18,0,0,0"/>
+                <Label Text = "Sex: " VerticalOptions="Center" Margin="18,0,0,0"/>
                 <Picker x:Name="settings_gender" HorizontalOptions="FillAndExpand">
                   <Picker.Items>
                     <x:String>Female</x:String>
@@ -27,18 +28,38 @@
             </ViewCell>
 
           <EntryCell Label = "Age: " x:Name="settings_age" Keyboard = "Numeric"/>
-          <SwitchCell Text = "Pregnant" x:Name = "settings_pregnant"/>
-          <SwitchCell Text = "Lactating" x:Name = "settings_lactating"/>
+          <EntryCell Label = "Weight (lb): " x:Name="settings_weight" Keyboard = "Numeric"/>                
 
+          <ViewCell>
+              <StackLayout Orientation = "Horizontal">
+                <Label Text = "Daily Exercise Level: " VerticalOptions="Center" Margin="18,0,0,0"/>
+                <Picker x:Name="settings_activity_level" HorizontalOptions="FillAndExpand">
+                  <Picker.Items>
+                    <x:String> Heavy</x:String>
+                    <x:String> Moderate</x:String>
+                    <x:String> Light</x:String>                   
+                  </Picker.Items>
+                </Picker>
+              </StackLayout>
+            </ViewCell>
+                        
           </TableSection>
+
+          <TableSection Title ="Height">
+          <EntryCell Label = "Feet: " x:Name="settings_feet" Keyboard = "Numeric"/>
+          <EntryCell Label = "Inches: " x:Name="settings_inches" Keyboard = "Numeric"/>
+          </TableSection>
+
           <TableSection Title ="Health Concerns">
-            <SwitchCell Text = "Blood Pressure" x:Name="settings_blood_pressure"/>
-            <SwitchCell Text = "T2D" x:Name="settings_t2d"/>
+            <SwitchCell Text = "High Blood Pressure" x:Name="settings_blood_pressure"/>
+            <SwitchCell Text = "Type 2 Diabetes" x:Name="settings_t2d"/>
             <SwitchCell Text = "Gluten Sensitivity" x:Name="settings_gluten_sensitivity"/>
-            <SwitchCell Text = "CVD" x:Name="settings_cvd"/>
+            <SwitchCell Text = "Cardiovascular Disease" x:Name="settings_cvd"/>
             <SwitchCell Text = "Liver Disease" x:Name="settings_liver_disease"/>
             <SwitchCell Text = "Kidney Disease" x:Name="settings_kidney_disease"/>
             <SwitchCell Text = "SIBO" x:Name="settings_sibo"/>
+            <SwitchCell Text = "Pregnant" x:Name = "settings_pregnant"/>
+            <SwitchCell Text = "Lactating" x:Name = "settings_lactating"/>
           </TableSection>
 
           <TableSection Title="User Goals">

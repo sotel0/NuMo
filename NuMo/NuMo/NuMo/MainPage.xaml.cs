@@ -14,12 +14,14 @@ namespace NuMo
 			InitializeComponent();
 			masterPage.ListView.ItemSelected += OnItemSelected;
             NavigationPage.SetHasNavigationBar(this, false);
+
             masterPage.ListView.SelectedItem = null;
+
+            checkFirstLoadUp();
         }
 
+        private async void checkFirstLoadUp(){
 
-        protected override async void OnAppearing()
-        {
             //to only show the startup message the first time the app is opened
             if (Application.Current.Properties.ContainsKey("start_up"))
             {
@@ -27,16 +29,28 @@ namespace NuMo
             }
             else
             {
-
                 Application.Current.Properties["start_up"] = "true";
 
-                await DisplayAlert("Welcome to NuMo", "NuMo aims to emphasize the most important nutritional " +
-				                   "values for your health. \n\n A Better Diet -- A Better Life \n\n You will be redirected to the app settings, which will" +
-				                   " personalize your nutritional and health goals.\n\nThe database contains \"commodity\" foods.", "OK");
+
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert("Welcome to NuMo", "NuMo aims to emphasize the most important nutritional " +
+                    "values for your health. \n\n A Better Diet -- A Better Life \n\n You will be redirected to the app settings, which will" +
+                                       " personalize your nutritional and health goals.\n\nThe database contains \"commodity\" foods.", "OK");
+                });
+
 
                 await Navigation.PushModalAsync(new NavigationPage(new SettingsPage()));
+
             }
 
+        }
+
+
+
+        protected override void OnAppearing()
+        {
+            //does not run in Android sometimes but does in iOS, it might be a simulator issue
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)

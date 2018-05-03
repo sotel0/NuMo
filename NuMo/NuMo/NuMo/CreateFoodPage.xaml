@@ -8,7 +8,7 @@
     <ToolbarItem Name="Save" Clicked="saveButtonClicked"/>
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <StackLayout>
+    <StackLayout >
       <TableView>
         <TableRoot>
           <TableSection Title="Item">
@@ -16,12 +16,14 @@
           </TableSection>
           <TableSection Title="Serving">
            <ViewCell>
-				<StackLayout x:Name="layout" Orientation = "Horizontal">
-					<Entry x:Name="quantity" Placeholder = "1" Margin = "10,0,0,0" Keyboard="Numeric"/>
-					<Entry x:Name="quantifier" Placeholder = "serving" />
-					<Label Text = "~=" Margin = "0,10,0,0"/>
-					<Entry x:Name="gramsAmount" Placeholder = "25" Keyboard="Numeric"/>
-					<Label Text = "grams" Margin = "0,10,0,0"  />
+				<StackLayout x:Name="layout" Orientation = "Horizontal" Margin = "0,0,0,0">
+					<Entry x:Name="quantity" Placeholder = "1    " Margin = "10,0,0,0" 
+                           Keyboard="Numeric" WidthRequest ="55"/>
+					<Entry x:Name="quantifier" Placeholder = "serving" WidthRequest ="80" />
+					<Label Text = "~=" Margin = "0,0,0,0" VerticalOptions="Center"/>
+					<Entry x:Name="gramsAmount" Placeholder = "0     "
+                           Keyboard="Numeric" WidthRequest ="65"/>
+					<Label Text = "Grams" Margin = "0,0,0,0" VerticalOptions="Center" />
 				</StackLayout>
           </ViewCell>
           </TableSection>

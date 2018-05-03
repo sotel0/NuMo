@@ -19,12 +19,14 @@ namespace NuMo
 	{
         DateTime date;
         List<IMyDayViewItem> ViewItemList;
-        Color selectedColor = Color.FromRgb(123, 199, 193);
+
         //Initially we only want to see info for 1 day.
         int daysToLoad = 1;
 
         public MyDayPage()
 		{
+            InitializeComponent();
+
             //subscribe to events to refresh the page and update a food item
             MessagingCenter.Subscribe<MyDayFoodItem>(this, "RefreshMyDay", (sender) =>
             {
@@ -34,19 +36,22 @@ namespace NuMo
             {
                 UpdateMyDayFoodItem(sender);
             });
+
+
             ViewItemList = new List<IMyDayViewItem>();
+
+
             ToolbarItem plus = new ToolbarItem();
             plus.Icon = "ic_add_black_24dp.png";
             plus.Clicked += AddButton;
             ToolbarItems.Add(plus);
             
-            InitializeComponent();
+            //setting the values of the calendar
             timeLengthChoice.SelectedIndex = 0;
-            ItemsButton.BackgroundColor = selectedColor;
             date = datePicker.Date;
         }
 
-        //Set the profile picture, default to a smiley face if one does not exist.
+        //Set the profile picture, default to logo if one does not exist.
         void UpdateMyDayPicture()
         {
             var db = DataAccessor.getDataAccessor();
@@ -57,13 +62,17 @@ namespace NuMo
             if (myDayRemainderItem != null)
             {
                 pic.Source = myDayRemainderItem.RemainderImage.Source;
+            } else {
+                pic.Source = "ic_logo_24dp.png";
             }
         }
 
         //Update a food item's information
         async void UpdateMyDayFoodItem(MyDayFoodItem item)
         {
-            await Navigation.PushModalAsync(new AddItemUpdate(item));
+            AddItemUpdate update = new AddItemUpdate(item);
+            await Navigation.PushAsync(update.nutrFacts);
+
         }
 
         //Plus button in top right to add a food item to today's history
@@ -75,14 +84,14 @@ namespace NuMo
         //Display the food items associated with today, and back in time to the number of selected days.
         void OnItemsClicked()
         {
-            ItemsButton.BackgroundColor = selectedColor;
-            NutrientsButton.BackgroundColor = Color.Default;
+            
             Image pic2 = new Image();
             if (Application.Current.Properties.ContainsKey("Profile Pic"))
             {
                 pic2 = Application.Current.Properties["Profile Pic"] as Image;
                 pic.Source = pic2.Source;
             }
+
             listView.BeginRefresh();
             listView.ItemsSource = null;
             var db = DataAccessor.getDataAccessor();
@@ -113,7 +122,7 @@ namespace NuMo
         void viewToggle(object sender, EventArgs args)
         {
             var button = (Button)sender;
-            button.BackgroundColor = selectedColor;
+
             if(button == NutrientsButton)
             {
                 OnNutrientsClicked();
@@ -127,8 +136,6 @@ namespace NuMo
         //Display nutrient info for the day/history range selected.
         void OnNutrientsClicked()
         {
-            ItemsButton.BackgroundColor = Color.Default;
-            NutrientsButton.BackgroundColor = selectedColor;
             listView.BeginRefresh();
             listView.ItemsSource = null;
 
@@ -161,7 +168,7 @@ namespace NuMo
 
             foreach (var item in nutrientList)
             {
-                if (item.name != "Omega6/3Ratio")
+                if (item.name != "Omega6/3 Ratio")
                     item.quantity /= daysToLoad;
             }
             return nutrientList;
@@ -185,15 +192,15 @@ namespace NuMo
         void OnTimeLengthChoiceChanged(object sender, EventArgs e)
         {
             this.Title = timeLengthChoice.Items.ElementAt(timeLengthChoice.SelectedIndex);
-            if(this.Title == "This Day")
+            if(this.Title == "One Day Report")
             {
                 daysToLoad = 1;
             }
-            else if(this.Title == "This Week")
+            else if(this.Title == "7 Day Report")
             {
                 daysToLoad = 7;
             }
-            else if(this.Title == "This Month")
+            else if(this.Title == "30 Day Report")
             {
                 daysToLoad = 30;
             }

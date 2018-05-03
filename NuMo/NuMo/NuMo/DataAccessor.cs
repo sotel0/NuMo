@@ -1,4 +1,4 @@
-﻿using NuMo.DatabaseItems;
+using NuMo.DatabaseItems;
 using NuMo.ItemViews;
 using SQLite.Net;
 using System;
@@ -37,23 +37,42 @@ namespace NuMo
         //For use in addItem pages.
         public List<NumoNameSearch> searchName(String name)
         {
+            
             if (name == null || name.Length <= 0 || name.Trim().Length == 0)
                 return new List<NumoNameSearch>();
             //ignore single quotes
-            name = name.Replace("'", "");
+            name = name.Replace("’", "");//iPhone specific
+            name = name.Replace("'", "");//Android Specific
             name = name.ToUpper();
             String where = "WHERE ";
+            String whereOR = "WHERE ";
             var names = name.Split(' ');
-            
+
             //build where clause.
-            foreach(var word in names)
+            foreach (var word in names)
             {
-                if(word.Length > 0)
-                    where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", word);
+                if (word.Length > 0)
+                {
+                    var temp = word;
+                    //Removes plural form, but still catches correct form using wild cards
+                    if (word[word.Length - 1] == 'S')
+                    {
+                        temp = word.Substring(0, word.Length - 1);
+                    }
+
+                    where += String.Format("UPPER(Long_Desc) LIKE '%{0}%' AND ", temp);
+                    whereOR += String.Format("UPPER(Long_Desc) LIKE '%{0}%' OR ", temp); //Allows for misspelling of a word in a phrase
+                }
             }
             where = where.Remove(where.Length - 4);//remove last 4 as we don't want the final 'AND '
+            whereOR = whereOR.Remove(whereOR.Length - 3);//remove last 3 as we don't want the final 'OR '
             var query = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", where);
+            var queryOR = String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES {0}order by Times_Searched DESC", whereOR);
+
             var resultList = dbConn.Query<NumoNameSearch>(query);
+            var resultsOR = dbConn.Query<NumoNameSearch>(queryOR);
+            foreach (var item in resultsOR)
+                resultList.Add(item);
             return resultList;
         }
 
@@ -79,6 +98,18 @@ namespace NuMo
             quantifier1.AddRange(quantifier2);
             return quantifier1;
         }
+
+        //Retrives macronutrients from the database for a food_no
+        //NOT WORKING
+        public List<ConvertItem> getFoodInfo(int food_no)
+        {
+            string data_num = food_no.ToString();
+            if (data_num.Length == 4)
+                data_num = "0" + data_num;
+            var foodInfo = dbConn.Query<ConvertItem>(String.Format("SELECT Carbohydrt_(g) as carbs, Sugar_Tot_(g) as sugarTotal FROM ABBREV WHERE NDB_No = '{0}'", data_num));
+            return foodInfo;
+        }
+
 
         //Retrieves one clean list of all the nutrients related to a list of historyItems
         public List<Nutrient> getNutrientsFromHistoryList(List<FoodHistoryItem> historyItems)
@@ -106,26 +137,71 @@ namespace NuMo
             return foodItem;
         }
 
+        //Used to save and read Settings and User Info from the database
         public void saveSettingsItem(String settingName, String settingValue)
         {
-            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT date as Date from FoodHistory WHERE Date = '{0}'", settingName));
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Setting_Name from SETTINGS WHERE Setting_Name = '{0}'", settingName));
             if (values.Any())
             {
-                dbConn.Execute(String.Format("UPDATE FoodHistory set Image = '{0}' WHERE Date = '1'", settingValue, settingName));
+                dbConn.Execute(String.Format("UPDATE SETTINGS set Setting_Val = '{0}' WHERE Setting_Name = '{1}'", settingValue, settingName));
             }
             else
             {
-                dbConn.Execute(String.Format("INSERT INTO FoodHistory (date, Image, Food_Id, Quantity, Quantifier) VALUES ('{0}', '{1}', 0, 0, '')", settingName, settingValue));
+                dbConn.Execute(String.Format("INSERT INTO SETTINGS (Setting_Name, Setting_Val) VALUES ('{0}', '{1}')", settingName, settingValue));
             }
         }
 
         public string getSettingsItem(String settingName)
         {
-            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Image as imageString from FoodHistory WHERE Date = '{0}'", settingName));
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT Setting_Val as imageString from SETTINGS WHERE Setting_Name = '{0}'", settingName));
             if (values.Any())
                 return values.First().imageString;
             else
                 return "";
+        }
+
+        public void saveDRIValue(String DRIName, String DRIValue)
+        {
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT DRI_Name from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+            if (values.Any())
+            {
+                dbConn.Execute(String.Format("UPDATE DRI_VALUES set DRI_Val = '{0}' WHERE DRI_Name = '{1}'", DRIValue, DRIName));
+            }
+            else
+            {
+                dbConn.Execute(String.Format("INSERT INTO DRI_VALUES (DRI_Name, DRI_Val) VALUES ('{0}', '{1}')", DRIName, DRIValue));
+            }
+        }
+
+        public string getDRIValue(String DRIName)
+        {
+            var values = dbConn.Query<MyDayRemainderItem>(String.Format("SELECT DRI_Val as imageString from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+            if (values.Any())
+                return values.First().imageString;
+            else
+                return "";
+        }
+
+        //save threshold values for dri thresholds
+        public void saveDRIThresholds(String DRIName, String lowThresh, String highThresh)
+        {
+            var values = dbConn.Query<DRIThresholds>(String.Format("SELECT Low_Thresh as lowThresh from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+            if (values.Any())
+            {
+                dbConn.Execute(String.Format("UPDATE DRI_VALUES set Low_Thresh = '{0}', High_Thresh ='{1}' WHERE DRI_Name = '{2}'", lowThresh,highThresh,DRIName));
+            }
+            else
+            {
+                dbConn.Execute(String.Format("INSERT INTO DRI_VALUES (DRI_Name, Low_Thresh, High_Thresh) VALUES ('{0}', '{1}', '{2}')", DRIName,lowThresh,highThresh));
+            }
+        }
+
+        //retrieve the thresholds of whichever nutrient
+        public List<DRIThresholds> getDRIThresholds(String DRIName)
+        {
+            var values = dbConn.Query<DRIThresholds>(String.Format("SELECT Low_Thresh as lowThresh, High_Thresh as highThresh from DRI_VALUES WHERE DRI_Name = '{0}'", DRIName));
+
+            return values;
         }
         
         //Inserts a new reminder for a specific date. Reminders are held in the database as a base64 string.
@@ -172,10 +248,8 @@ namespace NuMo
         //quantity is the number of servings...
         public void createFoodItem(List<Nutrient> values, String name, double multiplier, String quantifier)
         {
-            // var keys = dbConn.Query<FoodItem>("SELECT MAX(NDB_No) as food_no FROM FOOD_DES");
-            //var food_no = keys.First<FoodItem>.
             name.Replace("'", "''");
-            dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
+    		dbConn.Execute(String.Format("INSERT INTO FOOD_DES (Long_Desc, Times_Searched) VALUES ('{0}', 10)", name));
             dbConn.Commit();
             var food_no_data = dbConn.Query<NumoNameSearch>(String.Format("SELECT NDB_No as food_no, Long_Desc as name FROM FOOD_DES where UPPER(Long_Desc) LIKE '{0}' order by Times_Searched DESC", name));
             var food_no = food_no_data.FirstOrDefault().food_no;
@@ -195,6 +269,8 @@ namespace NuMo
             dbConn.Execute(String.Format("INSERT INTO FoodHistory (Date, Food_Id, Quantity, Quantifier) VALUES ('{0}', {1}, {2}, '{3}')", item.Date, item.food_no, item.Quantity, item.Quantifier));
         }
 
+
+
         //retrieves the foodhistory associated to a certain date
         public List<FoodHistoryItem> getFoodHistoryList(String date)
         {
@@ -213,7 +289,7 @@ namespace NuMo
                     var newItem = new MyDayFoodItem();
                     newItem.id = result.History_Id;
                     newItem.DisplayName = getNameFromID(result.food_no);
-                    newItem.Quantity = "Quantity: " + result.Quantity.ToString() + " Quantifier: " + result.Quantifier;
+                    newItem.Quantity = "(" + result.Quantity.ToString() + ") " + result.Quantifier;
                     resultList.Add(newItem);
                 }
             }
@@ -248,20 +324,6 @@ namespace NuMo
         {
             int changes = dbConn.Execute(String.Format("UPDATE FOOD_DES SET Times_Searched = Times_Searched + 1 WHERE NDB_No = {0}", food_no));
             dbConn.Commit();
-        }
-
-        //Methods below here are for testing purposes only
-        public void checkTimesSearched(int food_no)
-        {
-            var result = dbConn.Query<testTimesSearched>(String.Format("SELECT Times_Searched as times_searched FROM FOOD_DES WHERE NDB_NO = {0}", food_no));
-            int times_searched = result.First<testTimesSearched>().times_searched;
-            times_searched--;
-            times_searched++;
-        }
-
-        public class testTimesSearched
-        {
-            public int times_searched { get; set; }
         }
     }
 }

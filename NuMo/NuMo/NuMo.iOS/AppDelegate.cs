@@ -5,6 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using NControl.iOS;
+using Xamarin.Forms.Platform.iOS;
 
 namespace NuMo.iOS
 {
@@ -23,10 +24,14 @@ namespace NuMo.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            var temp = new CustomProgressBarRenderer();
+
+            //set default progress bar color
+            UIProgressView.Appearance.TintColor = global::Xamarin.Forms.Color.FromHex("#3fc0ff").ToUIColor();
+
             global::Xamarin.Forms.Forms.Init();
 			NControlViewRenderer.Init(); //Add this line <----------
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
     }

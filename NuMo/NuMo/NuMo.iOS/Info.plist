@@ -31,7 +31,7 @@
 	<key>CFBundleName</key>
 	<string>NuMo</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2</string>
+	<string>2.3</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NuMo photo library access</string>
 	<key>NSCameraUsageDescription</key>

@@ -13,18 +13,21 @@ namespace NuMo
     public class AddItemToRecipe : AddItemPage
     {
         List<FoodHistoryItem> recipeList;
+
         public AddItemToRecipe(List<FoodHistoryItem> temp) : base()
         {
             recipeList = temp;
         }
 
         //Append created item to the recipeList.
-        void saveButtonClicked(object sender, EventArgs args)
+        public override void saveButtonClicked(object sender, EventArgs args)
         {
             var result = new FoodHistoryItem();
             result.food_no = selectedResult.food_no;
-            result.Quantity = Convert.ToDouble(Quantity);
-            result.Quantifier = getQuantifier();
+
+            //nutrFacts is from parenting class
+            result.Quantity = Convert.ToDouble(nutrFacts.Quantity);
+            result.Quantifier = nutrFacts.getQuantifier();
             recipeList.Add(result);
             Navigation.RemovePage(this);
             base.OnBackButtonPressed();

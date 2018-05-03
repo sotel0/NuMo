@@ -39,47 +39,100 @@ namespace NuMo
         {
             InitializeComponent();
 
-            foreach(var item in inputValues)
+            foreach (var item in inputValues)
             {
-                var entryCell = new EntryCell();
-                entryCell.Label = item;
-                entryCell.Keyboard = Keyboard.Numeric;
-                entryCell.Text = "0";
+
+                var entryCell = new EntryCell()
+                {
+                    Label = item,
+                    Keyboard = Keyboard.Numeric,
+                    //WidthRequest = 65,
+                    Text = "0",
+                    //Margin = new Thickness(0, 0, 50, 0),
+                    //HorizontalOptions = LayoutOptions.EndAndExpand
+                };
                 nutrientSection.Add(entryCell);
             }
+
         }
 
         //Create food item from user data and save to database
-        void saveButtonClicked(object sender, EventArgs args)
+        async void saveButtonClicked(object sender, EventArgs args)
         {
-            var db = DataAccessor.getDataAccessor();
-
-            var nutrientList = new List<Nutrient>();
-            //multiplier deals with getting food to the 100g rate by the time it's in the db.
-            var multiplier = 1 / Convert.ToDouble(gramsAmount.Text);
-            foreach(var item in nutrientSection)
+            //check if inputs are valid
+            if (CreateItemName.Text == null || CreateItemName.Text == "")
+            {
+                await DisplayAlert("Please input NAME", "", "OK");
+            }
+            else if (quantity.Text == null || quantity.Text == "" || quantity.Text == "0")
+            {
+                await DisplayAlert("Please input QUANTITY", "example: 1.5 or 3", "OK");
+            }
+            else if (quantifier.Text == null || quantifier.Text == "")
+            {
+                await DisplayAlert("Please input SERVING", "", "OK");
+            }
+            else if (gramsAmount.Text == null || gramsAmount.Text == "")
+            {
+                await DisplayAlert("Please input GRAMS", "", "OK");
+            } 
+            else //perform save
             {
 
-                var entryCellItem = (EntryCell)item;
-                if(Convert.ToDouble(entryCellItem.Text) > 0)
+                var db = DataAccessor.getDataAccessor();
+
+                var nutrientList = new List<Nutrient>();
+                //multiplier deals with getting food to the 100g rate by the time it's in the db.
+                var multiplier = 1 / Convert.ToDouble(gramsAmount.Text);
+
+                foreach (var item in nutrientSection)
                 {
-                    var oldNutrient = nutrientList.FindLast(i => i.dbNo == mappings[Array.IndexOf(inputValues, entryCellItem.Label)]);
-                    if (oldNutrient == null)
+
+                    var entryCellItem = (EntryCell)item;
+                    if (Convert.ToDouble(entryCellItem.Text) > 0)
                     {
-                        var nutrient = new Nutrient();
-                        nutrient.dbNo = mappings[Array.IndexOf(inputValues, entryCellItem.Label)];
-                        nutrient.quantity = Convert.ToDouble(entryCellItem.Text) * multiplier;
-                        nutrientList.Add(nutrient);
-                    }
-                    else
-                    {
-                        oldNutrient.quantity += Convert.ToDouble(entryCellItem.Text) * multiplier;
+                        var oldNutrient = nutrientList.FindLast(i => i.dbNo == mappings[Array.IndexOf(inputValues, entryCellItem.Label)]);
+                        if (oldNutrient == null)
+                        {
+                            var nutrient = new Nutrient();
+                            nutrient.dbNo = mappings[Array.IndexOf(inputValues, entryCellItem.Label)];
+                            nutrient.quantity = Convert.ToDouble(entryCellItem.Text) * multiplier;
+                            nutrientList.Add(nutrient);
+                        }
+                        else
+                        {
+                            oldNutrient.quantity += Convert.ToDouble(entryCellItem.Text) * multiplier;
+                        }
                     }
                 }
+                //check if there were any nutrients input
+                if (nutrientList.Count == 0)
+                {
+                    await DisplayAlert("Please input NUTRIENTS", "", "OK");
+                }
+                else
+                {
+                    //servingMultiplier for the custom unit
+                    var servingMultiplier = Convert.ToDouble(quantity.Text) / (multiplier);
+
+                    //put into database
+                    db.createFoodItem(nutrientList, CreateItemName.Text, servingMultiplier, quantifier.Text.ToString());
+
+                    //wipe inputs
+                    foreach (var item in nutrientSection)
+                    {
+                        var entryCellItem = (EntryCell)item;
+                        entryCellItem.Text = "0";
+                    }
+                    quantity.Text = "";
+                    quantifier.Text = "";
+                    gramsAmount.Text = "";
+                    CreateItemName.Text = "";
+
+                    //alert user it was saved
+                    await DisplayAlert("Item Saved", "", "OK");
+                }
             }
-            //servingMultiplier for the custom unit
-            var servingMultiplier = Convert.ToDouble(quantity.Text) / (multiplier);
-            db.createFoodItem(nutrientList, CreateItemName.Text, servingMultiplier, quantifier.Text.ToString());
         }
     }
 }
